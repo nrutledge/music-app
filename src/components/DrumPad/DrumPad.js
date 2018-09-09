@@ -12,17 +12,20 @@ class DrumPad extends Component {
     }
 
     componentDidMount() {
+        window.focus();
         document.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('keyup', this.handleKeyUp);
         this.audioHard.current.volume = this.props.hardVolume;
         this.audioSoft.current.volume = this.props.softVolume;
       }
 
-    componentDidUpdate() {
-        if (this.props.type === 'Hi-Hat Open' && this.props.currentHiHatPosition === 'Hi-Hat Closed') { 
-            this.stopSound(this.audioHard.current, 40);
-            this.stopSound(this.audioSoft.current, 40);
-        }
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.handleKeyDown);
+        document.removeEventListener('keyup', this.handleKeyUp);        
+    }
+
+    componentDidUpdate(prevProps) {
+        this.stopOpenHiHat(prevProps.hiHatPosition);
     }
     
     isKeyDown = false;
@@ -34,17 +37,23 @@ class DrumPad extends Component {
             this.isKeyDown = true;
 
             this.playSound();
-
-            const type = this.props.type;
-            if (type.indexOf('Hi-Hat') >= 0) {
-                this.props.setHiHatPosition(type);
-            }
         }
     }
 
     handleKeyUp = (e) => {
         if (e.key === this.props.triggerKey) {
             this.isKeyDown = false;
+        }
+    }
+
+    stopOpenHiHat = (prevPosition) => {
+        if (
+            this.props.type === 'Hi-Hat Open' && 
+            this.props.currentHiHatPosition === 'Hi-Hat Closed' &&
+            this.props.currentHiHatPosition !== prevPosition
+        ) { 
+            this.stopSound(this.audioHard.current, 40);
+            this.stopSound(this.audioSoft.current, 40);
         }
     }
 
@@ -56,7 +65,6 @@ class DrumPad extends Component {
             (audioHard.currentTime > 0 && audioHard.currentTime < 0.08)
             || (audioSoft.currentTime > 0 && audioSoft.currentTime < 0.08)
         ) {
-            console.log('audioSoft: ', audioSoft)
             this.stopSound(audioHard, 80);
             audioSoft.currentTime = 0;
             audioSoft.play();
@@ -65,6 +73,13 @@ class DrumPad extends Component {
             audioHard.currentTime = 0;
             audioHard.play();
         }
+
+        if (this.props.isHiHat) {
+            this.props.setHiHatPosition(this.props.type);
+        }
+
+
+        this.props.setDisplay(this.props.type);
     }
 
     stopSound = (audioRef, delay = 0) => {

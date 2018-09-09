@@ -1,7 +1,7 @@
 import React from 'react';
 import DrumPad from '../DrumPad/DrumPad';
 
-const PadBank = ({ keyMappings, currentHiHatPosition, setHiHatPosition }) => {
+const PadBank = ({ keyMappings, hiHatPosition, setHiHatPosition, setDisplay  }) => {
     const drumPads = keyMappings.map(keyMap => {
         return <DrumPad 
                     triggerKey={keyMap.triggerKey} 
@@ -10,13 +10,15 @@ const PadBank = ({ keyMappings, currentHiHatPosition, setHiHatPosition }) => {
                     softSound={keyMap.softSound} 
                     softVolume={keyMap.softVolume} 
                     type={keyMap.type}
-                    currentHiHatPosition={currentHiHatPosition}
+                    isHiHat={keyMap.isHiHat}
+                    hiHatPosition={hiHatPosition}
                     setHiHatPosition={setHiHatPosition} 
+                    setDisplay={setDisplay}
                 />
     });
 
     return (
-        <div>
+        <div className="pad-bank">
             {drumPads}
         </div> 
     );

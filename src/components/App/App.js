@@ -7,6 +7,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
+      display: 'Drum Machine',
       hiHatPosition: 'Hi-Hat Open'
     }
   }
@@ -17,18 +18,22 @@ class App extends Component {
     })
   }
 
-  setHiHatPosition = (hiHatPos) => {
-    this.setState({ 
-      hiHatPosition: hiHatPos
-    });
+  setDisplay = (text) => {
+    this.setState({ display: text });
+  }
+
+  setHiHatPosition = (hiHatPosition) => {
+    this.setState({ hiHatPosition });
   }
 
   render() {
     return (
       <div id="drum-machine">
+        <div id="display">{this.state.display}</div>
         <PadBank 
           keyMappings={ keyMappings } 
-          currentHiHatPosition={this.state.hiHatPosition} 
+          hiHatPosition={this.state.hiHatPosition} 
+          setDisplay={this.setDisplay}
           setHiHatPosition={this.setHiHatPosition} 
         />
       </div>

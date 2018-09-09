@@ -12,7 +12,7 @@ export const keyMappings = [
         hardVolume: 1.0,
         softSound: 'sounds/drums/Tom Mid/Tom Mid 5.wav',
         softVolume: 1.0,
-        type: 'High Tom'
+        type: 'Mid Tom'
     }, {
         triggerKey: 'e',
         hardSound: 'sounds/drums/Tom Floor/Tom Floor 5.wav',
@@ -40,7 +40,8 @@ export const keyMappings = [
         hardVolume: 0.70,
         softSound: 'sounds/drums/Hi Hat/Hi Hat Open 4.wav',
         softVolume: 1.0,
-        type: 'Hi-Hat Open'
+        type: 'Hi-Hat Open',
+        isHiHat: true
     }, {
         triggerKey: 'z',
         hardSound: 'sounds/drums2/kick-softy.wav',
@@ -61,6 +62,7 @@ export const keyMappings = [
         hardVolume: 1.0,
         softSound: 'sounds/drums/Hi Hat/Hi Hat 7.wav',
         softVolume: 1.0,
-        type: 'Hi-Hat Closed'
+        type: 'Hi-Hat Closed',
+        isHiHat: true
     }
 ]

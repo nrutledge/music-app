@@ -1,7 +1,38 @@
+@font-face {
+  font-family: 'LedDisplay';
+  src: url('../../fonts/The Led Display St.ttf');
+}
+
+@font-face {
+  font-family: 'Pixel';
+  src: url('../../fonts/LLPIXEL3.ttf');
+}
+
 #drum-machine {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
   width: 100vw;
+}
+
+#display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 320px;
+  height: 100px;
+  background-color: rgb(31, 219, 141);
+  font-family: 'Pixel';
+  font-size: 30px;
+  color: #fff;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.pad-bank {
+  width: 330px;
+  display: flex;
+  flex-wrap: wrap;
 }
