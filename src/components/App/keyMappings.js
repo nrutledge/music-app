@@ -1,67 +1,66 @@
 export const keyMappings = [
     {
-        key: 'q',
-        src: 'sounds/drums/Crash C/Crash C 4.wav'
+        triggerKey: 'q',
+        hardSound: 'sounds/drums/Tom High/Tom High 4.wav',
+        hardVolume: 1.0,
+        softSound: 'sounds/drums/Tom High/Tom High 3.wav',
+        softVolume: 1.0,
+        type: 'High Tom',
     }, {
-        key: 'w',
-        src: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav'      
+        triggerKey: 'w',
+        hardSound: 'sounds/drums/Tom Mid/Tom Mid 4.wav',
+        hardVolume: 1.0,
+        softSound: 'sounds/drums/Tom Mid/Tom Mid 5.wav',
+        softVolume: 1.0,
+        type: 'High Tom'
     }, {
-        key: 'e',
-        src: 'sounds/drums/Hi Hat/Hi Hat Open 1.wav',
-        hiHatPosition: 'open'
+        triggerKey: 'e',
+        hardSound: 'sounds/drums/Tom Floor/Tom Floor 5.wav',
+        hardVolume: 1.0,
+        softSound: 'sounds/drums/Tom Floor/Tom Floor 4.wav',
+        softVolume: 1.0,
+        type: 'Floor Tom'
     }, {
-        key: 'a',
-        src: 'sounds/drums/Tom High/Tom High 4.wav'
+        triggerKey: 'a',
+        hardSound: 'sounds/drums/Crash A/Crash A 5.wav',
+        hardVolume: 0.85,
+        softSound: 'sounds/drums/Crash A/Crash A 5.wav',
+        softVolume: 1.0,
+        type: 'Crash'
     }, {
-        key: 's',
-        src: 'sounds/drums/Tom Floor/Tom Floor 4.wav'
+        triggerKey: 's',
+        hardSound: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
+        hardVolume: 1.0,
+        softSound: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
+        softVolume: 1.0,
+        type: 'Ride'
     }, {
-        key: 'd',
-        src: 'sounds/drums/Hi Hat/Hi Hat 7.wav',
-        hiHatPosition: 'closed'
+        triggerKey: 'd',
+        hardSound: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
+        hardVolume: 0.70,
+        softSound: 'sounds/drums/Hi Hat/Hi Hat Open 4.wav',
+        softVolume: 1.0,
+        type: 'Hi-Hat Open'
     }, {
-        key: 'z',
-        src: 'sounds/drums2/kick-softy.wav'
+        triggerKey: 'z',
+        hardSound: 'sounds/drums2/kick-softy.wav',
+        hardVolume: 1.0,
+        softSound: 'sounds/drums2/kick-softy.wav',
+        softVolume: 1.0,
+        type: 'Kick'
     }, {
-        key: 'x',
-        src: 'sounds/drums/Snare On/Snare 4.wav'
+        triggerKey: 'x',
+        hardSound: 'sounds/drums/Snare On/Snare 6.wav',
+        hardVolume: 1.0,
+        softSound: 'sounds/drums/Snare On/Snare 4.wav',
+        softVolume: 1.0,
+        type: 'Snare'
     }, {
-        key: 'c',
-        src: 'sounds/drums/Snare On/Snare 6.wav'
+        triggerKey: 'c',
+        hardSound: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
+        hardVolume: 1.0,
+        softSound: 'sounds/drums/Hi Hat/Hi Hat 7.wav',
+        softVolume: 1.0,
+        type: 'Hi-Hat Closed'
     }
 ]
-
-
-// Previous mapping
-/*
-export const keyMappings = [
-    {
-        key: 'q',
-        src: 'sounds/drums2/crash-acoustic.wav'
-    }, {
-        key: 'w',
-        src: 'sounds/drums2/ride-acoustic02.wav'      
-    }, {
-        key: 'e',
-        src: 'sounds/drums2/openhat-acoustic01.wav'
-    }, {
-        key: 'a',
-        src: 'sounds/drums2/tom-acoustic02.wav'
-    }, {
-        key: 's',
-        src: 'sounds/drums2/tom-acoustic01.wav'
-    }, {
-        key: 'd',
-        src: 'sounds/drums2/hihat-dist01.wav'
-    }, {
-        key: 'z',
-        src: 'sounds/drums2/kick-softy.wav'
-    }, {
-        key: 'x',
-        src: 'sounds/drums2/snare-acoustic01.wav'
-    }, {
-        key: 'c',
-        src: 'sounds/drums2/snare-dist01.wav'
-    }
-]
-*/

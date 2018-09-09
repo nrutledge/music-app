@@ -4,9 +4,12 @@ import DrumPad from '../DrumPad/DrumPad';
 const PadBank = ({ keyMappings, currentHiHatPosition, setHiHatPosition }) => {
     const drumPads = keyMappings.map(keyMap => {
         return <DrumPad 
-                    src={keyMap.src} 
-                    triggerKey={keyMap.key} 
-                    hiHatPosition={keyMap.hiHatPosition}
+                    triggerKey={keyMap.triggerKey} 
+                    hardSound={keyMap.hardSound} 
+                    hardVolume={keyMap.hardVolume} 
+                    softSound={keyMap.softSound} 
+                    softVolume={keyMap.softVolume} 
+                    type={keyMap.type}
                     currentHiHatPosition={currentHiHatPosition}
                     setHiHatPosition={setHiHatPosition} 
                 />

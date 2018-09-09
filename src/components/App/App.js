@@ -7,8 +7,14 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      hiHatPosition: 'open'
+      hiHatPosition: 'Hi-Hat Open'
     }
+  }
+
+  componentDidMount() {
+    window.addEventListener('keydown', (e) => {
+      console.log('Key: ', e.key);
+    })
   }
 
   setHiHatPosition = (hiHatPos) => {
@@ -19,7 +25,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div id="drum-machine">
         <PadBank 
           keyMappings={ keyMappings } 
           currentHiHatPosition={this.state.hiHatPosition} 
