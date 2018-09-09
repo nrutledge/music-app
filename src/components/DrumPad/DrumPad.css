@@ -1,0 +1,9 @@
+.drum-pad {
+    font-size: 20px;
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    background-color: rgb(221, 221, 221);
+    outline: none;
+    margin: 5px;
+}
