@@ -28,14 +28,16 @@ class App extends Component {
 
   render() {
     return (
-      <div id="drum-machine">
-        <div id="display">{this.state.display}</div>
-        <PadBank 
-          keyMappings={ keyMappings } 
-          hiHatPosition={this.state.hiHatPosition} 
-          setDisplay={this.setDisplay}
-          setHiHatPosition={this.setHiHatPosition} 
-        />
+      <div className="app">
+        <div id="drum-machine">
+          <div id="display">{this.state.display}</div>
+          <PadBank 
+            keyMappings={ keyMappings } 
+            hiHatPosition={this.state.hiHatPosition} 
+            setDisplay={this.setDisplay}
+            setHiHatPosition={this.setHiHatPosition} 
+          />
+        </div>
       </div>
     );
   }

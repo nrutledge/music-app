@@ -23,9 +23,9 @@ export const keyMappings = [
     }, {
         triggerKey: 'a',
         hardSound: 'sounds/drums/Crash A/Crash A 5.wav',
-        hardVolume: 0.85,
+        hardVolume: 0.8,
         softSound: 'sounds/drums/Crash A/Crash A 5.wav',
-        softVolume: 1.0,
+        softVolume: 0.6,
         type: 'Crash'
     }, {
         triggerKey: 's',
@@ -37,7 +37,7 @@ export const keyMappings = [
     }, {
         triggerKey: 'd',
         hardSound: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
-        hardVolume: 0.70,
+        hardVolume: 0.55,
         softSound: 'sounds/drums/Hi Hat/Hi Hat Open 4.wav',
         softVolume: 1.0,
         type: 'Hi-Hat Open',
@@ -47,19 +47,19 @@ export const keyMappings = [
         hardSound: 'sounds/drums2/kick-softy.wav',
         hardVolume: 1.0,
         softSound: 'sounds/drums2/kick-softy.wav',
-        softVolume: 1.0,
+        softVolume: 0.75,
         type: 'Kick'
     }, {
         triggerKey: 'x',
         hardSound: 'sounds/drums/Snare On/Snare 6.wav',
-        hardVolume: 1.0,
+        hardVolume: 0.9,
         softSound: 'sounds/drums/Snare On/Snare 4.wav',
         softVolume: 1.0,
         type: 'Snare'
     }, {
         triggerKey: 'c',
         hardSound: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
-        hardVolume: 1.0,
+        hardVolume: 0.9,
         softSound: 'sounds/drums/Hi Hat/Hi Hat 7.wav',
         softVolume: 1.0,
         type: 'Hi-Hat Closed',

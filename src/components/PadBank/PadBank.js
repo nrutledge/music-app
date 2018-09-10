@@ -14,6 +14,7 @@ const PadBank = ({ keyMappings, hiHatPosition, setHiHatPosition, setDisplay  }) 
                     hiHatPosition={hiHatPosition}
                     setHiHatPosition={setHiHatPosition} 
                     setDisplay={setDisplay}
+                    key={keyMap.triggerKey}
                 />
     });
 

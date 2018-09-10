@@ -5,8 +5,11 @@ class DrumPad extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            sound: this.props.hardSound
+            color: {
+                r: 2
+            }
         }
+
         this.audioHard = React.createRef();
         this.audioSoft = React.createRef();
     }
@@ -49,8 +52,8 @@ class DrumPad extends Component {
     stopOpenHiHat = (prevPosition) => {
         if (
             this.props.type === 'Hi-Hat Open' && 
-            this.props.currentHiHatPosition === 'Hi-Hat Closed' &&
-            this.props.currentHiHatPosition !== prevPosition
+            this.props.hiHatPosition === 'Hi-Hat Closed' &&
+            this.props.hiHatPosition !== prevPosition
         ) { 
             this.stopSound(this.audioHard.current, 40);
             this.stopSound(this.audioSoft.current, 40);
@@ -67,10 +70,12 @@ class DrumPad extends Component {
         ) {
             this.stopSound(audioHard, 80);
             audioSoft.currentTime = 0;
+            audioSoft.volume = this.props.softVolume;
             audioSoft.play();
         } else {
             this.stopSound(audioSoft, 80);
             audioHard.currentTime = 0;
+            audioHard.volume = this.props.hardVolume;
             audioHard.play();
         }
 
@@ -84,8 +89,7 @@ class DrumPad extends Component {
 
     stopSound = (audioRef, delay = 0) => {
         setTimeout(() => {
-            audioRef.pause();
-            audioRef.currentTime = 0;
+            audioRef.volume = 0;
         }, delay);
     }
  
