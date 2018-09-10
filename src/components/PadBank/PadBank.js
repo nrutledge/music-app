@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { Component } from 'react';
 import DrumPad from '../DrumPad/DrumPad';
 
-const PadBank = ({ keyMappings, hiHatPosition, setHiHatPosition, setDisplay  }) => {
-    const drumPads = keyMappings.map(keyMap => {
-        return <DrumPad 
-                    triggerKey={keyMap.triggerKey} 
-                    hardSound={keyMap.hardSound} 
-                    hardVolume={keyMap.hardVolume} 
-                    softSound={keyMap.softSound} 
-                    softVolume={keyMap.softVolume} 
-                    type={keyMap.type}
-                    isHiHat={keyMap.isHiHat}
-                    hiHatPosition={hiHatPosition}
-                    setHiHatPosition={setHiHatPosition} 
-                    setDisplay={setDisplay}
-                    key={keyMap.triggerKey}
-                />
-    });
+export default class PadBank extends Component {
+    render() {
+        const { keyMappings, hiHatPosition, setHiHatPosition, setDisplay  } = this.props;
 
-    return (
-        <div className="pad-bank">
-            {drumPads}
-        </div> 
-    );
-}
+        const drumPads = keyMappings.map((keyMap, index) => {
+            return <DrumPad 
+                        triggerKey={keyMap.triggerKey} 
+                        hardSound={keyMap.hardSound} 
+                        hardVolume={keyMap.hardVolume} 
+                        softSound={keyMap.softSound} 
+                        softVolume={keyMap.softVolume} 
+                        type={keyMap.type}
+                        isHiHat={keyMap.isHiHat}
+                        hiHatPosition={hiHatPosition}
+                        setHiHatPosition={setHiHatPosition} 
+                        setDisplay={setDisplay}
+                        key={index}
+                        hue={(this.props.baseHue + ((index + 1) * 7)) % 360}
+                    />
+        });
 
-export default PadBank;
+        return (
+            <div className="pad-bank">
+                {drumPads}
+            </div> 
+        );
+    }
+} 

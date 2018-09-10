@@ -4,11 +4,6 @@ import './DrumPad.css';
 class DrumPad extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            color: {
-                r: 2
-            }
-        }
 
         this.audioHard = React.createRef();
         this.audioSoft = React.createRef();
@@ -95,7 +90,17 @@ class DrumPad extends Component {
  
     render() {
         return (
-            <button className="drum-pad" id={this.props.type} onClick={this.playSound}>
+            <button 
+                className="drum-pad" 
+                id={this.props.type} 
+                onClick={this.playSound}
+                style={{ 
+                    border: `3px solid hsl(${this.props.hue}, 80%, 75%)`,
+                    boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, 95%, 60%, 0.25)`,
+                    color: `hsl(${this.props.hue}, 80%, 75%)`
+
+                }}
+            >
                 {this.props.triggerKey.toUpperCase()}
                 <audio 
                     ref={this.audioHard} 
