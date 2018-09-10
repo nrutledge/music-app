@@ -18,7 +18,7 @@ export default class PadBank extends Component {
                         setHiHatPosition={setHiHatPosition} 
                         setDisplay={setDisplay}
                         key={index}
-                        hue={(this.props.baseHue + ((index + 1) * 7)) % 360}
+                        hue={(this.props.baseHue + ((index + 1) * -10)) % 360}
                     />
         });
 

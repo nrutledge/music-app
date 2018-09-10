@@ -12,8 +12,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  //background-image: url('../../images/rocco-caruso-712902-unsplash.jpg');
-  //background-image: url('../../images/yannis-papanastasopoulos-327476-unsplash.jpg');
   background-image: url('../../images/jodie-walton-502797-unsplash.jpg');
   background-size: cover;
   width: 100vw;
@@ -27,10 +25,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 400px;
+  width: calc(100% - 10px);
+  max-width: 360px;
   padding: 40px;
   background-color: rgba(34, 34, 34, 0.8);
-  //background-image: linear-gradient(-180deg, #333, #111);
   border-radius: 20px;
 }
 

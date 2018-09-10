@@ -31,8 +31,8 @@ class App extends Component {
 
   setBaseHue() {
     setInterval(() => {
-        this.setState({ baseHue: this.state.baseHue < 360 ? this.state.baseHue + 1 : 0 });
-    }, 100);
+        this.setState({ baseHue: this.state.baseHue < 360 ? this.state.baseHue + 2 : 0 });
+    }, 200);
 }
 
   render() {
