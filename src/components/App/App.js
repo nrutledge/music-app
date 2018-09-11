@@ -7,18 +7,27 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      display: 'Drum Machine',
+      display: 'Booting...',
       hiHatPosition: 'Hi-Hat Open',
-      baseHue: Math.random() * 360
+      baseHue: Math.random() * 360,
+      loadedCount: 0,
+      totalCount: keyMappings.length
     }
   }
 
   componentDidMount() {
-    window.addEventListener('keydown', (e) => {
-      console.log('Key: ', e.key);
-    })
+    setInterval(() => {
+      this.setBaseHue(1, true);
+    }, 100);
+  }
 
-    this.setBaseHue();
+  incrementLoadedCount = () => {
+    if (this.state.loadedCount >= this.state.totalCount) { return; }
+
+    this.setState({ 
+      loadedCount: this.state.loadedCount + 1,
+      display: `Loaded ${this.state.loadedCount + 1}/${this.state.totalCount} Sounds`
+    });
   }
 
   setDisplay = (text) => {
@@ -29,10 +38,9 @@ class App extends Component {
     this.setState({ hiHatPosition });
   }
 
-  setBaseHue() {
-    setInterval(() => {
-        this.setState({ baseHue: this.state.baseHue < 360 ? this.state.baseHue + 2 : 0 });
-    }, 200);
+  setBaseHue = (newHue, isRelative) => {
+    if (isRelative) { newHue = this.state.baseHue + newHue }
+    this.setState({ baseHue: newHue % 360 })
 }
 
   render() {
@@ -43,16 +51,20 @@ class App extends Component {
             id="display" 
             style={{ 
               color: `hsl(${this.state.baseHue}, 70%, 85%)`,
-              backgroundColor: `hsl(${(this.state.baseHue + 180) % 360}, 30%, 30%)`,
+              backgroundColor: `hsl(${this.state.baseHue + 180}, 30%, 30%)`,
               border: `3px solid hsl(${this.state.baseHue}, 80%, 75%)`
             }}
-          >{this.state.display}</div>
+          >
+            {this.state.display}
+          </div>
           <PadBank 
             keyMappings={ keyMappings } 
             hiHatPosition={this.state.hiHatPosition} 
+            baseHue={this.state.baseHue}
             setDisplay={this.setDisplay}
             setHiHatPosition={this.setHiHatPosition} 
-            baseHue={this.state.baseHue}
+            setBaseHue={this.setBaseHue}
+            incrementLoadedCount={this.incrementLoadedCount}
           />
         </div>
       </div>

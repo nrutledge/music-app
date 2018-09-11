@@ -4,7 +4,9 @@ import './DrumPad.css';
 class DrumPad extends Component {
     constructor(props) {
         super(props);
-
+        this.state = {
+            isPressed: false
+        }
         this.audioHard = React.createRef();
         this.audioSoft = React.createRef();
     }
@@ -26,13 +28,11 @@ class DrumPad extends Component {
         this.stopOpenHiHat(prevProps.hiHatPosition);
     }
     
-    isKeyDown = false;
-
     handleKeyDown = (e) => {
         if (e.key === this.props.triggerKey) {
             // Prevent key auto-repeat
-            if (this.isKeyDown) { return };
-            this.isKeyDown = true;
+            if (this.state.isPressed) { return };
+            this.setState({ isPressed: true });
 
             this.playSound();
         }
@@ -40,7 +40,7 @@ class DrumPad extends Component {
 
     handleKeyUp = (e) => {
         if (e.key === this.props.triggerKey) {
-            this.isKeyDown = false;
+            this.setState({ isPressed: false });
         }
     }
 
@@ -80,6 +80,9 @@ class DrumPad extends Component {
 
 
         this.props.setDisplay(this.props.type);
+
+        // Shift color by random amount for each note played
+        //this.props.setBaseHue(Math.random() * 10, true);
     }
 
     stopSound = (audioRef, delay = 0) => {
@@ -89,15 +92,20 @@ class DrumPad extends Component {
     }
  
     render() {
+        const lightness = this.state.isPressed ? '90%' : '75%';
+        const shadowAlpha = this.state.isPressed ? '0.4' : '0.2';
+
         return (
             <button 
                 className="drum-pad" 
                 id={this.props.type} 
-                onClick={this.playSound}
+                onMouseDown={() => this.handleKeyDown({ key: this.props.triggerKey })}
+                onMouseUp={() => this.handleKeyUp({ key: this.props.triggerKey })}
+                onMouseLeave={() => this.handleKeyUp({ key: this.props.triggerKey })}
                 style={{ 
-                    border: `3px solid hsl(${this.props.hue}, 80%, 75%)`,
-                    boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, 95%, 60%, 0.25)`,
-                    color: `hsl(${this.props.hue}, 80%, 75%)`
+                    border: `3px solid hsl(${this.props.hue}, 80%, ${lightness})`,
+                    boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, 95%, 60%, ${shadowAlpha})`,
+                    color: `hsl(${this.props.hue}, 80%, ${lightness})`
 
                 }}
             >
@@ -107,6 +115,7 @@ class DrumPad extends Component {
                     id={this.props.triggerKey.toUpperCase()}
                     className="clip"
                     src={this.props.hardSound} 
+                    onCanPlayThrough={() => this.props.incrementLoadedCount()}
                     preload="auto" 
                 >
                 </audio>

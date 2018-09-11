@@ -3,9 +3,7 @@ import DrumPad from '../DrumPad/DrumPad';
 
 export default class PadBank extends Component {
     render() {
-        const { keyMappings, hiHatPosition, setHiHatPosition, setDisplay  } = this.props;
-
-        const drumPads = keyMappings.map((keyMap, index) => {
+        const drumPads = this.props.keyMappings.map((keyMap, index) => {
             return <DrumPad 
                         triggerKey={keyMap.triggerKey} 
                         hardSound={keyMap.hardSound} 
@@ -14,11 +12,13 @@ export default class PadBank extends Component {
                         softVolume={keyMap.softVolume} 
                         type={keyMap.type}
                         isHiHat={keyMap.isHiHat}
-                        hiHatPosition={hiHatPosition}
-                        setHiHatPosition={setHiHatPosition} 
-                        setDisplay={setDisplay}
-                        key={index}
-                        hue={(this.props.baseHue + ((index + 1) * -10)) % 360}
+                        hiHatPosition={this.props.hiHatPosition}
+                        key={this.props.index}
+                        hue={(this.props.baseHue + ((index + 1) * -8)) % 360}
+                        setHiHatPosition={this.props.setHiHatPosition} 
+                        setDisplay={this.props.setDisplay}
+                        setBaseHue={this.props.setBaseHue}
+                        incrementLoadedCount={this.props.incrementLoadedCount}
                     />
         });
 
