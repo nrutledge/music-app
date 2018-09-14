@@ -7,7 +7,7 @@ export const keyMappings = [
         hardVolume: 1.0,
         softSound: 'sounds/piano/Chord_1.mp3',
         softVolume: 0.8,
-        type: 'Paino Chord 1'
+        type: 'Piano Chord 1'
     }, {
         triggerKey: 't',
         hardSound: 'sounds/piano/Chord_2.mp3',
