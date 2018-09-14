@@ -46,23 +46,23 @@ export const keyMappings = [
     }, {
         triggerKey: 'a',
         hardSound: 'sounds/drums/Crash A/Crash A 5.wav',
-        hardVolume: 0.65 * multiplier,
+        hardVolume: 0.55 * multiplier,
         softSound: 'sounds/drums/Crash A/Crash A 5.wav',
-        softVolume: 0.55 * multiplier,
+        softVolume: 0.45 * multiplier,
         type: 'Crash'
     }, {
         triggerKey: 's',
         hardSound: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
-        hardVolume: 0.9 * multiplier,
+        hardVolume: 0.8 * multiplier,
         softSound: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
         softVolume: 0.7 * multiplier,
         type: 'Ride'
     }, {
         triggerKey: 'd',
         hardSound: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
-        hardVolume: 0.55 * multiplier,
+        hardVolume: 0.5 * multiplier,
         softSound: 'sounds/drums/Hi Hat/Hi Hat Open 4.wav',
-        softVolume: 1.0 * multiplier,
+        softVolume: 0.9 * multiplier,
         type: 'Hi-Hat Open',
         isHiHat: true
     }, {
@@ -75,9 +75,9 @@ export const keyMappings = [
     }, {
         triggerKey: 'x',
         hardSound: 'sounds/drums/Snare On/Snare 6.wav',
-        hardVolume: 0.9 * multiplier,
+        hardVolume: 0.8 * multiplier,
         softSound: 'sounds/drums/Snare On/Snare 5.wav',
-        softVolume: 0.95 * multiplier,
+        softVolume: 0.8 * multiplier,
         type: 'Snare'
     }, {
         triggerKey: 'c',

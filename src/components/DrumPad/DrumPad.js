@@ -58,36 +58,39 @@ class DrumPad extends Component {
     playSound = () => {
         const audioHard = this.audioHard.current;
         const audioSoft = this.audioSoft.current;
-        
+        let soundToPlay = audioHard;
+
+        // Max time (in seconds) that is considered to be fast playing
+        // in case of repeated triggers of same drum pad
+        const fastCutoff = 0.1;
+
+        console.log('Hard time:', audioHard.currentTime);
+        console.log('Soft time:', audioSoft.currentTime);
+
+        // Detect if user is playing drum pad fastly and play softer sound
+        // to simulate real playing.
         if (
-            (audioHard.currentTime > 0 && audioHard.currentTime < 0.08)
-            || (audioSoft.currentTime > 0 && audioSoft.currentTime < 0.08)
+            (audioHard.currentTime > 0 && audioHard.currentTime < fastCutoff) ||
+            (audioSoft.currentTime > 0 && audioSoft.currentTime < fastCutoff)
         ) {
-            this.stopSound(audioHard, 80);
-            audioSoft.currentTime = 0;
-            audioSoft.volume = this.props.softVolume;
-            audioSoft.play();
-        } else {
-            this.stopSound(audioSoft, 80);
-            audioHard.currentTime = 0;
-            audioHard.volume = this.props.hardVolume;
-            audioHard.play();
+            this.stopSound(audioHard);
+            soundToPlay = audioSoft;
         }
+
+        soundToPlay.currentTime = 0;
+        soundToPlay.play();
 
         if (this.props.isHiHat) {
             this.props.setHiHatPosition(this.props.type);
         }
 
-
         this.props.setDisplay(this.props.type);
-
-        // Shift color by random amount for each note played
-        //this.props.setBaseHue(Math.random() * 10, true);
     }
 
     stopSound = (audioRef, delay = 0) => {
         setTimeout(() => {
-            audioRef.volume = 0;
+            audioRef.pause();
+            audioRef.currentTime = 0;
         }, delay);
     }
  

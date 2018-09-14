@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import './App.css';
 import PadBank from '../PadBank/PadBank';
 import { keyMappings } from './keyMappings'
+import detectMobile from '../../helpers/detectMobile';
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
-      display: 'Booting...',
+      display: detectMobile() ? 'Not mobile optimized' : 'Booting...',
       hiHatPosition: 'Hi-Hat Open',
       baseHue: Math.random() * 360,
       loadedCount: 0,
@@ -15,10 +16,11 @@ class App extends Component {
     }
   }
 
+  // Start hue shift animation
   componentDidMount() {
     setInterval(() => {
-      this.setBaseHue(1, true);
-    }, 100);
+      this.setBaseHue(2, true);
+    }, 200);
   }
 
   incrementLoadedCount = () => {
