@@ -7,16 +7,14 @@ class DrumPad extends Component {
         this.state = {
             isPressed: false
         }
-        this.audioHard = React.createRef();
-        this.audioSoft = React.createRef();
+        this.audio = React.createRef();
     }
 
     componentDidMount() {
         window.focus();
         document.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('keyup', this.handleKeyUp);
-        this.audioHard.current.volume = this.props.hardVolume;
-        this.audioSoft.current.volume = this.props.softVolume;
+        this.audio.current.volume = this.props.volume;
       }
 
     componentWillUnmount() {
@@ -46,45 +44,42 @@ class DrumPad extends Component {
 
     stopOpenHiHat = (prevPosition) => {
         if (
-            this.props.type === 'Hi-Hat Open' && 
+            this.props.name === 'Hi-Hat Open' && 
             this.props.hiHatPosition === 'Hi-Hat Closed' &&
             this.props.hiHatPosition !== prevPosition
         ) { 
-            this.stopSound(this.audioHard.current, 40);
-            this.stopSound(this.audioSoft.current, 40);
+            this.stopSound(this.audio.current, 40);
         }
     }
 
     playSound = () => {
-        const audioHard = this.audioHard.current;
-        const audioSoft = this.audioSoft.current;
-        let soundToPlay = audioHard;
+        const audio = this.audio.current;
 
         // Max time (in seconds) that is considered to be fast playing
         // in case of repeated triggers of same drum pad
-        const fastCutoff = 0.1;
+        const fastCutoff = 0.12;
 
-        console.log('Hard time:', audioHard.currentTime);
-        console.log('Soft time:', audioSoft.currentTime);
+        // Minimum volume to play during fast playing
+        const minVolume = 0.6
 
-        // Detect if user is playing drum pad fastly and play softer sound
-        // to simulate real playing.
-        if (
-            (audioHard.currentTime > 0 && audioHard.currentTime < fastCutoff) ||
-            (audioSoft.currentTime > 0 && audioSoft.currentTime < fastCutoff)
-        ) {
-            this.stopSound(audioHard);
-            soundToPlay = audioSoft;
+        // Change volume of sound based on trigger frequency to simulate
+        // physics of shorter stick travel having less force
+        const currentTime = audio.currentTime;
+        if (currentTime > 0 && currentTime < fastCutoff) {
+            // Vary volume between 0.5 and 1 based on frequency
+            audio.volume = this.props.volume * (minVolume + (currentTime * (1 - minVolume) / fastCutoff));
+        } else {
+            audio.volume = this.props.volume;
         }
 
-        soundToPlay.currentTime = 0;
-        soundToPlay.play();
+        audio.currentTime = 0;
+        audio.play();
 
         if (this.props.isHiHat) {
-            this.props.setHiHatPosition(this.props.type);
+            this.props.setHiHatPosition(this.props.name);
         }
 
-        this.props.setDisplay(this.props.type);
+        this.props.setDisplay(this.props.name);
     }
 
     stopSound = (audioRef, delay = 0) => {
@@ -114,18 +109,11 @@ class DrumPad extends Component {
             >
                 {this.props.triggerKey.toUpperCase()}
                 <audio 
-                    ref={this.audioHard} 
+                    ref={this.audio} 
                     id={this.props.triggerKey.toUpperCase()}
                     className="clip"
-                    src={this.props.hardSound} 
+                    src={this.props.sound} 
                     onCanPlayThrough={() => this.props.incrementLoadedCount()}
-                    preload="auto" 
-                >
-                </audio>
-                <audio
-                    ref={this.audioSoft} 
-                    id={this.props.triggerKey.toUpperCase() + '-soft'}
-                    src={this.props.softSound}
                     preload="auto" 
                 >
                 </audio>

@@ -6,11 +6,9 @@ export default class PadBank extends Component {
         const drumPads = this.props.keyMappings.map((keyMap, index) => {
             return <DrumPad 
                         triggerKey={keyMap.triggerKey} 
-                        hardSound={keyMap.hardSound} 
-                        hardVolume={keyMap.hardVolume} 
-                        softSound={keyMap.softSound} 
-                        softVolume={keyMap.softVolume} 
-                        type={keyMap.type}
+                        sound={keyMap.sound} 
+                        volume={keyMap.volume} 
+                        name={keyMap.name}
                         isHiHat={keyMap.isHiHat}
                         hiHatPosition={this.props.hiHatPosition}
                         key={this.props.index}

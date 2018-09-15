@@ -1,91 +1,78 @@
 const multiplier = 0.8;
 
 export const keyMappings = [
-   {
+    {
+        name: 'Piano Chord 1',
         triggerKey: 'r',
-        hardSound: 'sounds/piano/Chord_1.mp3',
-        hardVolume: 1.0,
-        softSound: 'sounds/piano/Chord_1.mp3',
-        softVolume: 0.8,
-        type: 'Piano Chord 1'
-    }, {
+        sound: 'sounds/piano/Chord_1.mp3',
+        volume: 1.0,
+    }, 
+    {
+        name: 'Piano Chord 2',
         triggerKey: 't',
-        hardSound: 'sounds/piano/Chord_2.mp3',
-        hardVolume: 1.0,
-        softSound: 'sounds/piano/Chord_2.mp3',
-        softVolume: 0.8,
-        type: 'Piano Chord 2'
-    }, {
+        sound: 'sounds/piano/Chord_2.mp3',
+        volume: 1.0,        
+    }, 
+    {
+        name: 'Piano Chord 3',
         triggerKey: 'y',
-        hardSound: 'sounds/piano/Chord_3.mp3',
-        hardVolume: 1.0,
-        softSound: 'sounds/piano/Chord_3.mp3',
-        softVolume: 0.8,
-        type: 'Piano Chord 3'
-    }, {
+        sound: 'sounds/piano/Chord_3.mp3',
+        volume: 1.0
+    }, 
+    {
+        name: 'High Tom',
         triggerKey: 'q',
-        hardSound: 'sounds/drums/Tom High/Tom High 4.wav',
-        hardVolume: 1.0 * multiplier,
-        softSound: 'sounds/drums/Tom High/Tom High 3.wav',
-        softVolume: 1.0 * multiplier,
-        type: 'High Tom',
-    }, {
+        sound: 'sounds/drums/Tom High/Tom High 4.wav',
+        volume: 1.0 * multiplier,
+    }, 
+    {
+        name: 'Mid Tom',
         triggerKey: 'w',
-        hardSound: 'sounds/drums/Tom Mid/Tom Mid 4.wav',
-        hardVolume: 1.0 * multiplier,
-        softSound: 'sounds/drums/Tom Mid/Tom Mid 5.wav',
-        softVolume: 1.0 * multiplier,
-        type: 'Mid Tom'
-    }, {
+        sound: 'sounds/drums/Tom Mid/Tom Mid 4.wav',
+        volume: 1.0 * multiplier
+    }, 
+    {
+        name: 'Floor Tom',
         triggerKey: 'e',
-        hardSound: 'sounds/drums/Tom Floor/Tom Floor 5.wav',
-        hardVolume: 1.0 * multiplier,
-        softSound: 'sounds/drums/Tom Floor/Tom Floor 4.wav',
-        softVolume: 1.0 * multiplier,
-        type: 'Floor Tom'
-    }, {
+        sound: 'sounds/drums/Tom Floor/Tom Floor 5.wav',
+        volume: 1.0 * multiplier
+    }, 
+    {
+        name: 'Crash',
         triggerKey: 'a',
-        hardSound: 'sounds/drums/Crash A/Crash A 5.wav',
-        hardVolume: 0.55 * multiplier,
-        softSound: 'sounds/drums/Crash A/Crash A 5.wav',
-        softVolume: 0.45 * multiplier,
-        type: 'Crash'
-    }, {
+        sound: 'sounds/drums/Crash A/Crash A 5.wav',
+        volume: 0.55 * multiplier
+    }, 
+    {
+        name: 'Ride',
         triggerKey: 's',
-        hardSound: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
-        hardVolume: 0.8 * multiplier,
-        softSound: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
-        softVolume: 0.7 * multiplier,
-        type: 'Ride'
-    }, {
+        sound: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
+        volume: 0.8 * multiplier
+    }, 
+    {
+        name: 'Hi-Hat Open',
         triggerKey: 'd',
-        hardSound: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
-        hardVolume: 0.5 * multiplier,
-        softSound: 'sounds/drums/Hi Hat/Hi Hat Open 4.wav',
-        softVolume: 0.9 * multiplier,
-        type: 'Hi-Hat Open',
+        sound: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
+        volume: 0.5 * multiplier,
         isHiHat: true
-    }, {
+    }, 
+    {
+        name: 'Kick',
         triggerKey: 'z',
-        hardSound: 'sounds/drums2/kick-softy.wav',
-        hardVolume: 0.85 * multiplier,
-        softSound: 'sounds/drums2/kick-softy.wav',
-        softVolume: 0.7 * multiplier,
-        type: 'Kick'
-    }, {
+        sound: 'sounds/drums2/kick-softy.wav',
+        volume: 0.85 * multiplier
+    }, 
+    {
+        name: 'Snare',
         triggerKey: 'x',
-        hardSound: 'sounds/drums/Snare On/Snare 6.wav',
-        hardVolume: 0.8 * multiplier,
-        softSound: 'sounds/drums/Snare On/Snare 5.wav',
-        softVolume: 0.8 * multiplier,
-        type: 'Snare'
-    }, {
+        sound: 'sounds/drums/Snare On/Snare 6.wav',
+        volume: 0.8 * multiplier
+    }, 
+    {
+        name: 'Hi-Hat Closed',
         triggerKey: 'c',
-        hardSound: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
-        hardVolume: 0.7 * multiplier,
-        softSound: 'sounds/drums/Hi Hat/Hi Hat 7.wav',
-        softVolume: 0.85 * multiplier,
-        type: 'Hi-Hat Closed',
+        sound: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
+        volume: 0.7 * multiplier,
         isHiHat: true
     }
 ]
