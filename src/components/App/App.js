@@ -60,7 +60,7 @@ class App extends Component {
             {this.state.display}
           </div>
           <PadBank 
-            keyMappings={ keyMappings } 
+            keyMappings={keyMappings} 
             hiHatPosition={this.state.hiHatPosition} 
             baseHue={this.state.baseHue}
             setDisplay={this.setDisplay}

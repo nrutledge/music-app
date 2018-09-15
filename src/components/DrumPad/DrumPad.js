@@ -15,7 +15,7 @@ class DrumPad extends Component {
         document.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('keyup', this.handleKeyUp);
         this.audio.current.volume = this.props.volume;
-      }
+    }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyDown);
@@ -27,17 +27,28 @@ class DrumPad extends Component {
     }
     
     handleKeyDown = (e) => {
-        if (e.key === this.props.triggerKey) {
-            // Prevent key auto-repeat
-            if (this.state.isPressed) { return };
-            this.setState({ isPressed: true });
+        let key = e.key;
 
-            this.playSound();
+        // Play lower intensity when shift key / caps lock is on
+        let intensity = 1;
+        if (typeof key === 'string' && key === key.toUpperCase()) {
+            intensity = 0.7;
+            key = key.toLowerCase();
         }
+
+        if (key !== this.props.triggerKey) { return; }
+
+        // Prevent key auto-repeat
+        if (this.state.isPressed) { return; }
+
+        this.setState({ isPressed: true });
+        this.playSound(intensity);
     }
 
     handleKeyUp = (e) => {
-        if (e.key === this.props.triggerKey) {
+        const key = (typeof e.key === 'string') ? e.key.toLowerCase() : e.key;
+
+        if (key === this.props.triggerKey) {
             this.setState({ isPressed: false });
         }
     }
@@ -52,7 +63,7 @@ class DrumPad extends Component {
         }
     }
 
-    playSound = () => {
+    playSound = (intensity) => {
         const audio = this.audio.current;
 
         // Max time (in seconds) that is considered to be fast playing
@@ -60,16 +71,17 @@ class DrumPad extends Component {
         const fastCutoff = 0.12;
 
         // Minimum volume to play during fast playing
-        const minVolume = 0.6
+        const minVolume = 0.65
 
         // Change volume of sound based on trigger frequency to simulate
         // physics of shorter stick travel having less force
         const currentTime = audio.currentTime;
+
         if (currentTime > 0 && currentTime < fastCutoff) {
             // Vary volume between 0.5 and 1 based on frequency
-            audio.volume = this.props.volume * (minVolume + (currentTime * (1 - minVolume) / fastCutoff));
+            audio.volume = intensity * this.props.volume * (minVolume + (currentTime * (1 - minVolume) / fastCutoff));
         } else {
-            audio.volume = this.props.volume;
+            audio.volume = intensity * this.props.volume;
         }
 
         audio.currentTime = 0;
@@ -88,6 +100,12 @@ class DrumPad extends Component {
             audioRef.currentTime = 0;
         }, delay);
     }
+
+    handleMouseDown = () => this.handleKeyDown({ key: this.props.triggerKey });
+    handleMouseUp = () => this.handleKeyUp({ key: this.props.triggerKey });
+    handleMouseEnter = () => this.props.setDisplay(this.props.name);
+    handleMouseLeave = () => this.handleKeyUp({ key: this.props.triggerKey });
+    handleCanPlayThrough = () => this.props.incrementLoadedCount();
  
     render() {
         const lightness = this.state.isPressed ? '90%' : '75%';
@@ -97,9 +115,10 @@ class DrumPad extends Component {
             <button 
                 className="drum-pad" 
                 id={this.props.type} 
-                onMouseDown={() => this.handleKeyDown({ key: this.props.triggerKey })}
-                onMouseUp={() => this.handleKeyUp({ key: this.props.triggerKey })}
-                onMouseLeave={() => this.handleKeyUp({ key: this.props.triggerKey })}
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
                 style={{ 
                     border: `3px solid hsl(${this.props.hue}, 80%, ${lightness})`,
                     boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, 95%, 60%, ${shadowAlpha})`,
@@ -113,7 +132,7 @@ class DrumPad extends Component {
                     id={this.props.triggerKey.toUpperCase()}
                     className="clip"
                     src={this.props.sound} 
-                    onCanPlayThrough={() => this.props.incrementLoadedCount()}
+                    onCanPlayThrough={this.handleCanPlayThrough}
                     preload="auto" 
                 >
                 </audio>
