@@ -23,9 +23,15 @@ class DrumPad extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        this.stopOpenHiHat(prevProps.hiHatPosition);
+        // Stop playing sound if another key in same exclusive zone was played
+        if (this.props.exclusiveZone &&
+            this.props.exclusiveZone === this.props.lastPlayedZone &&
+            this.props.lastPlayedKey !== this.props.triggerKey 
+        ) {
+            this.stopSound(this.audio.current, 50);
+        }
     }
-    
+
     handleKeyDown = (e) => {
         let key = e.key;
 
@@ -36,13 +42,13 @@ class DrumPad extends Component {
             key = key.toLowerCase();
         }
 
-        if (key !== this.props.triggerKey) { return; }
+        // Only play if correct key pressed and that key isnt' already
+        // pressed (i.e., prevent auto-repeat)
+        if (key !== this.props.triggerKey || this.state.isPressed) { return; }
 
-        // Prevent key auto-repeat
-        if (this.state.isPressed) { return; }
-
-        this.setState({ isPressed: true });
         this.playSound(intensity);
+        this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
+        this.setState({ isPressed: true });
     }
 
     handleKeyUp = (e) => {
@@ -53,51 +59,39 @@ class DrumPad extends Component {
         }
     }
 
-    stopOpenHiHat = (prevPosition) => {
-        if (
-            this.props.name === 'Hi-Hat Open' && 
-            this.props.hiHatPosition === 'Hi-Hat Closed' &&
-            this.props.hiHatPosition !== prevPosition
-        ) { 
-            this.stopSound(this.audio.current, 40);
-        }
-    }
-
     playSound = (intensity) => {
         const audio = this.audio.current;
+        const currentTime = audio.currentTime;
 
         // Max time (in seconds) that is considered to be fast playing
         // in case of repeated triggers of same drum pad
         const fastCutoff = 0.12;
 
         // Minimum volume to play during fast playing
-        const minVolume = 0.65
+        const minVolume = 0.6
+
+        let newVolume = intensity * this.props.volume;
 
         // Change volume of sound based on trigger frequency to simulate
         // physics of shorter stick travel having less force
-        const currentTime = audio.currentTime;
-
         if (currentTime > 0 && currentTime < fastCutoff) {
-            // Vary volume between 0.5 and 1 based on frequency
-            audio.volume = intensity * this.props.volume * (minVolume + (currentTime * (1 - minVolume) / fastCutoff));
-        } else {
-            audio.volume = intensity * this.props.volume;
+            newVolume *= minVolume + (currentTime * (1 - minVolume) / fastCutoff);
         }
 
+        // Set volume of audio element (without exceeding 1) and begin playback
+        audio.volume = newVolume < 1 ? newVolume : 1; 
         audio.currentTime = 0;
         audio.play();
-
-        if (this.props.isHiHat) {
-            this.props.setHiHatPosition(this.props.name);
-        }
-
-        this.props.setDisplay(this.props.name);
     }
 
     stopSound = (audioRef, delay = 0) => {
         setTimeout(() => {
-            audioRef.pause();
-            audioRef.currentTime = 0;
+            // Stop sound if it isn't the currently playing key (to prevent
+            // callback running on a subsequent play)
+            if (this.props.lastPlayedKey !== this.props.triggerKey) {
+                audioRef.pause();
+                audioRef.currentTime = 0;
+            }
         }, delay);
     }
 
@@ -129,8 +123,7 @@ class DrumPad extends Component {
                 {this.props.triggerKey.toUpperCase()}
                 <audio 
                     ref={this.audio} 
-                    id={this.props.triggerKey.toUpperCase()}
-                    className="clip"
+                    className='audio'
                     src={this.props.sound} 
                     onCanPlayThrough={this.handleCanPlayThrough}
                     preload="auto" 

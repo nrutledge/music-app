@@ -5,18 +5,19 @@ export default class PadBank extends Component {
     render() {
         const drumPads = this.props.keyMappings.map((keyMap, index) => {
             return <DrumPad 
+                        key={this.props.index}
+                        name={keyMap.name}
                         triggerKey={keyMap.triggerKey} 
                         sound={keyMap.sound} 
                         volume={keyMap.volume} 
-                        name={keyMap.name}
-                        isHiHat={keyMap.isHiHat}
-                        hiHatPosition={this.props.hiHatPosition}
-                        key={this.props.index}
+                        exclusiveZone={keyMap.exclusiveZone}
+                        lastPlayedZone={this.props.lastPlayedZone}
+                        lastPlayedKey={this.props.lastPlayedKey}
                         hue={(this.props.baseHue + ((index + 1) * -8)) % 360}
-                        setHiHatPosition={this.props.setHiHatPosition} 
-                        setDisplay={this.props.setDisplay}
                         setBaseHue={this.props.setBaseHue}
                         incrementLoadedCount={this.props.incrementLoadedCount}
+                        setLastPlayed={this.props.setLastPlayed}
+                        setDisplay={this.props.setDisplay}
                     />
         });
 

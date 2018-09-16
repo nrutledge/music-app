@@ -1,0 +1,32 @@
+#drum-machine {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 440px;
+    margin: 20px;
+    padding: 40px;
+    background-color: rgba(34, 34, 34, 0.8);
+    border-radius: 20px;
+  }
+  
+  #display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 320px;
+    height: 100px;
+    box-sizing: border-box;
+    font-family: 'Pixel';
+    font-size: 24px;
+    border-radius: 10px;
+    margin: 5px 5px 10px 5px;
+  }
+  
+  .pad-bank {
+    width: 330px;
+    display: flex;
+    flex-wrap: wrap;
+  }
