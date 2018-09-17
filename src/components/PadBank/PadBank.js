@@ -14,6 +14,7 @@ export default class PadBank extends Component {
                         lastPlayedZone={this.props.lastPlayedZone}
                         lastPlayedKey={this.props.lastPlayedKey}
                         hue={(this.props.baseHue + ((index + 1) * -8)) % 360}
+                        playSound={this.props.playSound}
                         setBaseHue={this.props.setBaseHue}
                         incrementLoadedCount={this.props.incrementLoadedCount}
                         setLastPlayed={this.props.setLastPlayed}

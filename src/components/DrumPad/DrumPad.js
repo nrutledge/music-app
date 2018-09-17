@@ -7,14 +7,12 @@ class DrumPad extends Component {
         this.state = {
             isPressed: false
         }
-        this.audio = React.createRef();
     }
 
     componentDidMount() {
         window.focus();
         document.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('keyup', this.handleKeyUp);
-        this.audio.current.volume = this.props.volume;
     }
 
     componentWillUnmount() {
@@ -22,15 +20,18 @@ class DrumPad extends Component {
         document.removeEventListener('keyup', this.handleKeyUp);        
     }
 
+/*    
     componentDidUpdate(prevProps) {
         // Stop playing sound if another key in same exclusive zone was played
         if (this.props.exclusiveZone &&
             this.props.exclusiveZone === this.props.lastPlayedZone &&
             this.props.lastPlayedKey !== this.props.triggerKey 
         ) {
-            this.stopSound(this.audio.current, 50);
+            this.stopSound(null, 50);
         }
     }
+*/
+    
 
     handleKeyDown = (e) => {
         let key = e.key;
@@ -46,7 +47,7 @@ class DrumPad extends Component {
         // pressed (i.e., prevent auto-repeat)
         if (key !== this.props.triggerKey || this.state.isPressed) { return; }
 
-        this.playSound(intensity);
+        this.props.playSound(this.props.name);
         this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
         this.setState({ isPressed: true });
     }
@@ -59,6 +60,7 @@ class DrumPad extends Component {
         }
     }
 
+    /*
     playSound = (intensity) => {
         const audio = this.audio.current;
         const currentTime = audio.currentTime;
@@ -89,17 +91,18 @@ class DrumPad extends Component {
             // Stop sound if it isn't the currently playing key (to prevent
             // callback running on a subsequent play)
             if (this.props.lastPlayedKey !== this.props.triggerKey) {
-                audioRef.pause();
-                audioRef.currentTime = 0;
+            //    audioRef.pause();
+            //    audioRef.currentTime = 0;
             }
         }, delay);
     }
+    */
+    
 
     handleMouseDown = () => this.handleKeyDown({ key: this.props.triggerKey });
     handleMouseUp = () => this.handleKeyUp({ key: this.props.triggerKey });
     handleMouseEnter = () => this.props.setDisplay(this.props.name);
     handleMouseLeave = () => this.handleKeyUp({ key: this.props.triggerKey });
-    handleCanPlayThrough = () => this.props.incrementLoadedCount();
  
     render() {
         const lightness = this.state.isPressed ? '90%' : '75%';
@@ -121,14 +124,6 @@ class DrumPad extends Component {
                 }}
             >
                 {this.props.triggerKey.toUpperCase()}
-                <audio 
-                    ref={this.audio} 
-                    className='audio'
-                    src={this.props.sound} 
-                    onCanPlayThrough={this.handleCanPlayThrough}
-                    preload="auto" 
-                >
-                </audio>
             </button>
         );
     }
