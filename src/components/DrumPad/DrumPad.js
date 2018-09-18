@@ -5,94 +5,133 @@ class DrumPad extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            audioBuffer: null,
+            audioSource: null,
+            gainNode: null,
+            panner: null,
             isPressed: false
         }
-        this.audioHard = React.createRef();
-        this.audioSoft = React.createRef();
     }
 
     componentDidMount() {
         window.focus();
         document.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('keyup', this.handleKeyUp);
-        this.audioHard.current.volume = this.props.hardVolume;
-        this.audioSoft.current.volume = this.props.softVolume;
-      }
+
+        this.loadAudioBuffer(this.props.audioCtx, this.props.source);
+        this.createPanner(this.props.audioCtx, this.props.pan);
+    }
 
     componentWillUnmount() {
         document.removeEventListener('keydown', this.handleKeyDown);
         document.removeEventListener('keyup', this.handleKeyUp);        
     }
 
+
     componentDidUpdate(prevProps) {
-        this.stopOpenHiHat(prevProps.hiHatPosition);
+        // Stop playing sound if another key in same exclusive zone was played
+        if (prevProps.lastPlayedKey === this.props.lastPlayedKey) { return; } 
+        if (this.props.exclusiveZone &&
+            this.props.exclusiveZone === this.props.lastPlayedZone &&
+            this.props.lastPlayedKey !== this.props.triggerKey 
+        ) {
+            this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, 0.001)
+        }
     }
+
     
     handleKeyDown = (e) => {
-        if (e.key === this.props.triggerKey) {
-            // Prevent key auto-repeat
-            if (this.state.isPressed) { return };
-            this.setState({ isPressed: true });
+        let key = e.key;
 
-            this.playSound();
+        // Play lower intensity when shift key / caps lock is on
+        let intensity = 1;
+        if (typeof key === 'string' && key === key.toUpperCase()) {
+            intensity = 0.7;
+            key = key.toLowerCase();
         }
+
+        // Only play if correct key pressed and that key isnt' already
+        // pressed (i.e., prevent auto-repeat)
+        if (key !== this.props.triggerKey || this.state.isPressed) { return; }
+
+        this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, 0.001)
+        this.playSound(this.props.audioCtx, this.state.panner, this.state.audioBuffer, this.props.volume, 0.001, 0.001);
+        this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
+
+        this.setState({ isPressed: true });
     }
 
     handleKeyUp = (e) => {
-        if (e.key === this.props.triggerKey) {
-            this.setState({ isPressed: false });
-        }
+        const key = (typeof e.key === 'string') ? e.key.toLowerCase() : e.key;
+        if (key !== this.props.triggerKey) { return; }
+
+        this.setState({ isPressed: false });
     }
 
-    stopOpenHiHat = (prevPosition) => {
-        if (
-            this.props.type === 'Hi-Hat Open' && 
-            this.props.hiHatPosition === 'Hi-Hat Closed' &&
-            this.props.hiHatPosition !== prevPosition
-        ) { 
-            this.stopSound(this.audioHard.current, 40);
-            this.stopSound(this.audioSoft.current, 40);
-        }
+    loadAudioBuffer = async (audioCtx, src) => {
+        const response = await fetch(src);
+        const arrayBuffer = await response.arrayBuffer();
+        const decodedData = await audioCtx.decodeAudioData(arrayBuffer);
+
+        this.setState({ audioBuffer: decodedData });
     }
 
-    playSound = () => {
-        const audioHard = this.audioHard.current;
-        const audioSoft = this.audioSoft.current;
-        let soundToPlay = audioHard;
+    createPanner = (audioCtx, panValue = 0) => {
+        const panner = audioCtx.createStereoPanner();
+        panner.pan.setValueAtTime(panValue, audioCtx.currentTime);
+        this.setState({ panner });
+    }
+/*
+    setPanner = (audioCtx, panner, value) => {
+        panner.pan.setValueAtTime(value, audioCtx.currentTime);
+    }
+*/
+    
+    playSound = (audioCtx, panner, bufferToPlay, volume = 1, attackTime = 0.001, startDelay = 0) => {
+        const source = audioCtx.createBufferSource();
+        source.buffer = bufferToPlay;
 
+/*
         // Max time (in seconds) that is considered to be fast playing
         // in case of repeated triggers of same drum pad
-        const fastCutoff = 0.1;
+        const fastCutoff = 0.12;
 
-        console.log('Hard time:', audioHard.currentTime);
-        console.log('Soft time:', audioSoft.currentTime);
+        // Minimum volume to play during fast playing
+        const minVolume = 0.6;
 
-        // Detect if user is playing drum pad fastly and play softer sound
-        // to simulate real playing.
-        if (
-            (audioHard.currentTime > 0 && audioHard.currentTime < fastCutoff) ||
-            (audioSoft.currentTime > 0 && audioSoft.currentTime < fastCutoff)
-        ) {
-            this.stopSound(audioHard);
-            soundToPlay = audioSoft;
+        // Change volume of sound based on trigger frequency to simulate
+        // physics of shorter stick travel having less force
+        if (currentTime > 0 && currentTime < fastCutoff) {
+            volume *= minVolume + (currentTime * (1 - minVolume) / fastCutoff);
         }
+*/
 
-        soundToPlay.currentTime = 0;
-        soundToPlay.play();
+        // Create temp gain node used for ramping up volume (without affecting currently playing sound)
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + attackTime);
 
-        if (this.props.isHiHat) {
-            this.props.setHiHatPosition(this.props.type);
-        }
+        // @Todo: Optimize the connects (move to different methods)
+        source.connect(gainNode);
+        gainNode.connect(panner);
+        panner.connect(audioCtx.destination);
 
-        this.props.setDisplay(this.props.type);
+        source.start(audioCtx.currentTime + startDelay);
+        this.setState({ 
+            audioSource: source,
+            gainNode: gainNode
+        });
     }
 
-    stopSound = (audioRef, delay = 0) => {
-        setTimeout(() => {
-            audioRef.pause();
-            audioRef.currentTime = 0;
-        }, delay);
+    stopSound = (audioCtx, audioSource, gainNode, fadeOutTime = 0) => {
+        gainNode && gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + fadeOutTime);
+        audioSource && audioSource.stop(audioCtx.currentTime + fadeOutTime);
     }
+
+    handleMouseDown = () => this.handleKeyDown({ key: this.props.triggerKey });
+    handleMouseUp = () => this.handleKeyUp({ key: this.props.triggerKey });
+    handleMouseEnter = () => this.props.setDisplay(this.props.name);
+    handleMouseLeave = () => this.handleKeyUp({ key: this.props.triggerKey });
  
     render() {
         const lightness = this.state.isPressed ? '90%' : '75%';
@@ -102,9 +141,10 @@ class DrumPad extends Component {
             <button 
                 className="drum-pad" 
                 id={this.props.type} 
-                onMouseDown={() => this.handleKeyDown({ key: this.props.triggerKey })}
-                onMouseUp={() => this.handleKeyUp({ key: this.props.triggerKey })}
-                onMouseLeave={() => this.handleKeyUp({ key: this.props.triggerKey })}
+                onMouseDown={this.handleMouseDown}
+                onMouseUp={this.handleMouseUp}
+                onMouseEnter={this.handleMouseEnter}
+                onMouseLeave={this.handleMouseLeave}
                 style={{ 
                     border: `3px solid hsl(${this.props.hue}, 80%, ${lightness})`,
                     boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, 95%, 60%, ${shadowAlpha})`,
@@ -113,22 +153,6 @@ class DrumPad extends Component {
                 }}
             >
                 {this.props.triggerKey.toUpperCase()}
-                <audio 
-                    ref={this.audioHard} 
-                    id={this.props.triggerKey.toUpperCase()}
-                    className="clip"
-                    src={this.props.hardSound} 
-                    onCanPlayThrough={() => this.props.incrementLoadedCount()}
-                    preload="auto" 
-                >
-                </audio>
-                <audio
-                    ref={this.audioSoft} 
-                    id={this.props.triggerKey.toUpperCase() + '-soft'}
-                    src={this.props.softSound}
-                    preload="auto" 
-                >
-                </audio>
             </button>
         );
     }
