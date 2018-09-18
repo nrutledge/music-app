@@ -1,4 +1,4 @@
-const multiplier = 0.85;
+const multiplier = 0.8;
 
 export const drums = [
     {
@@ -23,13 +23,13 @@ export const drums = [
         name: 'Crash',
         triggerKey: 'a',
         source: 'sounds/drums/Crash A/Crash A 5.wav',
-        volume: 0.55 * multiplier
+        volume: 0.6 * multiplier
     }, 
     {
         name: 'Ride',
         triggerKey: 's',
         source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
-        volume: 0.85 * multiplier
+        volume: 0.8 * multiplier
     }, 
     {
         name: 'Hi-Hat Open',
@@ -42,7 +42,7 @@ export const drums = [
         name: 'Kick',
         triggerKey: 'z',
         source: 'sounds/drums2/kick-softy.wav',
-        volume: 0.855 * multiplier
+        volume: 1 * multiplier
     }, 
     {
         name: 'Snare',
@@ -64,49 +64,56 @@ export const synth = [
         name: 'Synth C Major',
         triggerKey: 'r',
         source: 'sounds/synth/I_Do_Remember_C_01.wav',
-        volume: 0.85,
+        volume: 0.75,
+        pan: 0.5,
         exclusiveZone: 3
     },
     {
         name: 'Synth D Major',
         triggerKey: 't',
         source: 'sounds/synth/I_Do_Remember_D_01.wav',
-        volume: 0.85,
+        volume: 0.75,
+        pan: 0.5,
         exclusiveZone: 3
     },  
     {
         name: 'Synth E Major',
         triggerKey: 'y',
         source: 'sounds/synth/I_Do_Remember_E_01.wav',
-        volume: 0.85,
+        volume: 0.75,
+        pan: 0.5,
         exclusiveZone: 3
     },  
     {
         name: 'Synth F Major',
         triggerKey: 'u',
         source: 'sounds/synth/I_Do_Remember_F_01.wav',
-        volume: 0.85,
+        volume: 0.75,
+        pan: 0.5,
         exclusiveZone: 3
     },  
     {
         name: 'Synth G Major',
         triggerKey: 'i',
         source: 'sounds/synth/I_Do_Remember_G_01.wav',
-        volume: 0.85,
+        volume: 0.75,
+        pan: 0.5,
         exclusiveZone: 3
     },
     {
         name: 'Synth A Major',
         triggerKey: 'o',
         source: 'sounds/synth/I_Do_Remember_A_01.wav',
-        volume: 0.85,
+        volume: 0.75,
+        pan: 0.5,
         exclusiveZone: 3
     },
     {
         name: 'Synth B Major',
         triggerKey: 'p',
         source: 'sounds/synth/I_Do_Remember_B_01.wav',
-        volume: 0.85,
+        volume: 0.75,
+        pan: 0.5,
         exclusiveZone: 3
     },
     {
@@ -114,13 +121,15 @@ export const synth = [
         triggerKey: 'f',
         source: 'sounds/piano/Chord_1.mp3',
         volume: 1.0,
+        pan: -0.5,
         exclusiveZone: 1
     }, 
     {
         name: 'Piano Chord 2',
         triggerKey: 'g',
         source: 'sounds/piano/Chord_2.mp3',
-        volume: 1.0,   
+        volume: 1.0,
+        pan: -0.5,   
         exclusiveZone: 1
     }, 
     {
@@ -128,6 +137,7 @@ export const synth = [
         triggerKey: 'h',
         source: 'sounds/piano/Chord_3.mp3',
         volume: 1.0,
+        pan: -0.5,
         exclusiveZone: 1
     }, 
 ]

@@ -7,8 +7,6 @@ export default class Instrument extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            audioBuffers: {},
-            sourcesPlaying: {},
             baseHue: Math.random() * 360,
             loadedCount: 0,
             totalCount: this.props.keyMappings.length,
@@ -19,13 +17,11 @@ export default class Instrument extends Component {
 
     // Start hue shift animation
     componentDidMount() {
-        this.props.keyMappings.forEach(mapping => {
-            this.loadAudioBuffer(mapping.source, mapping.name);
-        });
-
+        /*
         setInterval(() => {
             this.setBaseHue(3, true);
         }, 300);
+        */
     }
 
     incrementLoadedCount = () => {
@@ -45,35 +41,6 @@ export default class Instrument extends Component {
         this.setState({ display: text });
     }
 
-    loadAudioBuffer = async (src, name) => {
-        const response = await fetch(src);
-        const arrayBuffer = await response.arrayBuffer();
-        const decodedData = await this.props.audioCtx.decodeAudioData(arrayBuffer);
-
-        this.setState(prevState => { 
-            const newAudioBuffers = { ...prevState.audioBuffers };
-            newAudioBuffers[name] = decodedData;
-            return { audioBuffers: newAudioBuffers };
-        });
-    }
-    
-    // @TODO: Update sources playing when play starts and stops
-    playSound = (bufferName, detuneVal = 0) => {
-        const source = this.props.audioCtx.createBufferSource();
-
-        source.buffer = this.state.audioBuffers[bufferName];
-        source.connect(this.props.audioCtx.destination);
-
-        source.detune.value = detuneVal;
-        source.start(0);
-
-        this.setState(prevState => {
-            const newSourcesPlaying = { ...prevState.sourcesPlaying };
-            newSourcesPlaying[bufferName] = source;
-            return { sourcesPlaying: newSourcesPlaying };
-        });
-    }
-
     setLastPlayed = (zone, key, name) => {
         this.setState({ 
             lastPlayedZone: zone,
@@ -84,7 +51,7 @@ export default class Instrument extends Component {
 
     render() {
         const displayText = this.state.loadedCount === 0 
-            ? detectMobile() ? 'Not mobile optimized' : 'Booting...' 
+            ? detectMobile() ? 'Not mobile optimized' : 'All your bass r belong to us. (ง\'̀-\'́)ง' 
             : `Loaded ${this.state.loadedCount}/${this.state.totalCount} Sounds`
 
         return (

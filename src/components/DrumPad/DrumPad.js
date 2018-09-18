@@ -5,6 +5,10 @@ class DrumPad extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            audioBuffer: null,
+            audioSource: null,
+            gainNode: null,
+            panner: null,
             isPressed: false
         }
     }
@@ -13,6 +17,9 @@ class DrumPad extends Component {
         window.focus();
         document.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('keyup', this.handleKeyUp);
+
+        this.loadAudioBuffer(this.props.audioCtx, this.props.source);
+        this.createPanner(this.props.audioCtx, this.props.pan);
     }
 
     componentWillUnmount() {
@@ -20,19 +27,19 @@ class DrumPad extends Component {
         document.removeEventListener('keyup', this.handleKeyUp);        
     }
 
-/*    
+
     componentDidUpdate(prevProps) {
         // Stop playing sound if another key in same exclusive zone was played
+        if (prevProps.lastPlayedKey === this.props.lastPlayedKey) { return; } 
         if (this.props.exclusiveZone &&
             this.props.exclusiveZone === this.props.lastPlayedZone &&
             this.props.lastPlayedKey !== this.props.triggerKey 
         ) {
-            this.stopSound(null, 50);
+            this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, 0.001)
         }
     }
-*/
-    
 
+    
     handleKeyDown = (e) => {
         let key = e.key;
 
@@ -47,57 +54,79 @@ class DrumPad extends Component {
         // pressed (i.e., prevent auto-repeat)
         if (key !== this.props.triggerKey || this.state.isPressed) { return; }
 
-        this.props.playSound(this.props.name);
+        this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, 0.001)
+        this.playSound(this.props.audioCtx, this.state.panner, this.state.audioBuffer, this.props.volume, 0.001, 0.001);
         this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
+
         this.setState({ isPressed: true });
     }
 
     handleKeyUp = (e) => {
         const key = (typeof e.key === 'string') ? e.key.toLowerCase() : e.key;
+        if (key !== this.props.triggerKey) { return; }
 
-        if (key === this.props.triggerKey) {
-            this.setState({ isPressed: false });
-        }
+        this.setState({ isPressed: false });
     }
 
-    /*
-    playSound = (intensity) => {
-        const audio = this.audio.current;
-        const currentTime = audio.currentTime;
+    loadAudioBuffer = async (audioCtx, src) => {
+        const response = await fetch(src);
+        const arrayBuffer = await response.arrayBuffer();
+        const decodedData = await audioCtx.decodeAudioData(arrayBuffer);
 
+        this.setState({ audioBuffer: decodedData });
+    }
+
+    createPanner = (audioCtx, panValue = 0) => {
+        const panner = audioCtx.createStereoPanner();
+        panner.pan.setValueAtTime(panValue, audioCtx.currentTime);
+        this.setState({ panner });
+    }
+/*
+    setPanner = (audioCtx, panner, value) => {
+        panner.pan.setValueAtTime(value, audioCtx.currentTime);
+    }
+*/
+    
+    playSound = (audioCtx, panner, bufferToPlay, volume = 1, attackTime = 0.001, startDelay = 0) => {
+        const source = audioCtx.createBufferSource();
+        source.buffer = bufferToPlay;
+
+/*
         // Max time (in seconds) that is considered to be fast playing
         // in case of repeated triggers of same drum pad
         const fastCutoff = 0.12;
 
         // Minimum volume to play during fast playing
-        const minVolume = 0.6
-
-        let newVolume = intensity * this.props.volume;
+        const minVolume = 0.6;
 
         // Change volume of sound based on trigger frequency to simulate
         // physics of shorter stick travel having less force
         if (currentTime > 0 && currentTime < fastCutoff) {
-            newVolume *= minVolume + (currentTime * (1 - minVolume) / fastCutoff);
+            volume *= minVolume + (currentTime * (1 - minVolume) / fastCutoff);
         }
+*/
 
-        // Set volume of audio element (without exceeding 1) and begin playback
-        audio.volume = newVolume < 1 ? newVolume : 1; 
-        audio.currentTime = 0;
-        audio.play();
+        // Create temp gain node used for ramping up volume (without affecting currently playing sound)
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + attackTime);
+
+        // @Todo: Optimize the connects (move to different methods)
+        source.connect(gainNode);
+        gainNode.connect(panner);
+        panner.connect(audioCtx.destination);
+
+        source.start(audioCtx.currentTime + startDelay);
+        this.setState({ 
+            audioSource: source,
+            gainNode: gainNode
+        });
     }
 
-    stopSound = (audioRef, delay = 0) => {
-        setTimeout(() => {
-            // Stop sound if it isn't the currently playing key (to prevent
-            // callback running on a subsequent play)
-            if (this.props.lastPlayedKey !== this.props.triggerKey) {
-            //    audioRef.pause();
-            //    audioRef.currentTime = 0;
-            }
-        }, delay);
+    stopSound = (audioCtx, audioSource, gainNode, fadeOutTime = 0) => {
+        gainNode && gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + fadeOutTime);
+        audioSource && audioSource.stop(audioCtx.currentTime + fadeOutTime);
     }
-    */
-    
 
     handleMouseDown = () => this.handleKeyDown({ key: this.props.triggerKey });
     handleMouseUp = () => this.handleKeyUp({ key: this.props.triggerKey });
