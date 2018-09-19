@@ -1,34 +1,41 @@
 import React, { Component } from 'react';
 import PadBank from '../PadBank/PadBank';
 import detectMobile from '../../helpers/detectMobile';
+import InputRange from '../InputRange/InputRange';
 import './Instrument.css';
 
 export default class Instrument extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            display: '',
             baseHue: Math.random() * 360,
             loadedCount: 0,
             totalCount: this.props.keyMappings.length,
             lastPlayedZone: 0,
-            lastPlayedKey: ''
+            lastPlayedKey: '',
+            tuning: 0
         }
     }
 
     // Start hue shift animation
     componentDidMount() {
-        /*
+        const initialDisplay = detectMobile() ? 'Not mobile optimized' : 'Booting...'
+        this.setDisplay(initialDisplay);
         setInterval(() => {
             this.setBaseHue(3, true);
         }, 300);
-        */
     }
 
     incrementLoadedCount = () => {
         if (this.state.loadedCount >= this.state.totalCount) { return; }
 
         this.setState(prevState => { 
-            return { loadedCount: prevState.loadedCount + 1 };
+            const newCount = prevState.loadedCount + 1;
+            return { 
+                display: `Loaded ${newCount}/${this.state.totalCount} Sounds`,
+                loadedCount: newCount
+            };
         });
     }
 
@@ -49,13 +56,14 @@ export default class Instrument extends Component {
         });
     }
 
-    render() {
-        const displayText = this.state.loadedCount === 0 
-            ? detectMobile() ? 'Not mobile optimized' : 'All your bass r belong to us. (ง\'̀-\'́)ง' 
-            : `Loaded ${this.state.loadedCount}/${this.state.totalCount} Sounds`
+    handleTuningChange = (e) => {
+        this.setState({ tuning: parseFloat(e.target.value) });
+    }
 
+    render() {
         return (
-            <div id="drum-machine">
+            <div className="instrument">
+                <div className="title">{this.props.name}</div>
                 <div 
                     id="display" 
                     style={{ 
@@ -64,14 +72,23 @@ export default class Instrument extends Component {
                             border: `3px solid hsl(${this.state.baseHue}, 80%, 75%)`
                         }}
                 >
-                    {displayText}
+                    {this.state.display}
                 </div>
+                <InputRange 
+                    name="Tuning" 
+                    min={-12} 
+                    max={12} 
+                    value={this.state.tuning} 
+                    handleTuningChange={this.handleTuningChange} 
+                    setDisplay={this.setDisplay}
+                />
                 <PadBank 
                     audioCtx={this.props.audioCtx}
                     keyMappings={this.props.keyMappings} 
                     baseHue={this.state.baseHue}
                     lastPlayedZone={this.state.lastPlayedZone}
                     lastPlayedKey={this.state.lastPlayedKey}
+                    instrumentDetune={this.state.tuning * 100}
                     playSound={this.playSound}
                     setBaseHue={this.setBaseHue}
                     incrementLoadedCount={this.incrementLoadedCount}

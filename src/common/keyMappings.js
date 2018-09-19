@@ -90,7 +90,8 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_F_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        exclusiveZone: 3,
+        detune: 100
     },  
     {
         name: 'Synth G Major',
@@ -116,6 +117,9 @@ export const synth = [
         pan: 0.5,
         exclusiveZone: 3
     },
+]
+
+export const piano = [
     {
         name: 'Piano Chord 1',
         triggerKey: 'f',
@@ -140,4 +144,40 @@ export const synth = [
         pan: -0.5,
         exclusiveZone: 1
     }, 
+    {
+        name: 'Piano Chord 4',
+        triggerKey: 'j',
+        source: 'sounds/piano/Chord_3.mp3',
+        volume: 1.0,
+        pan: -0.5,
+        exclusiveZone: 1,
+        detune: 200
+    }, 
+    {
+        name: 'Piano Chord 5',
+        triggerKey: 'k',
+        source: 'sounds/piano/Chord_3.mp3',
+        volume: 1.0,
+        pan: -0.5,
+        exclusiveZone: 1,
+        detune: 300
+    },
+    {
+        name: 'Piano Chord 6',
+        triggerKey: 'l',
+        source: 'sounds/piano/Chord_3.mp3',
+        volume: 1.0,
+        pan: -0.5,
+        exclusiveZone: 1,
+        detune: 500
+    },
+    {
+        name: 'Piano Chord 7',
+        triggerKey: ';',
+        source: 'sounds/piano/Chord_3.mp3',
+        volume: 1.0,
+        pan: -0.5,
+        exclusiveZone: 1,
+        detune: 700
+    },
 ]

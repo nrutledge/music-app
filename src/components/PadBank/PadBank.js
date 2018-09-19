@@ -13,6 +13,8 @@ export default class PadBank extends Component {
                         sound={keyMap.sound} 
                         volume={keyMap.volume} 
                         pan={keyMap.pan}
+                        detune={keyMap.detune}
+                        instrumentDetune={this.props.instrumentDetune}
                         exclusiveZone={keyMap.exclusiveZone}
                         lastPlayedZone={this.props.lastPlayedZone}
                         lastPlayedKey={this.props.lastPlayedKey}

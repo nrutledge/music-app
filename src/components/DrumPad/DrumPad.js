@@ -55,7 +55,16 @@ class DrumPad extends Component {
         if (key !== this.props.triggerKey || this.state.isPressed) { return; }
 
         this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, 0.001)
-        this.playSound(this.props.audioCtx, this.state.panner, this.state.audioBuffer, this.props.volume, 0.001, 0.001);
+        this.playSound(
+            this.props.audioCtx, 
+            this.state.panner, 
+            this.state.audioBuffer, 
+            this.props.volume, 
+            this.props.detune, 
+            this.props.instrumentDetune,
+            0.001, 
+            0.001
+        );
         this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
 
         this.setState({ isPressed: true });
@@ -73,6 +82,7 @@ class DrumPad extends Component {
         const arrayBuffer = await response.arrayBuffer();
         const decodedData = await audioCtx.decodeAudioData(arrayBuffer);
 
+        this.props.incrementLoadedCount();
         this.setState({ audioBuffer: decodedData });
     }
 
@@ -87,7 +97,7 @@ class DrumPad extends Component {
     }
 */
     
-    playSound = (audioCtx, panner, bufferToPlay, volume = 1, attackTime = 0.001, startDelay = 0) => {
+    playSound = (audioCtx, panner, bufferToPlay, volume = 1, detune = 0, instrumentDetune = 0, attackTime = 0.001, startDelay = 0) => {
         const source = audioCtx.createBufferSource();
         source.buffer = bufferToPlay;
 
@@ -115,6 +125,8 @@ class DrumPad extends Component {
         source.connect(gainNode);
         gainNode.connect(panner);
         panner.connect(audioCtx.destination);
+
+        source.detune.setValueAtTime(instrumentDetune + detune, audioCtx.currentTime);
 
         source.start(audioCtx.currentTime + startDelay);
         this.setState({ 
