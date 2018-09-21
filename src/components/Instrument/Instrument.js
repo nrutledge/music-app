@@ -24,18 +24,25 @@ export default class Instrument extends Component {
         }
     }
 
-    // Start hue shift animation
     componentDidMount() {
         const initialDisplay = detectMobile() ? 'Not mobile optimized' : 'Booting...'
         this.setDisplay(initialDisplay);
+        /*
+        // Start hue shift animation
         setInterval(() => {
             this.setBaseHue(4, true);
         }, 500);
+        */
     }
 
-    componentDidUpdate() {
-        this.setPanner(this.props.audioCtx, this.state.panner, this.state.panning);
-        this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
+    componentDidUpdate(newState) {
+        if (newState.panning !== this.state.panning) {
+            this.setPanner(this.props.audioCtx, this.state.panner, this.state.panning);
+        }
+
+        if (newState.reverb !== this.state.reverb) {
+            this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
+        }
     }
 
     componentWillReceiveProps(nextProps) {
@@ -60,9 +67,6 @@ export default class Instrument extends Component {
         }
         dryGain.gain.setValueAtTime(1 - (reverbLevel / 100), audioCtx.currentTime);
         wetGain.gain.setValueAtTime((reverbLevel / 100), audioCtx.currentTime);
-
-        console.log('dry gain', dryGain);
-        console.log('wet gain', wetGain);
     }
 
     incrementLoadedCount = () => {

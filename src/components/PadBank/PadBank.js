@@ -1,40 +1,40 @@
-import React, { Component } from 'react';
+import React from 'react';
 import DrumPad from '../DrumPad/DrumPad';
 
-export default class PadBank extends Component {
-    render() {
-        const drumPads = this.props.keyMappings.map((keyMap, index) => {
-            return <DrumPad 
-                        audioCtx={this.props.audioCtx}
-                        convolver={this.props.convolver}
-                        panner={this.props.panner}
-                        key={this.props.index}
-                        name={keyMap.name}
-                        source={keyMap.source}
-                        triggerKey={keyMap.triggerKey} 
-                        sound={keyMap.sound} 
-                        volume={keyMap.volume} 
-                        pan={keyMap.pan}
-                        detune={keyMap.detune}
-                        instrumentVolume={this.props.instrumentVolume}
-                        instrumentPanning={this.props.instrumentPanning}
-                        instrumentDetune={this.props.instrumentDetune}
-                        exclusiveZone={keyMap.exclusiveZone}
-                        lastPlayedZone={this.props.lastPlayedZone}
-                        lastPlayedKey={this.props.lastPlayedKey}
-                        hue={(this.props.baseHue + ((index + 1) * -8)) % 360}
-                        playSound={this.props.playSound}
-                        setBaseHue={this.props.setBaseHue}
-                        incrementLoadedCount={this.props.incrementLoadedCount}
-                        setLastPlayed={this.props.setLastPlayed}
-                        setDisplay={this.props.setDisplay}
-                    />
-        });
+const PadBank = function(props) {
+    const drumPads = props.keyMappings.map((keyMap, index) => {
+        return <DrumPad 
+                    audioCtx={props.audioCtx}
+                    convolver={props.convolver}
+                    panner={props.panner}
+                    key={props.index}
+                    name={keyMap.name}
+                    source={keyMap.source}
+                    triggerKey={keyMap.triggerKey} 
+                    sound={keyMap.sound} 
+                    volume={keyMap.volume} 
+                    pan={keyMap.pan}
+                    detune={keyMap.detune}
+                    instrumentVolume={props.instrumentVolume}
+                    instrumentPanning={props.instrumentPanning}
+                    instrumentDetune={props.instrumentDetune}
+                    exclusiveZone={keyMap.exclusiveZone}
+                    lastPlayedZone={props.lastPlayedZone}
+                    lastPlayedKey={props.lastPlayedKey}
+                    hue={(props.baseHue + ((index + 1) * -8)) % 360}
+                    playSound={props.playSound}
+                    setBaseHue={props.setBaseHue}
+                    incrementLoadedCount={props.incrementLoadedCount}
+                    setLastPlayed={props.setLastPlayed}
+                    setDisplay={props.setDisplay}
+                />
+    });
 
-        return (
-            <div className="pad-bank">
-                {drumPads}
-            </div> 
-        );
-    }
+    return (
+        <div className="pad-bank">
+            {drumPads}
+        </div> 
+    );
 } 
+
+export default PadBank;
