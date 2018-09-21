@@ -14,7 +14,13 @@ export default class Instrument extends Component {
             totalCount: this.props.keyMappings.length,
             lastPlayedZone: 0,
             lastPlayedKey: '',
-            tuning: 0
+            panner: this.props.audioCtx.createStereoPanner(),
+            dryGain: this.props.audioCtx.createGain(),
+            wetGain: this.props.audioCtx.createGain(),
+            volume: this.props.volume || 100,
+            panning: this.props.panning || 0,
+            tuning: this.props.tuning || 0,
+            reverb: this.props.reverb || 0,
         }
     }
 
@@ -23,8 +29,40 @@ export default class Instrument extends Component {
         const initialDisplay = detectMobile() ? 'Not mobile optimized' : 'Booting...'
         this.setDisplay(initialDisplay);
         setInterval(() => {
-            this.setBaseHue(3, true);
-        }, 300);
+            this.setBaseHue(4, true);
+        }, 500);
+    }
+
+    componentDidUpdate() {
+        this.setPanner(this.props.audioCtx, this.state.panner, this.state.panning);
+        this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.props.convolver === null && nextProps.convolver) { 
+            this.state.panner.connect(this.state.dryGain);
+            this.state.dryGain.connect(this.props.audioCtx.destination);
+            this.state.panner.connect(this.state.wetGain);
+            this.state.wetGain.connect(nextProps.convolver);
+        };
+    }
+
+    setPanner = (audioCtx, panner, panValue) => {
+        if (!audioCtx || !panner || !panValue || panValue < -10 || panValue > 10) { return; }
+
+        panner.pan.setValueAtTime((panValue / 10), audioCtx.currentTime);
+    }
+
+    setReverbLevel = (audioCtx, dryGain, wetGain, reverbLevel) => {
+        if (!audioCtx || !dryGain || !wetGain || reverbLevel < 0 || reverbLevel > 100) {
+            console.log('Invalid parameters passed into \'setReverbLevel\'');
+            return;
+        }
+        dryGain.gain.setValueAtTime(1 - (reverbLevel / 100), audioCtx.currentTime);
+        wetGain.gain.setValueAtTime((reverbLevel / 100), audioCtx.currentTime);
+
+        console.log('dry gain', dryGain);
+        console.log('wet gain', wetGain);
     }
 
     incrementLoadedCount = () => {
@@ -56,8 +94,12 @@ export default class Instrument extends Component {
         });
     }
 
-    handleTuningChange = (e) => {
-        this.setState({ tuning: parseFloat(e.target.value) });
+    handleInputRangeChange = (propName) => {
+        return (e) => {
+            const newState = {};
+            newState[propName] = parseFloat(e.target.value);
+            this.setState(newState);
+        }
     }
 
     render() {
@@ -75,19 +117,47 @@ export default class Instrument extends Component {
                     {this.state.display}
                 </div>
                 <InputRange 
+                    name="Volume" 
+                    min={0} 
+                    max={100} 
+                    value={this.state.volume} 
+                    handleInputRangeChange={this.handleInputRangeChange('volume')} 
+                    setDisplay={this.setDisplay}
+                />
+                <InputRange 
+                    name="Panning" 
+                    min={-10} 
+                    max={10} 
+                    value={this.state.panning} 
+                    handleInputRangeChange={this.handleInputRangeChange('panning')} 
+                    setDisplay={this.setDisplay}
+                />
+                <InputRange 
+                    name="Reverb" 
+                    min={0} 
+                    max={100} 
+                    value={this.state.reverb}
+                    handleInputRangeChange={this.handleInputRangeChange('reverb')} 
+                    setDisplay={this.setDisplay}
+                />
+                <InputRange 
                     name="Tuning" 
                     min={-12} 
                     max={12} 
                     value={this.state.tuning} 
-                    handleTuningChange={this.handleTuningChange} 
+                    handleInputRangeChange={this.handleInputRangeChange('tuning')} 
                     setDisplay={this.setDisplay}
                 />
                 <PadBank 
                     audioCtx={this.props.audioCtx}
+                    convolver={this.props.convolver}
+                    panner={this.state.panner}
                     keyMappings={this.props.keyMappings} 
                     baseHue={this.state.baseHue}
                     lastPlayedZone={this.state.lastPlayedZone}
                     lastPlayedKey={this.state.lastPlayedKey}
+                    instrumentVolume={this.state.volume / 100}
+                    instrumentPanning={this.state.panning / 10}
                     instrumentDetune={this.state.tuning * 100}
                     playSound={this.playSound}
                     setBaseHue={this.setBaseHue}

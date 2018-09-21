@@ -6,6 +6,8 @@ export default class PadBank extends Component {
         const drumPads = this.props.keyMappings.map((keyMap, index) => {
             return <DrumPad 
                         audioCtx={this.props.audioCtx}
+                        convolver={this.props.convolver}
+                        panner={this.props.panner}
                         key={this.props.index}
                         name={keyMap.name}
                         source={keyMap.source}
@@ -14,6 +16,8 @@ export default class PadBank extends Component {
                         volume={keyMap.volume} 
                         pan={keyMap.pan}
                         detune={keyMap.detune}
+                        instrumentVolume={this.props.instrumentVolume}
+                        instrumentPanning={this.props.instrumentPanning}
                         instrumentDetune={this.props.instrumentDetune}
                         exclusiveZone={keyMap.exclusiveZone}
                         lastPlayedZone={this.props.lastPlayedZone}

@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
+import loadAudioBuffer from '../../common/loadAudioBuffer';
 import './DrumPad.css';
+
+// Time (in seconds) to ramp volume up/down when playing/stopping sound
+const transitionTime = 0.005;
 
 class DrumPad extends Component {
     constructor(props) {
@@ -7,8 +11,8 @@ class DrumPad extends Component {
         this.state = {
             audioBuffer: null,
             audioSource: null,
-            gainNode: null,
-            panner: null,
+            gain: null,
+            isPlaying: false,
             isPressed: false
         }
     }
@@ -18,8 +22,10 @@ class DrumPad extends Component {
         document.addEventListener('keydown', this.handleKeyDown);
         document.addEventListener('keyup', this.handleKeyUp);
 
-        this.loadAudioBuffer(this.props.audioCtx, this.props.source);
-        this.createPanner(this.props.audioCtx, this.props.pan);
+        this.setAudioBuffer(this.props.audioCtx, this.props.source);
+
+        const gainNode = this.props.audioCtx.createGain();
+        this.setState({gainNode});
     }
 
     componentWillUnmount() {
@@ -27,6 +33,9 @@ class DrumPad extends Component {
         document.removeEventListener('keyup', this.handleKeyUp);        
     }
 
+    componentWillReceiveProps() {
+        //console.log(this.props);
+    }
 
     componentDidUpdate(prevProps) {
         // Stop playing sound if another key in same exclusive zone was played
@@ -35,11 +44,10 @@ class DrumPad extends Component {
             this.props.exclusiveZone === this.props.lastPlayedZone &&
             this.props.lastPlayedKey !== this.props.triggerKey 
         ) {
-            this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, 0.001)
+            this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, transitionTime)
         }
     }
 
-    
     handleKeyDown = (e) => {
         let key = e.key;
 
@@ -54,18 +62,22 @@ class DrumPad extends Component {
         // pressed (i.e., prevent auto-repeat)
         if (key !== this.props.triggerKey || this.state.isPressed) { return; }
 
-        this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, 0.001)
-        this.playSound(
-            this.props.audioCtx, 
-            this.state.panner, 
-            this.state.audioBuffer, 
-            this.props.volume, 
-            this.props.detune, 
-            this.props.instrumentDetune,
-            0.001, 
-            0.001
-        );
-        this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
+        this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, transitionTime)
+        setTimeout(() => {
+            this.playSound(
+                this.props.audioCtx, 
+                this.props.panner, 
+                this.state.gainNode,
+                this.state.audioBuffer, 
+                this.props.volume, 
+                this.props.detune, 
+                this.props.instrumentVolume,
+                this.props.instrumentPanning,
+                this.props.instrumentDetune,
+                transitionTime
+            );
+            this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
+        }, transitionTime * 1000)
 
         this.setState({ isPressed: true });
     }
@@ -77,19 +89,11 @@ class DrumPad extends Component {
         this.setState({ isPressed: false });
     }
 
-    loadAudioBuffer = async (audioCtx, src) => {
-        const response = await fetch(src);
-        const arrayBuffer = await response.arrayBuffer();
-        const decodedData = await audioCtx.decodeAudioData(arrayBuffer);
+    setAudioBuffer = async (audioCtx, src) => {
+        const decodedData = await loadAudioBuffer(audioCtx, src);
 
         this.props.incrementLoadedCount();
         this.setState({ audioBuffer: decodedData });
-    }
-
-    createPanner = (audioCtx, panValue = 0) => {
-        const panner = audioCtx.createStereoPanner();
-        panner.pan.setValueAtTime(panValue, audioCtx.currentTime);
-        this.setState({ panner });
     }
 /*
     setPanner = (audioCtx, panner, value) => {
@@ -97,7 +101,17 @@ class DrumPad extends Component {
     }
 */
     
-    playSound = (audioCtx, panner, bufferToPlay, volume = 1, detune = 0, instrumentDetune = 0, attackTime = 0.001, startDelay = 0) => {
+    playSound = (audioCtx, 
+        panner, 
+        gainNode,
+        bufferToPlay, 
+        volume = 1,
+        detune = 0, 
+        instrumentVolume = 1, 
+        instrumentPanning = 0, 
+        instrumentDetune = 0, 
+        attackTime = 0.001, 
+    ) => {
         const source = audioCtx.createBufferSource();
         source.buffer = bufferToPlay;
 
@@ -115,23 +129,25 @@ class DrumPad extends Component {
             volume *= minVolume + (currentTime * (1 - minVolume) / fastCutoff);
         }
 */
-
-        // Create temp gain node used for ramping up volume (without affecting currently playing sound)
-        const gainNode = audioCtx.createGain();
         gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(volume, audioCtx.currentTime + attackTime);
+        gainNode.gain.linearRampToValueAtTime(volume * instrumentVolume, audioCtx.currentTime + attackTime);
+
+        panner.pan.setValueAtTime(instrumentPanning, audioCtx.currentTime);
+        source.detune.setValueAtTime(instrumentDetune + detune, audioCtx.currentTime);
 
         // @Todo: Optimize the connects (move to different methods)
         source.connect(gainNode);
         gainNode.connect(panner);
-        panner.connect(audioCtx.destination);
 
-        source.detune.setValueAtTime(instrumentDetune + detune, audioCtx.currentTime);
+        source.start(audioCtx.currentTime);
 
-        source.start(audioCtx.currentTime + startDelay);
+        source.onended = () => { 
+            this.setState({ isPlaying: false }); 
+        };
+
         this.setState({ 
             audioSource: source,
-            gainNode: gainNode
+            isPlaying: true
         });
     }
 

@@ -15,26 +15,16 @@ export default class InputRange extends Component {
     render() {
         return (
             <div className="input-range">
-                <label for={this.props.name} style={{ color: '#CCC' }}>Tuning</label>
+                <label for={this.props.name} style={{ color: '#CCC' }}>{this.props.name}</label>
                 <input 
                     type="range" 
                     name={this.props.name} 
                     min={this.props.min} 
                     max={this.props.max} 
                     value={this.props.value} 
-                    onChange={this.props.handleTuningChange}
+                    onChange={this.props.handleInputRangeChange}
                     onMouseOver={this.setDisplay}
                 />
-                {/*
-                <input 
-                    type="number" 
-                    min={this.props.min} 
-                    max={this.props.max} 
-                    value={this.props.value} 
-                    onChange={this.props.handleTuningChange}
-                />
-                
-                */}
             </div>   
         )
     }
