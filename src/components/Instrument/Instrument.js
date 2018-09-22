@@ -9,7 +9,7 @@ export default class Instrument extends Component {
         super(props);
         this.state = {
             display: '',
-            baseHue: Math.random() * 360,
+            hue: this.props.hue,
             loadedCount: 0,
             totalCount: this.props.keyMappings.length,
             lastPlayedZone: 0,
@@ -27,24 +27,25 @@ export default class Instrument extends Component {
     componentDidMount() {
         const initialDisplay = detectMobile() ? 'Not mobile optimized' : 'Booting...'
         this.setDisplay(initialDisplay);
-        /*
-        // Start hue shift animation
-        setInterval(() => {
-            this.setBaseHue(4, true);
-        }, 500);
-        */
+        this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
+
+        this.state.panner.connect(this.state.dryGain);
+        this.state.dryGain.connect(this.props.audioCtx.destination);
+        this.state.panner.connect(this.state.wetGain);
+        this.state.wetGain.connect(this.props.convolverGain);
     }
 
-    componentDidUpdate(newState) {
-        if (newState.panning !== this.state.panning) {
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.panning !== prevState.panning) {
             this.setPanner(this.props.audioCtx, this.state.panner, this.state.panning);
         }
 
-        if (newState.reverb !== this.state.reverb) {
+        if (this.state.reverb !== prevState.reverb) {
             this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
         }
     }
 
+    /*
     componentWillReceiveProps(nextProps) {
         if (this.props.convolver === null && nextProps.convolver) { 
             this.state.panner.connect(this.state.dryGain);
@@ -53,18 +54,20 @@ export default class Instrument extends Component {
             this.state.wetGain.connect(nextProps.convolver);
         };
     }
+*/
 
     setPanner = (audioCtx, panner, panValue) => {
-        if (!audioCtx || !panner || !panValue || panValue < -10 || panValue > 10) { return; }
+        if (!audioCtx || !panner || !panValue || panValue < -50 || panValue > +50) { return; }
 
-        panner.pan.setValueAtTime((panValue / 10), audioCtx.currentTime);
+        panner.pan.setValueAtTime((panValue / 50), audioCtx.currentTime);
     }
 
     setReverbLevel = (audioCtx, dryGain, wetGain, reverbLevel) => {
         if (!audioCtx || !dryGain || !wetGain || reverbLevel < 0 || reverbLevel > 100) {
-            console.log('Invalid parameters passed into \'setReverbLevel\'');
+            console.log('setReverbLevel: Invalid parameters');
             return;
         }
+        console.log(this.props.name, reverbLevel);
         dryGain.gain.setValueAtTime(1 - (reverbLevel / 100), audioCtx.currentTime);
         wetGain.gain.setValueAtTime((reverbLevel / 100), audioCtx.currentTime);
     }
@@ -79,11 +82,6 @@ export default class Instrument extends Component {
                 loadedCount: newCount
             };
         });
-    }
-
-    setBaseHue = (newHue, isRelative) => {
-        if (isRelative) { newHue = this.state.baseHue + newHue }
-        this.setState({ baseHue: newHue % 360 })
     }
 
     setDisplay = (text) => {
@@ -109,16 +107,20 @@ export default class Instrument extends Component {
     render() {
         return (
             <div className="instrument">
-                <div className="title">{this.props.name}</div>
                 <div 
-                    id="display" 
+                    className="display" 
                     style={{ 
-                        color: `hsl(${this.state.baseHue}, 70%, 85%)`,
-                        backgroundColor: `hsl(${this.state.baseHue + 180}, 30%, 30%)`,
-                            border: `3px solid hsl(${this.state.baseHue}, 80%, 75%)`
+                        color: 'rgb(230, 230, 230)',
+                        backgroundColor: `rgb(45, 45, 45)`,
+                        border: `3px solid hsl(${this.props.hue}, 30%, 60%)`
                         }}
                 >
-                    {this.state.display}
+                    <div className="display-title">
+                        {this.props.name}
+                    </div>
+                    <div className="display-content">
+                        {this.state.display}
+                    </div>
                 </div>
                 <InputRange 
                     name="Volume" 
@@ -130,8 +132,8 @@ export default class Instrument extends Component {
                 />
                 <InputRange 
                     name="Panning" 
-                    min={-10} 
-                    max={10} 
+                    min={-50} 
+                    max={50} 
                     value={this.state.panning} 
                     handleInputRangeChange={this.handleInputRangeChange('panning')} 
                     setDisplay={this.setDisplay}
@@ -146,8 +148,8 @@ export default class Instrument extends Component {
                 />
                 <InputRange 
                     name="Tuning" 
-                    min={-12} 
-                    max={12} 
+                    min={-24} 
+                    max={24} 
                     value={this.state.tuning} 
                     handleInputRangeChange={this.handleInputRangeChange('tuning')} 
                     setDisplay={this.setDisplay}
@@ -157,14 +159,14 @@ export default class Instrument extends Component {
                     convolver={this.props.convolver}
                     panner={this.state.panner}
                     keyMappings={this.props.keyMappings} 
-                    baseHue={this.state.baseHue}
+                    hue={this.state.hue}
                     lastPlayedZone={this.state.lastPlayedZone}
                     lastPlayedKey={this.state.lastPlayedKey}
+                    transitionTime={this.props.transitionTime}
                     instrumentVolume={this.state.volume / 100}
                     instrumentPanning={this.state.panning / 10}
                     instrumentDetune={this.state.tuning * 100}
                     playSound={this.playSound}
-                    setBaseHue={this.setBaseHue}
                     incrementLoadedCount={this.incrementLoadedCount}
                     setLastPlayed={this.setLastPlayed}
                     setDisplay={this.setDisplay}

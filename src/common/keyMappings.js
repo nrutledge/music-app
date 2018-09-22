@@ -21,19 +21,19 @@ export const drums = [
         name: 'Crash',
         triggerKey: 'a',
         source: 'sounds/drums/Crash A/Crash A 5.wav',
-        volume: 0.6
+        volume: 0.5
     }, 
     {
         name: 'Ride',
         triggerKey: 's',
         source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
-        volume: 0.8
+        volume: 0.7
     }, 
     {
         name: 'Hi-Hat Open',
         triggerKey: 'd',
         source: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
-        volume: 0.5,
+        volume: 0.45,
         exclusiveZone: 2
     }, 
     {
@@ -54,10 +54,11 @@ export const drums = [
         source: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
         volume: 0.7,
         exclusiveZone: 2
-    }
+    },
 ]
 
 export const synth = [
+    /*
     {
         name: 'Synth C Minor',
         triggerKey: '4',
@@ -115,6 +116,7 @@ export const synth = [
         pan: 0.5,
         exclusiveZone: 3
     },
+    */
     {
         name: 'Synth C Major',
         triggerKey: 'r',
@@ -140,7 +142,7 @@ export const synth = [
         exclusiveZone: 3
     },  
     {
-        name: 'Synth F Major',
+        name: 'Synth F# Major',
         triggerKey: 'u',
         source: 'sounds/synth/I_Do_Remember_F_01.wav',
         volume: 0.75,
@@ -173,6 +175,7 @@ export const synth = [
         exclusiveZone: 3
     },
 ]
+
 
 export const piano = [
     {
@@ -236,3 +239,343 @@ export const piano = [
         detune: 700
     },
 ]
+
+export const piano2 = [
+    {
+        name: 'Piano G',
+        triggerKey: '`',
+        source: 'sounds/piano/piano-g_Gsharp_major.wav',
+        volume: 1.0,
+        pan: -0.5,
+        detune: -100
+    },    
+    {
+        name: 'Piano G#',
+        triggerKey: '1',
+        source: 'sounds/piano/piano-g_Gsharp_major.wav',
+        volume: 0.98,
+        pan: -0.5,
+    },    
+    {
+        name: 'Piano A',
+        triggerKey: '2',
+        source: 'sounds/piano/piano-a_A_major.wav',
+        volume: 0.96,
+        pan: -0.5,
+    },   
+    {
+        name: 'Piano A#',
+        triggerKey: '3',
+        source: 'sounds/piano/piano-bb_Asharp_major.wav',
+        volume: 0.94,
+        pan: -0.5,
+    },   
+    {
+        name: 'Piano A#',
+        triggerKey: '4',
+        source: 'sounds/piano/piano-b_B_major.wav',
+        volume: 0.92,
+        pan: -0.5,
+    },      
+    {
+        name: 'Piano C',
+        triggerKey: '5',
+        source: 'sounds/piano/piano-c_C_major.wav',
+        volume: 0.90,
+        pan: -0.5,
+    }, 
+    {
+        name: 'Piano C#',
+        triggerKey: '6',
+        source: 'sounds/piano/piano-c_Csharp_major.wav',
+        volume: 0.88,
+        pan: -0.5,
+    }, 
+    {
+        name: 'Piano D',
+        triggerKey: '7',
+        source: 'sounds/piano/piano-d_D_major.wav',
+        volume: 0.86,
+        pan: -0.5,
+    }, 
+    {
+        name: 'Piano D#',
+        triggerKey: '8',
+        source: 'sounds/piano/piano-eb_Dsharp_major.wav',
+        volume: 0.84,
+        pan: -0.5,
+    }, 
+    {
+        name: 'Piano E',
+        triggerKey: '9',
+        source: 'sounds/piano/piano-e_E_major.wav',
+        volume: 0.82,
+        pan: -0.5,
+    }, 
+    {
+        name: 'Piano F',
+        triggerKey: '0',
+        source: 'sounds/piano/piano-f_F_major.wav',
+        volume: 0.80,
+        pan: -0.5,
+    },     
+    {
+        name: 'Piano F#',
+        triggerKey: '-',
+        source: 'sounds/piano/piano-f_Fsharp_major.wav',
+        volume: 0.78,
+        pan: -0.5,
+    },     
+    {
+        name: 'Piano G',
+        triggerKey: '=',
+        source: 'sounds/piano/piano-g_G_major.wav',
+        volume: 0.76,
+        pan: -0.5,
+    },    
+]
+
+export const cello = [
+    {
+        name: 'Cello G',
+        triggerKey: '1',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 0
+    }, 
+    {
+        name: 'Cello A',
+        triggerKey: '2',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 200
+    }, 
+    {
+        name: 'Cello B',
+        triggerKey: '3',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 400
+    }, 
+    {
+        name: 'Cello C',
+        triggerKey: '4',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 500
+    }, 
+    {
+        name: 'Cello D',
+        triggerKey: '5',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 700
+    }, 
+    {
+        name: 'Cello E',
+        triggerKey: '6',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 900
+    }, 
+    {
+        name: 'Cello F#',
+        triggerKey: '7',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 1100
+    }, 
+    {
+        name: 'Cello G',
+        triggerKey: '8',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 1200
+    }, 
+    {
+        name: 'Cello A',
+        triggerKey: '9',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 1400
+    }, 
+    {
+        name: 'Cello B',
+        triggerKey: '0',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 1600
+    }, 
+    {
+        name: 'Cello C',
+        triggerKey: '-',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 1700
+    }, 
+    {
+        name: 'Cello D',
+        triggerKey: '=',
+        source: 'sounds/strings/cello_G_major.wav',
+        volume: 1.0,
+        detune: 1900
+    }, 
+]
+
+export const synthDrums = [
+    {
+        name: '808 C',
+        triggerKey: 'v',
+        source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
+        volume: 1.0,
+        detune: 600,
+        exclusiveZone: 6
+    }, 
+    {
+        name: '808 D',
+        triggerKey: 'b',
+        source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
+        volume: 1.0,
+        detune: 800,
+        exclusiveZone: 6
+    }, 
+    {
+        name: '808 E',
+        triggerKey: 'n',
+        source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
+        volume: 1.0,
+        detune: -200,
+        exclusiveZone: 6
+    }, {
+        name: '808 F#',
+        triggerKey: 'm',
+        source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
+        volume: 1.0,
+        detune: 0,
+        exclusiveZone: 6
+    }, {
+        name: '808 G',
+        triggerKey: ',',
+        source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
+        volume: 1.0,
+        detune: 100,
+        exclusiveZone: 6
+    }, {
+        name: '808 A',
+        triggerKey: '.',
+        source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
+        volume: 1.0,
+        detune: 300,
+        exclusiveZone: 6
+    }, {
+        name: '808 B',
+        triggerKey: '/',
+        source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
+        volume: 1.0,
+        detune: 500,
+        exclusiveZone: 6
+    },  
+]
+
+
+
+
+
+
+    /*
+    {
+        name: 'Synth Choir Chord',
+        triggerKey: ',',
+        source: 'sounds/synth/choir-chord-pad_78bpm_B_major.wav',
+        volume: 1.0,
+        exclusiveZone: 5
+    }, 
+    
+
+    {
+        name: 'Cinematic Strings',
+        triggerKey: 'n',
+        source: 'sounds/strings/cinematic-strings_125bpm_G_minor.wav',
+        volume: 1.0,
+        exclusiveZone: 5
+    }, 
+    {
+        name: 'Cinematic Strings',
+        triggerKey: 'm',
+        source: 'sounds/strings/violin-arp_128bpm_Dsharp_minor.wav',
+        volume: 1.0,
+        exclusiveZone: 5
+    }, 
+    */
+
+    /*
+export const synth2 = [
+    {
+        name: 'Madmax Pad C',
+        triggerKey: 'v',
+        source: 'sounds/synth/Madmax_Pad_E.wav',
+        volume: 0.75,
+        pan: 0.5,
+        exclusiveZone: 4,
+        detune: -400
+    },
+    {
+        name: 'Madmax Pad D',
+        triggerKey: 'b',
+        source: 'sounds/synth/Madmax_Pad_E.wav',
+        volume: 0.75,
+        pan: 0.5,
+        exclusiveZone: 4,
+        detune: -200
+    },
+    {
+        name: 'Madmax Pad E',
+        triggerKey: 'n',
+        source: 'sounds/synth/Madmax_Pad_E.wav',
+        volume: 0.75,
+        pan: 0.5,
+        exclusiveZone: 4,
+        detune: 0
+    },
+    {
+        name: 'Orion Pad F#',
+        triggerKey: 'm',
+        source: 'sounds/synth/Orion_Pad.wav',
+        volume: 0.75,
+        pan: 0.5,
+        exclusiveZone: 4,
+        detune: 600
+    },
+    {
+        name: 'Orion Pad G',
+        triggerKey: ',',
+        source: 'sounds/synth/Orion_Pad.wav',
+        volume: 0.75,
+        pan: 0.5,
+        exclusiveZone: 4,
+        detune: 700
+    },
+    {
+        name: 'Orion Pad A',
+        triggerKey: '.',
+        source: 'sounds/synth/Orion_Pad.wav',
+        volume: 0.75,
+        pan: 0.5,
+        exclusiveZone: 4,
+        detune: 900
+    },
+    {
+        name: 'Orion Pad B',
+        triggerKey: '/',
+        source: 'sounds/synth/Orion_Pad.wav',
+        volume: 0.75,
+        pan: 0.5,
+        exclusiveZone: 4,
+        detune: 1100
+    },
+    */
+
+    
+    
+    
+    

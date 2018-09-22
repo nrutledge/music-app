@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import loadAudioBuffer from '../../common/loadAudioBuffer';
 import './DrumPad.css';
 
-// Time (in seconds) to ramp volume up/down when playing/stopping sound
-const transitionTime = 0.005;
-
 class DrumPad extends Component {
     constructor(props) {
         super(props);
@@ -13,7 +10,8 @@ class DrumPad extends Component {
             audioSource: null,
             gain: null,
             isPlaying: false,
-            isPressed: false
+            isPressed: false,
+            lastStartTime: null
         }
     }
 
@@ -44,7 +42,8 @@ class DrumPad extends Component {
             this.props.exclusiveZone === this.props.lastPlayedZone &&
             this.props.lastPlayedKey !== this.props.triggerKey 
         ) {
-            this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, transitionTime)
+            // Fade sound out over longer duration than if single note were repeated (10x longer)
+            this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, this.props.transitionTime * 10)
         }
     }
 
@@ -62,22 +61,23 @@ class DrumPad extends Component {
         // pressed (i.e., prevent auto-repeat)
         if (key !== this.props.triggerKey || this.state.isPressed) { return; }
 
-        this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, transitionTime)
+        this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, this.props.transitionTime)
         setTimeout(() => {
             this.playSound(
                 this.props.audioCtx, 
                 this.props.panner, 
                 this.state.gainNode,
                 this.state.audioBuffer, 
+                this.state.lastStartTime,
                 this.props.volume, 
                 this.props.detune, 
                 this.props.instrumentVolume,
                 this.props.instrumentPanning,
                 this.props.instrumentDetune,
-                transitionTime
+                this.props.transitionTime
             );
             this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
-        }, transitionTime * 1000)
+        }, this.props.transitionTime * 1000)
 
         this.setState({ isPressed: true });
     }
@@ -95,16 +95,12 @@ class DrumPad extends Component {
         this.props.incrementLoadedCount();
         this.setState({ audioBuffer: decodedData });
     }
-/*
-    setPanner = (audioCtx, panner, value) => {
-        panner.pan.setValueAtTime(value, audioCtx.currentTime);
-    }
-*/
     
     playSound = (audioCtx, 
         panner, 
         gainNode,
         bufferToPlay, 
+        lastStartTime,
         volume = 1,
         detune = 0, 
         instrumentVolume = 1, 
@@ -115,20 +111,25 @@ class DrumPad extends Component {
         const source = audioCtx.createBufferSource();
         source.buffer = bufferToPlay;
 
-/*
         // Max time (in seconds) that is considered to be fast playing
         // in case of repeated triggers of same drum pad
-        const fastCutoff = 0.12;
+        const fastCutoff = 0.15;
 
         // Minimum volume to play during fast playing
-        const minVolume = 0.6;
+        const minVolume = 0.5;
 
         // Change volume of sound based on trigger frequency to simulate
         // physics of shorter stick travel having less force
-        if (currentTime > 0 && currentTime < fastCutoff) {
-            volume *= minVolume + (currentTime * (1 - minVolume) / fastCutoff);
+        if (lastStartTime) {
+            let playedTime = audioCtx.currentTime - lastStartTime;
+            if (playedTime > fastCutoff) { playedTime = fastCutoff; }
+            volume *= minVolume + (playedTime * (1 - minVolume) / fastCutoff);
         }
-*/
+
+        // Randomly vary volume to simulate variations in real playing
+        const maxVariance = 0.1;
+        volume -= Math.random() * maxVariance;
+
         gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
         gainNode.gain.linearRampToValueAtTime(volume * instrumentVolume, audioCtx.currentTime + attackTime);
 
@@ -147,7 +148,8 @@ class DrumPad extends Component {
 
         this.setState({ 
             audioSource: source,
-            isPlaying: true
+            isPlaying: true,
+            lastStartTime: audioCtx.currentTime
         });
     }
 
@@ -162,8 +164,10 @@ class DrumPad extends Component {
     handleMouseLeave = () => this.handleKeyUp({ key: this.props.triggerKey });
  
     render() {
-        const lightness = this.state.isPressed ? '90%' : '75%';
-        const shadowAlpha = this.state.isPressed ? '0.4' : '0.2';
+        //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';
+        const bgColor = this.state.isPressed ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
+        const lightness = this.state.isPressed ? '85%' : '70%';
+        const shadowAlpha = this.state.isPressed ? '0.6' : '0.2';
 
         return (
             <button 
@@ -174,7 +178,8 @@ class DrumPad extends Component {
                 onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
                 style={{ 
-                    border: `3px solid hsl(${this.props.hue}, 80%, ${lightness})`,
+                    backgroundColor: bgColor,
+                    border: `3px solid hsl(${this.props.hue}, 70%, ${lightness})`,
                     boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, 95%, 60%, ${shadowAlpha})`,
                     color: `hsl(${this.props.hue}, 80%, ${lightness})`
 

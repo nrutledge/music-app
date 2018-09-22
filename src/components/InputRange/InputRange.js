@@ -15,17 +15,22 @@ export default class InputRange extends Component {
     render() {
         return (
             <div className="input-range">
-                <label for={this.props.name} style={{ color: '#CCC' }}>{this.props.name}</label>
-                <input 
-                    type="range" 
-                    name={this.props.name} 
-                    min={this.props.min} 
-                    max={this.props.max} 
-                    value={this.props.value} 
-                    onChange={this.props.handleInputRangeChange}
-                    onMouseOver={this.setDisplay}
-                />
-            </div>   
+                <label>
+                    <div className="text">
+                        {this.props.name}
+                    </div>
+                    <input 
+                        className="slider"
+                        type="range" 
+                        name={this.props.name} 
+                        min={this.props.min} 
+                        max={this.props.max} 
+                        value={this.props.value} 
+                        onChange={this.props.handleInputRangeChange}
+                        onMouseOver={this.setDisplay}
+                    />
+                </label>
+            </div>
         )
     }
 }
