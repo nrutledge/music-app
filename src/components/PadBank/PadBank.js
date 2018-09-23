@@ -15,6 +15,8 @@ const PadBank = function(props) {
                     volume={keyMap.volume} 
                     pan={keyMap.pan}
                     detune={keyMap.detune}
+                    stopDelay={props.stopDelay}
+                    decayTime={props.decayTime}
                     transitionTime={props.transitionTime}
                     instrumentVolume={props.instrumentVolume}
                     instrumentPanning={props.instrumentPanning}
@@ -27,6 +29,8 @@ const PadBank = function(props) {
                     incrementLoadedCount={props.incrementLoadedCount}
                     setLastPlayed={props.setLastPlayed}
                     setDisplay={props.setDisplay}
+                    recording={props.recording}
+                    playbackIndex={props.playbackIndex}
                 />
     });
 

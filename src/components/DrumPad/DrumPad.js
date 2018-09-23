@@ -8,7 +8,7 @@ class DrumPad extends Component {
         this.state = {
             audioBuffer: null,
             audioSource: null,
-            gain: null,
+            gainNode: null,
             isPlaying: false,
             isPressed: false,
             lastStartTime: null
@@ -21,9 +21,6 @@ class DrumPad extends Component {
         document.addEventListener('keyup', this.handleKeyUp);
 
         this.setAudioBuffer(this.props.audioCtx, this.props.source);
-
-        const gainNode = this.props.audioCtx.createGain();
-        this.setState({gainNode});
     }
 
     componentWillUnmount() {
@@ -31,53 +28,43 @@ class DrumPad extends Component {
         document.removeEventListener('keyup', this.handleKeyUp);        
     }
 
-    componentWillReceiveProps() {
-        //console.log(this.props);
-    }
-
     componentDidUpdate(prevProps) {
         // Stop playing sound if another key in same exclusive zone was played
-        if (prevProps.lastPlayedKey === this.props.lastPlayedKey) { return; } 
         if (this.props.exclusiveZone &&
+            prevProps.lastPlayedKey !== this.props.lastPlayedKey &&
             this.props.exclusiveZone === this.props.lastPlayedZone &&
             this.props.lastPlayedKey !== this.props.triggerKey 
         ) {
             // Fade sound out over longer duration than if single note were repeated (10x longer)
-            this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, this.props.transitionTime * 10)
+            this.stopSound(this.props.audioCtx, this.state.gainNode, this.props.stopDelay, this.props.decayTime)
+        }
+
+        // Play recorded key if playback index changes (i.e., playback is on)
+        if (prevProps.playbackIndex !== this.props.playbackIndex) {
+            this.handleKeyDown(this.props.recording[this.props.playbackIndex].key);
         }
     }
 
     handleKeyDown = (e) => {
-        let key = e.key;
-
-        // Play lower intensity when shift key / caps lock is on
-        let intensity = 1;
-        if (typeof key === 'string' && key === key.toUpperCase()) {
-            intensity = 0.7;
-            key = key.toLowerCase();
-        }
+        let key = e.key || e;
 
         // Only play if correct key pressed and that key isnt' already
         // pressed (i.e., prevent auto-repeat)
         if (key !== this.props.triggerKey || this.state.isPressed) { return; }
 
-        this.stopSound(this.props.audioCtx, this.state.audioSource, this.state.gainNode, this.props.transitionTime)
-        setTimeout(() => {
-            this.playSound(
-                this.props.audioCtx, 
-                this.props.panner, 
-                this.state.gainNode,
-                this.state.audioBuffer, 
-                this.state.lastStartTime,
-                this.props.volume, 
-                this.props.detune, 
-                this.props.instrumentVolume,
-                this.props.instrumentPanning,
-                this.props.instrumentDetune,
-                this.props.transitionTime
-            );
-            this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
-        }, this.props.transitionTime * 1000)
+        this.playSound(
+            this.props.audioCtx, 
+            this.props.panner, 
+            this.state.audioBuffer, 
+            this.state.lastStartTime,
+            this.props.volume, 
+            this.props.detune, 
+            this.props.instrumentVolume,
+            this.props.instrumentPanning,
+            this.props.instrumentDetune,
+            this.props.transitionTime
+        );
+        this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
 
         this.setState({ isPressed: true });
     }
@@ -86,6 +73,7 @@ class DrumPad extends Component {
         const key = (typeof e.key === 'string') ? e.key.toLowerCase() : e.key;
         if (key !== this.props.triggerKey) { return; }
 
+        this.stopSound(this.props.audioCtx, this.state.gainNode, this.props.stopDelay, this.props.decayTime)
         this.setState({ isPressed: false });
     }
 
@@ -98,7 +86,6 @@ class DrumPad extends Component {
     
     playSound = (audioCtx, 
         panner, 
-        gainNode,
         bufferToPlay, 
         lastStartTime,
         volume = 1,
@@ -106,9 +93,10 @@ class DrumPad extends Component {
         instrumentVolume = 1, 
         instrumentPanning = 0, 
         instrumentDetune = 0, 
-        attackTime = 0.001, 
+        attackTime = 0.005, 
     ) => {
         const source = audioCtx.createBufferSource();
+        const gainNode = this.props.audioCtx.createGain();
         source.buffer = bufferToPlay;
 
         // Max time (in seconds) that is considered to be fast playing
@@ -116,7 +104,7 @@ class DrumPad extends Component {
         const fastCutoff = 0.15;
 
         // Minimum volume to play during fast playing
-        const minVolume = 0.5;
+        const minVolume = 0;
 
         // Change volume of sound based on trigger frequency to simulate
         // physics of shorter stick travel having less force
@@ -148,14 +136,20 @@ class DrumPad extends Component {
 
         this.setState({ 
             audioSource: source,
+            gainNode: gainNode,
             isPlaying: true,
             lastStartTime: audioCtx.currentTime
         });
     }
 
-    stopSound = (audioCtx, audioSource, gainNode, fadeOutTime = 0) => {
-        gainNode && gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + fadeOutTime);
-        audioSource && audioSource.stop(audioCtx.currentTime + fadeOutTime);
+    stopSound = (audioCtx, gainNode, stopDelay = 0, decayTime = 0.005) => {
+        if (stopDelay === 0) {
+            gainNode && gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + decayTime); 
+        } else {
+            setTimeout(() => {
+                gainNode && gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + decayTime);
+            }, stopDelay * 1000)
+        }
     }
 
     handleMouseDown = () => this.handleKeyDown({ key: this.props.triggerKey });
@@ -166,7 +160,7 @@ class DrumPad extends Component {
     render() {
         //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';
         const bgColor = this.state.isPressed ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
-        const lightness = this.state.isPressed ? '85%' : '70%';
+        const lightness = this.state.isPressed ? '88%' : '70%';
         const shadowAlpha = this.state.isPressed ? '0.6' : '0.2';
 
         return (
