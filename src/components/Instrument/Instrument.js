@@ -43,6 +43,10 @@ export default class Instrument extends Component {
         if (this.state.reverb !== prevState.reverb) {
             this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
         }
+
+        if (this.state.lastPlayedKey !== prevState.lastPlayedKey) {
+            this.props.recordPlayedKey(this.props.audioCtx.currentTime, this.state.lastPlayedKey);
+        }
     }
 
     /*
@@ -162,6 +166,8 @@ export default class Instrument extends Component {
                     hue={this.state.hue}
                     lastPlayedZone={this.state.lastPlayedZone}
                     lastPlayedKey={this.state.lastPlayedKey}
+                    stopDelay={this.props.stopDelay}
+                    decayTime={this.props.decayTime}
                     transitionTime={this.props.transitionTime}
                     instrumentVolume={this.state.volume / 100}
                     instrumentPanning={this.state.panning / 10}
@@ -170,6 +176,8 @@ export default class Instrument extends Component {
                     incrementLoadedCount={this.incrementLoadedCount}
                     setLastPlayed={this.setLastPlayed}
                     setDisplay={this.setDisplay}
+                    recording={this.props.recording}
+                    playbackIndex={this.props.playbackIndex}
                 />
             </div>
         )

@@ -21,26 +21,26 @@ export const drums = [
         name: 'Crash',
         triggerKey: 'a',
         source: 'sounds/drums/Crash A/Crash A 5.wav',
-        volume: 0.5
+        volume: 0.55
     }, 
     {
         name: 'Ride',
         triggerKey: 's',
         source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
-        volume: 0.7
+        volume: 0.75
     }, 
     {
         name: 'Hi-Hat Open',
         triggerKey: 'd',
         source: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
-        volume: 0.45,
-        exclusiveZone: 2
+        volume: 0.5,
+        //exclusiveZone: 2
     }, 
     {
         name: 'Kick',
         triggerKey: 'z',
         source: 'sounds/drums2/kick-softy.wav',
-        volume: 1
+        volume: 0.9
     }, 
     {
         name: 'Snare',
@@ -52,8 +52,8 @@ export const drums = [
         name: 'Hi-Hat Closed',
         triggerKey: 'c',
         source: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
-        volume: 0.7,
-        exclusiveZone: 2
+        volume: 0.75,
+        //exclusiveZone: 2
     },
 ]
 
@@ -65,7 +65,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_Cm_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
     {
         name: 'Synth D Minor',
@@ -73,7 +73,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_Dm_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },  
     {
         name: 'Synth E Minor',
@@ -81,7 +81,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_Em_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },  
     {
         name: 'Synth F Minor',
@@ -89,7 +89,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_Fm_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3,
+        //exclusiveZone: 3,
         detune: 100
     },  
     {
@@ -98,7 +98,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_Gm_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
     {
         name: 'Synth A Minor',
@@ -106,7 +106,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_Am_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
     {
         name: 'Synth B Minor',
@@ -114,7 +114,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_Bm_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
     */
     {
@@ -123,7 +123,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_C_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
     {
         name: 'Synth D Major',
@@ -131,7 +131,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_D_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },  
     {
         name: 'Synth E Major',
@@ -139,7 +139,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_E_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },  
     {
         name: 'Synth F# Major',
@@ -147,7 +147,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_F_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3,
+        //exclusiveZone: 3,
         detune: 100
     },  
     {
@@ -156,7 +156,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_G_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
     {
         name: 'Synth A Major',
@@ -164,7 +164,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_A_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
     {
         name: 'Synth B Major',
@@ -172,7 +172,7 @@ export const synth = [
         source: 'sounds/synth/I_Do_Remember_B_01.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 3
+        //exclusiveZone: 3
     },
 ]
 
@@ -184,7 +184,7 @@ export const piano = [
         source: 'sounds/piano/Chord_1.mp3',
         volume: 1.0,
         pan: -0.5,
-        exclusiveZone: 1
+        //exclusiveZone: 1
     }, 
     {
         name: 'Piano Chord 2',
@@ -192,7 +192,7 @@ export const piano = [
         source: 'sounds/piano/Chord_2.mp3',
         volume: 1.0,
         pan: -0.5,   
-        exclusiveZone: 1
+        //exclusiveZone: 1
     }, 
     {
         name: 'Piano Chord 3',
@@ -200,7 +200,7 @@ export const piano = [
         source: 'sounds/piano/Chord_3.mp3',
         volume: 1.0,
         pan: -0.5,
-        exclusiveZone: 1
+        //exclusiveZone: 1
     }, 
     {
         name: 'Piano Chord 4',
@@ -208,7 +208,7 @@ export const piano = [
         source: 'sounds/piano/Chord_3.mp3',
         volume: 1.0,
         pan: -0.5,
-        exclusiveZone: 1,
+        //exclusiveZone: 1,
         detune: 200
     }, 
     {
@@ -217,7 +217,7 @@ export const piano = [
         source: 'sounds/piano/Chord_3.mp3',
         volume: 1.0,
         pan: -0.5,
-        exclusiveZone: 1,
+        //exclusiveZone: 1,
         detune: 300
     },
     {
@@ -226,7 +226,7 @@ export const piano = [
         source: 'sounds/piano/Chord_3.mp3',
         volume: 1.0,
         pan: -0.5,
-        exclusiveZone: 1,
+        //exclusiveZone: 1,
         detune: 500
     },
     {
@@ -235,7 +235,7 @@ export const piano = [
         source: 'sounds/piano/Chord_3.mp3',
         volume: 1.0,
         pan: -0.5,
-        exclusiveZone: 1,
+        //exclusiveZone: 1,
         detune: 700
     },
 ]
@@ -347,77 +347,77 @@ export const cello = [
         name: 'Cello A',
         triggerKey: '2',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.98,
         detune: 200
     }, 
     {
         name: 'Cello B',
         triggerKey: '3',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.96,
         detune: 400
     }, 
     {
         name: 'Cello C',
         triggerKey: '4',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.94,
         detune: 500
     }, 
     {
         name: 'Cello D',
         triggerKey: '5',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.92,
         detune: 700
     }, 
     {
         name: 'Cello E',
         triggerKey: '6',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.90,
         detune: 900
     }, 
     {
         name: 'Cello F#',
         triggerKey: '7',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.88,
         detune: 1100
     }, 
     {
         name: 'Cello G',
         triggerKey: '8',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.86,
         detune: 1200
     }, 
     {
         name: 'Cello A',
         triggerKey: '9',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.84,
         detune: 1400
     }, 
     {
         name: 'Cello B',
         triggerKey: '0',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.82,
         detune: 1600
     }, 
     {
         name: 'Cello C',
         triggerKey: '-',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.80,
         detune: 1700
     }, 
     {
         name: 'Cello D',
         triggerKey: '=',
         source: 'sounds/strings/cello_G_major.wav',
-        volume: 1.0,
+        volume: 0.78,
         detune: 1900
     }, 
 ]
@@ -429,7 +429,7 @@ export const synthDrums = [
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
         detune: 600,
-        exclusiveZone: 6
+        //exclusiveZone: 6
     }, 
     {
         name: '808 D',
@@ -437,7 +437,7 @@ export const synthDrums = [
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
         detune: 800,
-        exclusiveZone: 6
+        //exclusiveZone: 6
     }, 
     {
         name: '808 E',
@@ -445,35 +445,35 @@ export const synthDrums = [
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
         detune: -200,
-        exclusiveZone: 6
+        //exclusiveZone: 6
     }, {
         name: '808 F#',
         triggerKey: 'm',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
         detune: 0,
-        exclusiveZone: 6
+        //exclusiveZone: 6
     }, {
         name: '808 G',
         triggerKey: ',',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
         detune: 100,
-        exclusiveZone: 6
+        //exclusiveZone: 6
     }, {
         name: '808 A',
         triggerKey: '.',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
         detune: 300,
-        exclusiveZone: 6
+        //exclusiveZone: 6
     }, {
         name: '808 B',
         triggerKey: '/',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
         detune: 500,
-        exclusiveZone: 6
+        //exclusiveZone: 6
     },  
 ]
 
@@ -488,7 +488,7 @@ export const synthDrums = [
         triggerKey: ',',
         source: 'sounds/synth/choir-chord-pad_78bpm_B_major.wav',
         volume: 1.0,
-        exclusiveZone: 5
+        //exclusiveZone: 5
     }, 
     
 
@@ -497,14 +497,14 @@ export const synthDrums = [
         triggerKey: 'n',
         source: 'sounds/strings/cinematic-strings_125bpm_G_minor.wav',
         volume: 1.0,
-        exclusiveZone: 5
+        //exclusiveZone: 5
     }, 
     {
         name: 'Cinematic Strings',
         triggerKey: 'm',
         source: 'sounds/strings/violin-arp_128bpm_Dsharp_minor.wav',
         volume: 1.0,
-        exclusiveZone: 5
+        //exclusiveZone: 5
     }, 
     */
 
@@ -516,7 +516,7 @@ export const synth2 = [
         source: 'sounds/synth/Madmax_Pad_E.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 4,
+        //exclusiveZone: 4,
         detune: -400
     },
     {
@@ -525,7 +525,7 @@ export const synth2 = [
         source: 'sounds/synth/Madmax_Pad_E.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 4,
+        //exclusiveZone: 4,
         detune: -200
     },
     {
@@ -534,7 +534,7 @@ export const synth2 = [
         source: 'sounds/synth/Madmax_Pad_E.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 4,
+        //exclusiveZone: 4,
         detune: 0
     },
     {
@@ -543,7 +543,7 @@ export const synth2 = [
         source: 'sounds/synth/Orion_Pad.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 4,
+        //exclusiveZone: 4,
         detune: 600
     },
     {
@@ -552,7 +552,7 @@ export const synth2 = [
         source: 'sounds/synth/Orion_Pad.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 4,
+        //exclusiveZone: 4,
         detune: 700
     },
     {
@@ -561,7 +561,7 @@ export const synth2 = [
         source: 'sounds/synth/Orion_Pad.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 4,
+        //exclusiveZone: 4,
         detune: 900
     },
     {
@@ -570,7 +570,7 @@ export const synth2 = [
         source: 'sounds/synth/Orion_Pad.wav',
         volume: 0.75,
         pan: 0.5,
-        exclusiveZone: 4,
+        //exclusiveZone: 4,
         detune: 1100
     },
     */
