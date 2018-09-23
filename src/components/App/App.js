@@ -89,7 +89,7 @@ export default class App extends Component {
   render() {
     // Set the amount to vary hue per instrument
     const instrumentCount = 5;
-    const hueRange = 360;
+    const hueRange = 270;
     const hueShift = hueRange / instrumentCount; 
 
     return (
@@ -100,9 +100,9 @@ export default class App extends Component {
           setConvolverBuffer={this.setConvolverBuffer} 
           keyMappings={drums} 
           name={'Rock Drums (ง\'̀-\'́)ง'} 
-          volume={55} 
+          volume={45} 
           panning={0} 
-          reverb={6}
+          reverb={8}
           stopDelay={2}
           decayTime={4}
           transitionTime={0.005}
@@ -117,9 +117,9 @@ export default class App extends Component {
           setConvolverBuffer={this.setConvolverBuffer} 
           keyMappings={synthDrums} 
           name={'Synth Drums'} 
-          volume={55} 
+          volume={45} 
           panning={0} 
-          reverb={6}
+          reverb={8}
           stopDelay={0.1}
           decayTime={0.2}
           transitionTime={0.005}
@@ -136,7 +136,7 @@ export default class App extends Component {
           name={'Piano'} 
           volume={100} 
           panning={-25} 
-          reverb={25}
+          reverb={30}
           stopDelay={0.1}
           decayTime={0.1}
           transitionTime={0.005}
@@ -151,9 +151,9 @@ export default class App extends Component {
           setConvolverBuffer={this.setConvolverBuffer} 
           keyMappings={synth} 
           name={'Synth'} 
-          volume={60} 
+          volume={70} 
           panning={25} 
-          reverb={20}
+          reverb={30}
           stopDelay={0.1}
           decayTime={0.1}
           transitionTime={0.005}
@@ -168,8 +168,8 @@ export default class App extends Component {
           setConvolverBuffer={this.setConvolverBuffer} 
           keyMappings={cello} 
           name={'Cello'} 
-          volume={40} 
-          panning={-7} 
+          volume={45} 
+          panning={-3} 
           reverb={55}
           stopDelay={0.01}
           decayTime={0.2}

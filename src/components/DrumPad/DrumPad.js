@@ -160,7 +160,7 @@ class DrumPad extends Component {
     render() {
         //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';
         const bgColor = this.state.isPressed ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
-        const lightness = this.state.isPressed ? '85%' : '70%';
+        const lightness = this.state.isPressed ? '88%' : '70%';
         const shadowAlpha = this.state.isPressed ? '0.6' : '0.2';
 
         return (

@@ -341,84 +341,84 @@ export const cello = [
         triggerKey: '1',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 1.0,
-        detune: 0
+        detune: 12
     }, 
     {
         name: 'Cello A',
         triggerKey: '2',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.98,
-        detune: 200
+        detune: -1000
     }, 
     {
         name: 'Cello B',
         triggerKey: '3',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.96,
-        detune: 400
+        detune: -800
     }, 
     {
         name: 'Cello C',
         triggerKey: '4',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.94,
-        detune: 500
+        detune: -700
     }, 
     {
         name: 'Cello D',
         triggerKey: '5',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.92,
-        detune: 700
+        detune: -500
     }, 
     {
         name: 'Cello E',
         triggerKey: '6',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.90,
-        detune: 900
+        detune: -300
     }, 
     {
         name: 'Cello F#',
         triggerKey: '7',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.88,
-        detune: 1100
+        detune: -100
     }, 
     {
         name: 'Cello G',
         triggerKey: '8',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.86,
-        detune: 1200
+        detune: 0
     }, 
     {
         name: 'Cello A',
         triggerKey: '9',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.84,
-        detune: 1400
+        detune: 200
     }, 
     {
         name: 'Cello B',
         triggerKey: '0',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.82,
-        detune: 1600
+        detune: 400
     }, 
     {
         name: 'Cello C',
         triggerKey: '-',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.80,
-        detune: 1700
+        detune: 500
     }, 
     {
         name: 'Cello D',
         triggerKey: '=',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.78,
-        detune: 1900
+        detune: 700
     }, 
 ]
 
@@ -428,7 +428,7 @@ export const synthDrums = [
         triggerKey: 'v',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
-        detune: 600,
+        detune: -600,
         //exclusiveZone: 6
     }, 
     {
@@ -436,7 +436,7 @@ export const synthDrums = [
         triggerKey: 'b',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
         volume: 1.0,
-        detune: 800,
+        detune: -400,
         //exclusiveZone: 6
     }, 
     {
