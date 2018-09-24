@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import Instrument from '../Instrument/Instrument';
 import loadAudioBuffer from '../../common/loadAudioBuffer';
 import { drums, synth, piano, synthDrums, cello } from '../../common/keyMappings'
@@ -6,7 +6,7 @@ import './App.css';
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-export default class App extends Component {
+export default class App extends PureComponent {
   constructor() {
     super();
     this.state = {
@@ -16,8 +16,7 @@ export default class App extends Component {
       baseHue: Math.random() * 360,
       recording: [],
       isPlaybackOn: false,
-      playbackIndex: 0,
-      playbackStartTime: 0
+      playback: {}
     }
   }
 
@@ -32,11 +31,11 @@ export default class App extends Component {
     ); 
   }
 
+/*
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.isPlayBackOn && this.state.isPlayBackOn !== prevState.isPlayBackOn) {
-      this.playRecording(true, this.state.recording, this.state.playbackIndex, this.state.playbackStartTime);
-    }
+
   }
+*/
 
   loadConvolver = async (audioCtx, convolverGain, loadAudioBuffer, src) => {
     const audioBuffer = await loadAudioBuffer(audioCtx, src);
@@ -53,38 +52,43 @@ export default class App extends Component {
     convolver.buffer = src;
   }
 
-  recordPlayedKey = (ctxCurrentTime, key) => {
-    const played = {
-      key: key,
-      time: ctxCurrentTime
+  recordPlayedKey = (ctxCurrentTime, key, action) => {
+    // Convert any number keys to strings for use as object prop names
+    key = typeof key === 'number' ? key.toString() : key;
+
+    const recordingStartTime = (this.state.recording[0] && this.state.recording[0].time) ? 
+      this.state.recording[0].time : ctxCurrentTime;
+
+    const elapsedTime = ctxCurrentTime - recordingStartTime;
+    const noteIndex = Math.round(elapsedTime * 50);
+    const existingKeysAtIndex = this.state.recording[noteIndex];
+    let newRecording = [...this.state.recording];
+    
+    if (!existingKeysAtIndex) {
+      newRecording[noteIndex] = { time: ctxCurrentTime };
+      // console.log('App 69 - newRecording[noteIndex]', newRecording[noteIndex]);
+    } else {
+      // console.log('App 71 - newRecording[noteIndex]', newRecording[noteIndex]);
     }
-    this.setState({ recording: [...this.state.recording, played] });
+    newRecording[noteIndex][key] = action;
+
+    this.setState({ recording: newRecording });
   }
 
-  playRecording = (isPlaybackOn, recording, playbackIndex, playbackStartTime) => {
-    console.log('playRecording')
-    if (!isPlaybackOn || !recording || !recording[playbackIndex] || !playbackStartTime) { 
+  playRecording = (isPlaybackOn, recording, playbackIndex) => {
+    if (!isPlaybackOn || !recording || !recording[playbackIndex]) { 
       return; 
     }
 
-    const nextPlaybackIndex = playbackIndex + 1;
+    setInterval(() => {
+      const keysToPlay = recording[playbackIndex];
+      playbackIndex++
 
-    // Set playbackStartTime to the first played key's start time
-    // (isPlaybackOn should be passed in directly as true for initial call)
-    if (this.state.isPlaybackOn === false) {
-      playbackStartTime = recording[nextPlaybackIndex].time;
-    }
+      keysToPlay && this.setState({ playback: keysToPlay });
+    }, 1000 / 50)
 
-    // Set next playback time 
-    const nextKeyPlayTime = (recording[nextPlaybackIndex].time - playbackStartTime);
-
-    setTimeout(() => {
-      this.setState({ playbackIndex: nextPlaybackIndex, playbackStartTime: playbackStartTime }, () => console.log('playbackIndex', this.state.playbackIndex));
-      this.playRecording(this.state.isPlaybackOn, recording, nextPlaybackIndex, playbackStartTime)
-
-      console.log('setTimeout', nextKeyPlayTime);
-    }, nextKeyPlayTime)
-  }
+    this.setState({ isPlaybackOn: true });
+  };
 
   render() {
     // Set the amount to vary hue per instrument
@@ -108,8 +112,7 @@ export default class App extends Component {
           transitionTime={0.005}
           hue={this.state.baseHue + (hueShift * 0)}
           recordPlayedKey={this.recordPlayedKey}
-          recording={this.state.recording}
-          playbackIndex={this.state.playbackIndex}
+          playback={this.state.playback}
         />
         <Instrument 
           audioCtx={audioCtx} 
@@ -125,8 +128,7 @@ export default class App extends Component {
           transitionTime={0.005}
           hue={this.state.baseHue + (hueShift * 1)}
           recordPlayedKey={this.recordPlayedKey}
-          recording={this.state.recording}
-          playbackIndex={this.state.playbackIndex}
+          playback={this.state.playback}
         />
         <Instrument 
           audioCtx={audioCtx} 
@@ -142,8 +144,7 @@ export default class App extends Component {
           transitionTime={0.005}
           hue={this.state.baseHue + (hueShift * 2)}
           recordPlayedKey={this.recordPlayedKey}
-          recording={this.state.recording}
-          playbackIndex={this.state.playbackIndex}
+          playback={this.state.playback}
         />
         <Instrument 
           audioCtx={audioCtx} 
@@ -159,8 +160,7 @@ export default class App extends Component {
           transitionTime={0.005}
           hue={this.state.baseHue + (hueShift * 3)}
           recordPlayedKey={this.recordPlayedKey}
-          recording={this.state.recording}
-          playbackIndex={this.state.playbackIndex}
+          playback={this.state.playback}
         />
         <Instrument 
           audioCtx={audioCtx} 
@@ -176,15 +176,11 @@ export default class App extends Component {
           transitionTime={0.005}
           hue={this.state.baseHue + (hueShift * 4)}
           recordPlayedKey={this.recordPlayedKey}
-          recording={this.state.recording}
-          playbackIndex={this.state.playbackIndex}
+          playback={this.state.playback}
         />
         <div>
           <button onClick={() => {
-            this.setState({ 
-              isPlayBackOn: true,
-              playbackStartTime: this.state.recording[this.state.playbackIndex + 1].time
-            });;
+            this.playRecording(true, this.state.recording, 0);
           }} >Click to Play recording (and cross your fucking fingers!</button>
         </div>
       </div>

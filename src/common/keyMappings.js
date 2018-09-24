@@ -1,35 +1,41 @@
 export const drums = [
     {
+        id: 1,
         name: 'High Tom',
         triggerKey: 'q',
         source: 'sounds/drums/Tom High/Tom High 4.wav',
         volume: 1.0,
     }, 
     {
+        id: 2,
         name: 'Mid Tom',
         triggerKey: 'w',
         source: 'sounds/drums/Tom Mid/Tom Mid 4.wav',
         volume: 1.0
     }, 
     {
+        id: 3,
         name: 'Floor Tom',
         triggerKey: 'e',
         source: 'sounds/drums/Tom Floor/Tom Floor 5.wav',
         volume: 1.0
     }, 
     {
+        id: 4,
         name: 'Crash',
         triggerKey: 'a',
         source: 'sounds/drums/Crash A/Crash A 5.wav',
         volume: 0.55
     }, 
     {
+        id: 5,
         name: 'Ride',
         triggerKey: 's',
         source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
         volume: 0.75
     }, 
     {
+        id: 6,
         name: 'Hi-Hat Open',
         triggerKey: 'd',
         source: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
@@ -37,18 +43,21 @@ export const drums = [
         //exclusiveZone: 2
     }, 
     {
+        id: 7,
         name: 'Kick',
         triggerKey: 'z',
         source: 'sounds/drums2/kick-softy.wav',
         volume: 0.9
     }, 
     {
+        id: 8,
         name: 'Snare',
         triggerKey: 'x',
         source: 'sounds/drums/Snare On/Snare 6.wav',
         volume: 0.85
     }, 
     {
+        id: 9,
         name: 'Hi-Hat Closed',
         triggerKey: 'c',
         source: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
@@ -118,6 +127,7 @@ export const synth = [
     },
     */
     {
+        id: 1,
         name: 'Synth C Major',
         triggerKey: 'r',
         source: 'sounds/synth/I_Do_Remember_C_01.wav',
@@ -126,6 +136,7 @@ export const synth = [
         //exclusiveZone: 3
     },
     {
+        id: 2,
         name: 'Synth D Major',
         triggerKey: 't',
         source: 'sounds/synth/I_Do_Remember_D_01.wav',
@@ -134,6 +145,7 @@ export const synth = [
         //exclusiveZone: 3
     },  
     {
+        id: 3,
         name: 'Synth E Major',
         triggerKey: 'y',
         source: 'sounds/synth/I_Do_Remember_E_01.wav',
@@ -142,6 +154,7 @@ export const synth = [
         //exclusiveZone: 3
     },  
     {
+        id: 4,
         name: 'Synth F# Major',
         triggerKey: 'u',
         source: 'sounds/synth/I_Do_Remember_F_01.wav',
@@ -151,6 +164,7 @@ export const synth = [
         detune: 100
     },  
     {
+        id: 5,
         name: 'Synth G Major',
         triggerKey: 'i',
         source: 'sounds/synth/I_Do_Remember_G_01.wav',
@@ -159,6 +173,7 @@ export const synth = [
         //exclusiveZone: 3
     },
     {
+        id: 6,
         name: 'Synth A Major',
         triggerKey: 'o',
         source: 'sounds/synth/I_Do_Remember_A_01.wav',
@@ -167,6 +182,7 @@ export const synth = [
         //exclusiveZone: 3
     },
     {
+        id: 7,
         name: 'Synth B Major',
         triggerKey: 'p',
         source: 'sounds/synth/I_Do_Remember_B_01.wav',
@@ -179,6 +195,7 @@ export const synth = [
 
 export const piano = [
     {
+        id: 1,
         name: 'Piano Chord 1',
         triggerKey: 'f',
         source: 'sounds/piano/Chord_1.mp3',
@@ -187,6 +204,7 @@ export const piano = [
         //exclusiveZone: 1
     }, 
     {
+        id: 2,
         name: 'Piano Chord 2',
         triggerKey: 'g',
         source: 'sounds/piano/Chord_2.mp3',
@@ -195,6 +213,7 @@ export const piano = [
         //exclusiveZone: 1
     }, 
     {
+        id: 3,
         name: 'Piano Chord 3',
         triggerKey: 'h',
         source: 'sounds/piano/Chord_3.mp3',
@@ -203,6 +222,7 @@ export const piano = [
         //exclusiveZone: 1
     }, 
     {
+        id: 4,
         name: 'Piano Chord 4',
         triggerKey: 'j',
         source: 'sounds/piano/Chord_3.mp3',
@@ -212,6 +232,7 @@ export const piano = [
         detune: 200
     }, 
     {
+        id: 5,
         name: 'Piano Chord 5',
         triggerKey: 'k',
         source: 'sounds/piano/Chord_3.mp3',
@@ -221,6 +242,7 @@ export const piano = [
         detune: 300
     },
     {
+        id: 6,
         name: 'Piano Chord 6',
         triggerKey: 'l',
         source: 'sounds/piano/Chord_3.mp3',
@@ -230,6 +252,7 @@ export const piano = [
         detune: 500
     },
     {
+        id: 7,
         name: 'Piano Chord 7',
         triggerKey: ';',
         source: 'sounds/piano/Chord_3.mp3',
@@ -242,6 +265,7 @@ export const piano = [
 
 export const piano2 = [
     {
+        id: 1,
         name: 'Piano G',
         triggerKey: '`',
         source: 'sounds/piano/piano-g_Gsharp_major.wav',
@@ -250,6 +274,7 @@ export const piano2 = [
         detune: -100
     },    
     {
+        id: 2,
         name: 'Piano G#',
         triggerKey: '1',
         source: 'sounds/piano/piano-g_Gsharp_major.wav',
@@ -257,6 +282,7 @@ export const piano2 = [
         pan: -0.5,
     },    
     {
+        id: 3,
         name: 'Piano A',
         triggerKey: '2',
         source: 'sounds/piano/piano-a_A_major.wav',
@@ -271,6 +297,7 @@ export const piano2 = [
         pan: -0.5,
     },   
     {
+        id: 4,
         name: 'Piano A#',
         triggerKey: '4',
         source: 'sounds/piano/piano-b_B_major.wav',
@@ -285,6 +312,7 @@ export const piano2 = [
         pan: -0.5,
     }, 
     {
+        id: 5,
         name: 'Piano C#',
         triggerKey: '6',
         source: 'sounds/piano/piano-c_Csharp_major.wav',
@@ -292,6 +320,7 @@ export const piano2 = [
         pan: -0.5,
     }, 
     {
+        id: 6,
         name: 'Piano D',
         triggerKey: '7',
         source: 'sounds/piano/piano-d_D_major.wav',
@@ -299,6 +328,7 @@ export const piano2 = [
         pan: -0.5,
     }, 
     {
+        id: 7,
         name: 'Piano D#',
         triggerKey: '8',
         source: 'sounds/piano/piano-eb_Dsharp_major.wav',
@@ -306,6 +336,7 @@ export const piano2 = [
         pan: -0.5,
     }, 
     {
+        id: 8,
         name: 'Piano E',
         triggerKey: '9',
         source: 'sounds/piano/piano-e_E_major.wav',
@@ -313,6 +344,7 @@ export const piano2 = [
         pan: -0.5,
     }, 
     {
+        id: 9,
         name: 'Piano F',
         triggerKey: '0',
         source: 'sounds/piano/piano-f_F_major.wav',
@@ -320,6 +352,7 @@ export const piano2 = [
         pan: -0.5,
     },     
     {
+        id: 10,
         name: 'Piano F#',
         triggerKey: '-',
         source: 'sounds/piano/piano-f_Fsharp_major.wav',
@@ -327,6 +360,7 @@ export const piano2 = [
         pan: -0.5,
     },     
     {
+        id: 11,
         name: 'Piano G',
         triggerKey: '=',
         source: 'sounds/piano/piano-g_G_major.wav',
@@ -337,6 +371,7 @@ export const piano2 = [
 
 export const cello = [
     {
+        id: 1,
         name: 'Cello G',
         triggerKey: '1',
         source: 'sounds/strings/cello_G_major.wav',
@@ -344,6 +379,7 @@ export const cello = [
         detune: 12
     }, 
     {
+        id: 2,
         name: 'Cello A',
         triggerKey: '2',
         source: 'sounds/strings/cello_G_major.wav',
@@ -351,6 +387,7 @@ export const cello = [
         detune: -1000
     }, 
     {
+        id: 3,
         name: 'Cello B',
         triggerKey: '3',
         source: 'sounds/strings/cello_G_major.wav',
@@ -358,6 +395,7 @@ export const cello = [
         detune: -800
     }, 
     {
+        id: 4,
         name: 'Cello C',
         triggerKey: '4',
         source: 'sounds/strings/cello_G_major.wav',
@@ -365,6 +403,7 @@ export const cello = [
         detune: -700
     }, 
     {
+        id: 5,
         name: 'Cello D',
         triggerKey: '5',
         source: 'sounds/strings/cello_G_major.wav',
@@ -372,6 +411,7 @@ export const cello = [
         detune: -500
     }, 
     {
+        id: 6,
         name: 'Cello E',
         triggerKey: '6',
         source: 'sounds/strings/cello_G_major.wav',
@@ -379,6 +419,7 @@ export const cello = [
         detune: -300
     }, 
     {
+        id: 7,
         name: 'Cello F#',
         triggerKey: '7',
         source: 'sounds/strings/cello_G_major.wav',
@@ -386,6 +427,7 @@ export const cello = [
         detune: -100
     }, 
     {
+        id: 8,
         name: 'Cello G',
         triggerKey: '8',
         source: 'sounds/strings/cello_G_major.wav',
@@ -393,6 +435,7 @@ export const cello = [
         detune: 0
     }, 
     {
+        id: 9,
         name: 'Cello A',
         triggerKey: '9',
         source: 'sounds/strings/cello_G_major.wav',
@@ -400,6 +443,7 @@ export const cello = [
         detune: 200
     }, 
     {
+        id: 10,
         name: 'Cello B',
         triggerKey: '0',
         source: 'sounds/strings/cello_G_major.wav',
@@ -407,6 +451,7 @@ export const cello = [
         detune: 400
     }, 
     {
+        id: 11,
         name: 'Cello C',
         triggerKey: '-',
         source: 'sounds/strings/cello_G_major.wav',
@@ -414,6 +459,7 @@ export const cello = [
         detune: 500
     }, 
     {
+        id: 12,
         name: 'Cello D',
         triggerKey: '=',
         source: 'sounds/strings/cello_G_major.wav',
@@ -424,6 +470,7 @@ export const cello = [
 
 export const synthDrums = [
     {
+        id: 1,
         name: '808 C',
         triggerKey: 'v',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -432,6 +479,7 @@ export const synthDrums = [
         //exclusiveZone: 6
     }, 
     {
+        id: 2,
         name: '808 D',
         triggerKey: 'b',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -440,6 +488,7 @@ export const synthDrums = [
         //exclusiveZone: 6
     }, 
     {
+        id: 3,
         name: '808 E',
         triggerKey: 'n',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -447,6 +496,7 @@ export const synthDrums = [
         detune: -200,
         //exclusiveZone: 6
     }, {
+        id: 4,
         name: '808 F#',
         triggerKey: 'm',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -454,6 +504,7 @@ export const synthDrums = [
         detune: 0,
         //exclusiveZone: 6
     }, {
+        id: 5,
         name: '808 G',
         triggerKey: ',',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -461,6 +512,7 @@ export const synthDrums = [
         detune: 100,
         //exclusiveZone: 6
     }, {
+        id: 6,
         name: '808 A',
         triggerKey: '.',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -468,6 +520,7 @@ export const synthDrums = [
         detune: 300,
         //exclusiveZone: 6
     }, {
+        id: 7,
         name: '808 B',
         triggerKey: '/',
         source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',

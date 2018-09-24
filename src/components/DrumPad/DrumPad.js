@@ -39,14 +39,26 @@ class DrumPad extends Component {
             this.stopSound(this.props.audioCtx, this.state.gainNode, this.props.stopDelay, this.props.decayTime)
         }
 
-        // Play recorded key if playback index changes (i.e., playback is on)
-        if (prevProps.playbackIndex !== this.props.playbackIndex) {
-            this.handleKeyDown(this.props.recording[this.props.playbackIndex].key);
+        // Play recorded key if playback key/action changes
+        if (prevProps.playbackAction !== this.props.playbackAction) {
+            switch(this.props.playbackAction) {
+                case 'down': 
+                    this.handleKeyDown(null, this.props.triggerKey);
+                    break;
+                case 'up':
+                    this.handleKeyUp(null, this.props.triggerKey);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    handleKeyDown = (e) => {
-        let key = e.key || e;
+    handleKeyDown = (e, playbackKey) => {
+        if (!e && !playbackKey) { return; }
+
+        const key = (e && e.key) || playbackKey;
+        const isPlayback = playbackKey ? true : false;
 
         // Only play if correct key pressed and that key isnt' already
         // pressed (i.e., prevent auto-repeat)
@@ -64,17 +76,30 @@ class DrumPad extends Component {
             this.props.instrumentDetune,
             this.props.transitionTime
         );
-        this.props.setLastPlayed(this.props.exclusiveZone, key, this.props.name);
 
-        this.setState({ isPressed: true });
+        // Set played key if manually pressed (don't log playback keys)
+        if (!isPlayback) {
+            this.props.setLastPlayed(this.props.exclusiveZone, key, 'down', this.props.name);
+            this.setState({ isPressed: true });
+        }
     }
 
-    handleKeyUp = (e) => {
-        const key = (typeof e.key === 'string') ? e.key.toLowerCase() : e.key;
+    handleKeyUp = (e, playbackKey) => {
+        // Accept key as event prop or string
+        if (!e && !playbackKey) { return; }
+
+        const key = (e && e.key) || playbackKey;
+        const isPlayback = playbackKey ? true : false;
+
         if (key !== this.props.triggerKey) { return; }
 
         this.stopSound(this.props.audioCtx, this.state.gainNode, this.props.stopDelay, this.props.decayTime)
-        this.setState({ isPressed: false });
+        
+        // Set released key if manually pressed (don't log playback keys)
+        if (!isPlayback) {
+            this.props.setLastPlayed(this.props.exclusiveZone, key, 'up', this.props.name);
+            this.setState({ isPressed: false });
+        }
     }
 
     setAudioBuffer = async (audioCtx, src) => {

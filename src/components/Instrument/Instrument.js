@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PadBank from '../PadBank/PadBank';
 import detectMobile from '../../helpers/detectMobile';
 import InputRange from '../InputRange/InputRange';
 import './Instrument.css';
 
-export default class Instrument extends Component {
+export default class Instrument extends PureComponent {
     constructor(props) {
         super(props);
         this.state = {
@@ -14,6 +14,7 @@ export default class Instrument extends Component {
             totalCount: this.props.keyMappings.length,
             lastPlayedZone: 0,
             lastPlayedKey: '',
+            lastPlayedAction: '',
             panner: this.props.audioCtx.createStereoPanner(),
             dryGain: this.props.audioCtx.createGain(),
             wetGain: this.props.audioCtx.createGain(),
@@ -44,8 +45,14 @@ export default class Instrument extends Component {
             this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
         }
 
-        if (this.state.lastPlayedKey !== prevState.lastPlayedKey) {
-            this.props.recordPlayedKey(this.props.audioCtx.currentTime, this.state.lastPlayedKey);
+        if (this.state.lastPlayedKey !== prevState.lastPlayedKey ||
+            this.state.lastPlayedAction !== prevState.lastPlayedAction
+        ) {
+            this.props.recordPlayedKey(
+                this.props.audioCtx.currentTime, 
+                this.state.lastPlayedKey, 
+                this.state.lastPlayedAction
+            );
         }
     }
 
@@ -71,7 +78,6 @@ export default class Instrument extends Component {
             console.log('setReverbLevel: Invalid parameters');
             return;
         }
-        console.log(this.props.name, reverbLevel);
         dryGain.gain.setValueAtTime(1 - (reverbLevel / 100), audioCtx.currentTime);
         wetGain.gain.setValueAtTime((reverbLevel / 100), audioCtx.currentTime);
     }
@@ -92,11 +98,11 @@ export default class Instrument extends Component {
         this.setState({ display: text });
     }
 
-    setLastPlayed = (zone, key, name) => {
+    setLastPlayed = (zone, key, action, name) => {
         this.setState({ 
             lastPlayedZone: zone,
             lastPlayedKey: key,
-            display: name
+            lastPlayedAction: action
         });
     }
 
@@ -176,8 +182,7 @@ export default class Instrument extends Component {
                     incrementLoadedCount={this.incrementLoadedCount}
                     setLastPlayed={this.setLastPlayed}
                     setDisplay={this.setDisplay}
-                    recording={this.props.recording}
-                    playbackIndex={this.props.playbackIndex}
+                    playback={this.props.playback}
                 />
             </div>
         )

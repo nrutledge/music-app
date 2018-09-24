@@ -4,10 +4,10 @@ import DrumPad from '../DrumPad/DrumPad';
 const PadBank = function(props) {
     const drumPads = props.keyMappings.map((keyMap, index) => {
         return <DrumPad 
+                    key={keyMap.id}
                     audioCtx={props.audioCtx}
                     convolver={props.convolver}
                     panner={props.panner}
-                    key={props.index}
                     name={keyMap.name}
                     source={keyMap.source}
                     triggerKey={keyMap.triggerKey} 
@@ -29,8 +29,7 @@ const PadBank = function(props) {
                     incrementLoadedCount={props.incrementLoadedCount}
                     setLastPlayed={props.setLastPlayed}
                     setDisplay={props.setDisplay}
-                    recording={props.recording}
-                    playbackIndex={props.playbackIndex}
+                    playbackAction={props.playback && props.playback[keyMap.triggerKey]}
                 />
     });
 
