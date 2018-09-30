@@ -3,7 +3,11 @@ import { KEY_PRESS } from '../actions/types';
 const record = (state = [], action) => {
     switch(action.type) {
         case KEY_PRESS:
-            const { playIndex, key, isKeyUp } = action.payload;
+            const { playIndex, key, isKeyUp, isPlayBack } = action.payload;
+
+            // Don't record keys being played back
+            if (isPlayBack) { return state; }
+
             let newPressedKeys = { ...state[playIndex] };
             if (isKeyUp) {
                 newPressedKeys[key] = 'u'
@@ -12,8 +16,6 @@ const record = (state = [], action) => {
             }
             const newState = [ ...state ];
             newState[playIndex] = newPressedKeys;
-
-            console.log(newState);
             return newState;
         default:
             return state;

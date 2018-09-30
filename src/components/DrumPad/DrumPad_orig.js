@@ -37,8 +37,8 @@ class DrumPad extends Component {
 
         // If key has changed from pressed to not press (or vise versa)
         // play or stop the sound in response (undefined state = key up)
-        if (this.props.play && this.props.play !== prevProps.play) {
-            if (this.props.play === 'd') {
+        if (this.props.play !== prevProps.play) {
+            if (this.props.play) {
                 this.playSound(
                     this.props.audioCtx, 
                     this.props.panner, 
@@ -172,9 +172,6 @@ class DrumPad extends Component {
     }
 }
 
-const mapStateToProps = ({ record, playIndex }, ownProps) => { 
-    const play = record[playIndex] ? record[playIndex][ownProps.triggerKey] : undefined;
-    return { play };
-}
+const mapStateToProps = ({ play }, ownProps) => ({ play: play[ownProps.triggerKey] });
 export default connect(mapStateToProps, { keyPress })(DrumPad);
 

@@ -32,12 +32,12 @@ export const timerRestart = () => {
     }
 }
 
-export const keyPress = (key, isKeyUp) => {
+export const keyPress = (key, isKeyUp, isPlayBack) => {
     return (dispatch, getState) => {
         const { playIndex } = getState();
         dispatch({
             type: KEY_PRESS,
-            payload: { key, isKeyUp, playIndex }
+            payload: { key, isKeyUp, isPlayBack, playIndex }
         });
     }
 }
