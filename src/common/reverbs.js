@@ -1,4 +1,4 @@
-const reverbs = [
+export const reverbs = [
     { 
         name: 'Mausoleum',
         source: 'sounds/reverb/hm2_000_ortf_48k.wav'

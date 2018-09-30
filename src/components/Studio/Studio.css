@@ -8,11 +8,11 @@
   src: url('../../fonts/LLPIXEL3.ttf');
 }
 
-.app {
+.studio {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  flex-wrap: wrap;
   /* background-image: url('../../images/jodie-walton-502797-unsplash.jpg'); */
   background-image: url('../../images/danny-howe-365401-unsplash.jpg');
   background-size: cover;
@@ -20,4 +20,13 @@
   width: 100vw;
   margin: 0;
   padding: 0;
+}
+
+.workspace {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;  
+  flex-wrap: wrap;
+  width: 100vw;
+  margin: 65px 10px;
 }
