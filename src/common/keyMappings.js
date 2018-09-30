@@ -40,7 +40,7 @@ export const drums = [
         triggerKey: 'd',
         source: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
         volume: 0.5,
-        //exclusiveZone: 2
+        exclusiveZone: 2
     }, 
     {
         id: 7,
@@ -62,7 +62,7 @@ export const drums = [
         triggerKey: 'c',
         source: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
         volume: 0.75,
-        //exclusiveZone: 2
+        exclusiveZone: 2
     },
 ]
 
@@ -376,7 +376,7 @@ export const cello = [
         triggerKey: '1',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 1.0,
-        detune: 12
+        detune: 0
     }, 
     {
         id: 2,
@@ -384,7 +384,7 @@ export const cello = [
         triggerKey: '2',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.98,
-        detune: -1000
+        detune: 200
     }, 
     {
         id: 3,
@@ -392,7 +392,7 @@ export const cello = [
         triggerKey: '3',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.96,
-        detune: -800
+        detune: 400
     }, 
     {
         id: 4,
@@ -400,7 +400,7 @@ export const cello = [
         triggerKey: '4',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.94,
-        detune: -700
+        detune: 500
     }, 
     {
         id: 5,
@@ -408,7 +408,7 @@ export const cello = [
         triggerKey: '5',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.92,
-        detune: -500
+        detune: 700
     }, 
     {
         id: 6,
@@ -416,7 +416,7 @@ export const cello = [
         triggerKey: '6',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.90,
-        detune: -300
+        detune: 900
     }, 
     {
         id: 7,
@@ -424,7 +424,7 @@ export const cello = [
         triggerKey: '7',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.88,
-        detune: -100
+        detune: 1100
     }, 
     {
         id: 8,
@@ -432,7 +432,7 @@ export const cello = [
         triggerKey: '8',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.86,
-        detune: 0
+        detune: 1200
     }, 
     {
         id: 9,
@@ -440,7 +440,7 @@ export const cello = [
         triggerKey: '9',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.84,
-        detune: 200
+        detune: 1400
     }, 
     {
         id: 10,
@@ -448,7 +448,7 @@ export const cello = [
         triggerKey: '0',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.82,
-        detune: 400
+        detune: 1600
     }, 
     {
         id: 11,
@@ -456,7 +456,7 @@ export const cello = [
         triggerKey: '-',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.80,
-        detune: 500
+        detune: 1700
     }, 
     {
         id: 12,
@@ -464,7 +464,7 @@ export const cello = [
         triggerKey: '=',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.78,
-        detune: 700
+        detune: 1900
     }, 
 ]
 

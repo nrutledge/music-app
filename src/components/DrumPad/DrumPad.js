@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import loadAudioBuffer from '../../common/loadAudioBuffer';
+import { connect } from 'react-redux'; 
+import { handleKeyEvent, loadAudioBuffer } from '../../common';
+import { keyPress } from '../../actions';
 import './DrumPad.css';
 
 class DrumPad extends Component {
@@ -16,20 +18,13 @@ class DrumPad extends Component {
     }
 
     componentDidMount() {
-        window.focus();
-        document.addEventListener('keydown', this.handleKeyDown);
-        document.addEventListener('keyup', this.handleKeyUp);
-
         this.setAudioBuffer(this.props.audioCtx, this.props.source);
     }
 
-    componentWillUnmount() {
-        document.removeEventListener('keydown', this.handleKeyDown);
-        document.removeEventListener('keyup', this.handleKeyUp);        
-    }
-
     componentDidUpdate(prevProps) {
+        // @TODO: Fix exclusive zone logic
         // Stop playing sound if another key in same exclusive zone was played
+        /*
         if (this.props.exclusiveZone &&
             prevProps.lastPlayedKey !== this.props.lastPlayedKey &&
             this.props.exclusiveZone === this.props.lastPlayedZone &&
@@ -38,68 +33,33 @@ class DrumPad extends Component {
             // Fade sound out over longer duration than if single note were repeated (10x longer)
             this.stopSound(this.props.audioCtx, this.state.gainNode, this.props.stopDelay, this.props.decayTime)
         }
+        */
 
-        // Play recorded key if playback key/action changes
-        if (prevProps.playbackAction !== this.props.playbackAction) {
-            switch(this.props.playbackAction) {
-                case 'down': 
-                    this.handleKeyDown(null, this.props.triggerKey);
-                    break;
-                case 'up':
-                    this.handleKeyUp(null, this.props.triggerKey);
-                    break;
-                default:
-                    break;
+        // If key has changed from pressed to not press (or vise versa)
+        // play or stop the sound in response (undefined state = key up)
+        if (this.props.play && this.props.play !== prevProps.play) {
+            if (this.props.play === 'd') {
+                this.playSound(
+                    this.props.audioCtx, 
+                    this.props.panner, 
+                    this.state.audioBuffer, 
+                    this.state.lastStartTime,
+                    this.props.volume, 
+                    this.props.detune, 
+                    this.props.instrumentVolume,
+                    this.props.instrumentPanning,
+                    this.props.instrumentDetune,
+                    this.props.transitionTime
+                );
+            } else {
+                this.stopSound(
+                    this.props.audioCtx, 
+                    this.state.gainNode, 
+                    this.props.stopDelay, 
+                    this.props.decayTime
+                );
             }
-        }
-    }
-
-    handleKeyDown = (e, playbackKey) => {
-        if (!e && !playbackKey) { return; }
-
-        const key = (e && e.key) || playbackKey;
-        const isPlayback = playbackKey ? true : false;
-
-        // Only play if correct key pressed and that key isnt' already
-        // pressed (i.e., prevent auto-repeat)
-        if (key !== this.props.triggerKey || this.state.isPressed) { return; }
-
-        this.playSound(
-            this.props.audioCtx, 
-            this.props.panner, 
-            this.state.audioBuffer, 
-            this.state.lastStartTime,
-            this.props.volume, 
-            this.props.detune, 
-            this.props.instrumentVolume,
-            this.props.instrumentPanning,
-            this.props.instrumentDetune,
-            this.props.transitionTime
-        );
-
-        // Set played key if manually pressed (don't log playback keys)
-        if (!isPlayback) {
-            this.props.setLastPlayed(this.props.exclusiveZone, key, 'down', this.props.name);
-            this.setState({ isPressed: true });
-        }
-    }
-
-    handleKeyUp = (e, playbackKey) => {
-        // Accept key as event prop or string
-        if (!e && !playbackKey) { return; }
-
-        const key = (e && e.key) || playbackKey;
-        const isPlayback = playbackKey ? true : false;
-
-        if (key !== this.props.triggerKey) { return; }
-
-        this.stopSound(this.props.audioCtx, this.state.gainNode, this.props.stopDelay, this.props.decayTime)
-        
-        // Set released key if manually pressed (don't log playback keys)
-        if (!isPlayback) {
-            this.props.setLastPlayed(this.props.exclusiveZone, key, 'up', this.props.name);
-            this.setState({ isPressed: false });
-        }
+        } 
     }
 
     setAudioBuffer = async (audioCtx, src) => {
@@ -177,24 +137,26 @@ class DrumPad extends Component {
         }
     }
 
-    handleMouseDown = () => this.handleKeyDown({ key: this.props.triggerKey });
-    handleMouseUp = () => this.handleKeyUp({ key: this.props.triggerKey });
-    handleMouseEnter = () => this.props.setDisplay(this.props.name);
-    handleMouseLeave = () => this.handleKeyUp({ key: this.props.triggerKey });
- 
+    handleMouseEnter = () => this.props.setDisplayContent(this.props.name);
+    handleMouseDown = handleKeyEvent(this.props.keyPress, false, this.props.triggerKey);
+    handleMouseUp = handleKeyEvent(this.props.keyPress, true, this.props.triggerKey);
+
+    // If currently playing, stop when mouse leaves key
+    handleMouseLeave = () => this.props.play && handleKeyEvent(this.props.keyPress, true, this.props.triggerKey)();
+
     render() {
         //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';
-        const bgColor = this.state.isPressed ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
-        const lightness = this.state.isPressed ? '88%' : '70%';
-        const shadowAlpha = this.state.isPressed ? '0.6' : '0.2';
+        const bgColor = this.props.play ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
+        const lightness = this.props.play ? '88%' : '70%';
+        const shadowAlpha = this.props.play ? '0.6' : '0.2';
 
         return (
             <button 
                 className="drum-pad" 
                 id={this.props.type} 
+                onMouseEnter={this.handleMouseEnter}
                 onMouseDown={this.handleMouseDown}
                 onMouseUp={this.handleMouseUp}
-                onMouseEnter={this.handleMouseEnter}
                 onMouseLeave={this.handleMouseLeave}
                 style={{ 
                     backgroundColor: bgColor,
@@ -210,4 +172,9 @@ class DrumPad extends Component {
     }
 }
 
-export default DrumPad
+const mapStateToProps = ({ record, playIndex }, ownProps) => { 
+    const play = record[playIndex] ? record[playIndex][ownProps.triggerKey] : undefined;
+    return { play };
+}
+export default connect(mapStateToProps, { keyPress })(DrumPad);
+

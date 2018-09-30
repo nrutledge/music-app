@@ -1,20 +1,18 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
+import InstrumentDisplay from '../InstrumentDisplay/InstrumentDisplay';
 import PadBank from '../PadBank/PadBank';
-import detectMobile from '../../helpers/detectMobile';
 import InputRange from '../InputRange/InputRange';
+import detectMobile from '../../helpers/detectMobile';
 import './Instrument.css';
 
-export default class Instrument extends PureComponent {
+export default class Instrument extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            display: '',
+            displayContent: '',
             hue: this.props.hue,
             loadedCount: 0,
             totalCount: this.props.keyMappings.length,
-            lastPlayedZone: 0,
-            lastPlayedKey: '',
-            lastPlayedAction: '',
             panner: this.props.audioCtx.createStereoPanner(),
             dryGain: this.props.audioCtx.createGain(),
             wetGain: this.props.audioCtx.createGain(),
@@ -27,7 +25,7 @@ export default class Instrument extends PureComponent {
 
     componentDidMount() {
         const initialDisplay = detectMobile() ? 'Not mobile optimized' : 'Booting...'
-        this.setDisplay(initialDisplay);
+        this.setDisplayContent(initialDisplay);
         this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
 
         this.state.panner.connect(this.state.dryGain);
@@ -35,6 +33,23 @@ export default class Instrument extends PureComponent {
         this.state.panner.connect(this.state.wetGain);
         this.state.wetGain.connect(this.props.convolverGain);
     }
+
+    /*
+    shouldComponentUpdate(nextProps, nextState) {
+        if (
+            nextState.displayContent !== this.state.displayContent ||
+            nextState.hue !== this.state.hue ||
+            nextState.volume !== this.state.volume ||
+            nextState.panning !== this.state.panning ||
+            nextState.tuning !== this.state.tuning ||
+            nextState.reverb !== this.state.reverb
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    */
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.panning !== prevState.panning) {
@@ -44,28 +59,7 @@ export default class Instrument extends PureComponent {
         if (this.state.reverb !== prevState.reverb) {
             this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
         }
-
-        if (this.state.lastPlayedKey !== prevState.lastPlayedKey ||
-            this.state.lastPlayedAction !== prevState.lastPlayedAction
-        ) {
-            this.props.recordPlayedKey(
-                this.props.audioCtx.currentTime, 
-                this.state.lastPlayedKey, 
-                this.state.lastPlayedAction
-            );
-        }
     }
-
-    /*
-    componentWillReceiveProps(nextProps) {
-        if (this.props.convolver === null && nextProps.convolver) { 
-            this.state.panner.connect(this.state.dryGain);
-            this.state.dryGain.connect(this.props.audioCtx.destination);
-            this.state.panner.connect(this.state.wetGain);
-            this.state.wetGain.connect(nextProps.convolver);
-        };
-    }
-*/
 
     setPanner = (audioCtx, panner, panValue) => {
         if (!audioCtx || !panner || !panValue || panValue < -50 || panValue > +50) { return; }
@@ -88,22 +82,14 @@ export default class Instrument extends PureComponent {
         this.setState(prevState => { 
             const newCount = prevState.loadedCount + 1;
             return { 
-                display: `Loaded ${newCount}/${this.state.totalCount} Sounds`,
+                displayContent: `Loaded ${newCount}/${this.state.totalCount} Sounds`,
                 loadedCount: newCount
             };
         });
     }
 
-    setDisplay = (text) => {
-        this.setState({ display: text });
-    }
-
-    setLastPlayed = (zone, key, action, name) => {
-        this.setState({ 
-            lastPlayedZone: zone,
-            lastPlayedKey: key,
-            lastPlayedAction: action
-        });
+    setDisplayContent = (text) => {
+        this.setState({ displayContent: text });
     }
 
     handleInputRangeChange = (propName) => {
@@ -117,28 +103,14 @@ export default class Instrument extends PureComponent {
     render() {
         return (
             <div className="instrument">
-                <div 
-                    className="display" 
-                    style={{ 
-                        color: 'rgb(230, 230, 230)',
-                        backgroundColor: `rgb(45, 45, 45)`,
-                        border: `3px solid hsl(${this.props.hue}, 30%, 60%)`
-                        }}
-                >
-                    <div className="display-title">
-                        {this.props.name}
-                    </div>
-                    <div className="display-content">
-                        {this.state.display}
-                    </div>
-                </div>
+                <InstrumentDisplay hue={this.state.hue} displayName={this.props.name} displayContent={this.state.displayContent} />
                 <InputRange 
                     name="Volume" 
                     min={0} 
                     max={100} 
                     value={this.state.volume} 
                     handleInputRangeChange={this.handleInputRangeChange('volume')} 
-                    setDisplay={this.setDisplay}
+                    setDisplayContent={this.setDisplayContent}
                 />
                 <InputRange 
                     name="Panning" 
@@ -146,7 +118,7 @@ export default class Instrument extends PureComponent {
                     max={50} 
                     value={this.state.panning} 
                     handleInputRangeChange={this.handleInputRangeChange('panning')} 
-                    setDisplay={this.setDisplay}
+                    setDisplayContent={this.setDisplayContent}
                 />
                 <InputRange 
                     name="Reverb" 
@@ -154,7 +126,7 @@ export default class Instrument extends PureComponent {
                     max={100} 
                     value={this.state.reverb}
                     handleInputRangeChange={this.handleInputRangeChange('reverb')} 
-                    setDisplay={this.setDisplay}
+                    setDisplayContent={this.setDisplayContent}
                 />
                 <InputRange 
                     name="Tuning" 
@@ -162,7 +134,7 @@ export default class Instrument extends PureComponent {
                     max={24} 
                     value={this.state.tuning} 
                     handleInputRangeChange={this.handleInputRangeChange('tuning')} 
-                    setDisplay={this.setDisplay}
+                    setDisplayContent={this.setDisplayContent}
                 />
                 <PadBank 
                     audioCtx={this.props.audioCtx}
@@ -170,19 +142,15 @@ export default class Instrument extends PureComponent {
                     panner={this.state.panner}
                     keyMappings={this.props.keyMappings} 
                     hue={this.state.hue}
-                    lastPlayedZone={this.state.lastPlayedZone}
-                    lastPlayedKey={this.state.lastPlayedKey}
                     stopDelay={this.props.stopDelay}
                     decayTime={this.props.decayTime}
                     transitionTime={this.props.transitionTime}
                     instrumentVolume={this.state.volume / 100}
-                    instrumentPanning={this.state.panning / 10}
+                    instrumentPanning={this.state.panning / 50}
                     instrumentDetune={this.state.tuning * 100}
                     playSound={this.playSound}
                     incrementLoadedCount={this.incrementLoadedCount}
-                    setLastPlayed={this.setLastPlayed}
-                    setDisplay={this.setDisplay}
-                    playback={this.props.playback}
+                    setDisplayContent={this.setDisplayContent}
                 />
             </div>
         )

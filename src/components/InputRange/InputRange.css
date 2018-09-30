@@ -14,15 +14,16 @@
     justify-content: center;
 }
 
-.text, .slider {
+.range-label, .range-slider {
     margin: 8px;
 }
 
-.text {
+.range-label {
     width: 30%;
     text-align: right;
 }
 
-.slider {
+.range-slider {
     width: 70%;
+    height: 10px;
 }
