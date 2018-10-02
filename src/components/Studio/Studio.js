@@ -74,7 +74,7 @@ class Studio extends Component {
   render() {
     // Set the amount to vary hue per instrument
     const instrumentCount = 5;
-    const hueRange = 360;
+    const hueRange = 270;
     const hueShift = hueRange / instrumentCount; 
 
     return (
@@ -89,7 +89,7 @@ class Studio extends Component {
             name={'Rock Drums (ง\'̀-\'́)ง'} 
             volume={50} 
             panning={0} 
-            reverb={5}
+            reverb={0}
             stopDelay={2}
             decayTime={4}
             transitionTime={0.005}
@@ -101,11 +101,11 @@ class Studio extends Component {
             setConvolverBuffer={this.setConvolverBuffer} 
             keyMappings={synthDrums} 
             name={'Synth Drums'} 
-            volume={45} 
+            volume={50} 
             panning={0} 
-            reverb={5}
+            reverb={0}
             stopDelay={0.1}
-            decayTime={0.2}
+            decayTime={0.25}
             transitionTime={0.005}
             hue={this.state.baseHue + (hueShift * 1)}
           />
@@ -116,10 +116,10 @@ class Studio extends Component {
             keyMappings={piano} 
             name={'Piano'} 
             volume={100} 
-            panning={-30} 
+            panning={-25} 
             reverb={35}
-            stopDelay={0.04}
-            decayTime={0.08}
+            stopDelay={0.01}
+            decayTime={0.25}
             transitionTime={0.005}
             hue={this.state.baseHue + (hueShift * 2)}
           />
@@ -130,10 +130,10 @@ class Studio extends Component {
             keyMappings={synth} 
             name={'Synth'} 
             volume={75} 
-            panning={30} 
+            panning={25} 
             reverb={35}
-            stopDelay={0.04}
-            decayTime={0.08}
+            stopDelay={0.01}
+            decayTime={0.25}
             transitionTime={0.005}
             hue={this.state.baseHue + (hueShift * 3)}
           />
@@ -143,7 +143,7 @@ class Studio extends Component {
             setConvolverBuffer={this.setConvolverBuffer} 
             keyMappings={cello} 
             name={'Cello'} 
-            volume={33} 
+            volume={35} 
             panning={-3} 
             reverb={80}
             stopDelay={0.01}

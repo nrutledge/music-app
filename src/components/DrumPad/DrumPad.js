@@ -35,10 +35,12 @@ class DrumPad extends Component {
         }
         */
 
-        // If key has changed from pressed to not press (or vise versa)
-        // play or stop the sound in response (undefined state = key up)
-        if (this.props.play && this.props.play !== prevProps.play) {
-            if (this.props.play === 'd') {
+        
+        if ((this.props.playback && this.props.playback !== prevProps.playback) || 
+            this.props.isKeyDown !== prevProps.isKeyDown
+        ) {
+            if (this.props.playback === 'd' || this.props.isKeyDown) {
+                this.setState({ isPressed: true });
                 this.playSound(
                     this.props.audioCtx, 
                     this.props.panner, 
@@ -52,6 +54,7 @@ class DrumPad extends Component {
                     this.props.transitionTime
                 );
             } else {
+                this.setState({ isPressed: false });
                 this.stopSound(
                     this.props.audioCtx, 
                     this.state.gainNode, 
@@ -146,9 +149,9 @@ class DrumPad extends Component {
 
     render() {
         //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';
-        const bgColor = this.props.play ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
-        const lightness = this.props.play ? '88%' : '70%';
-        const shadowAlpha = this.props.play ? '0.6' : '0.2';
+        const bgColor = this.state.isPressed ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
+        const lightness = this.state.isPressed ? '88%' : '70%';
+        const shadowAlpha = this.state.isPressed ? '0.6' : '0.2';
 
         return (
             <button 
@@ -172,9 +175,13 @@ class DrumPad extends Component {
     }
 }
 
-const mapStateToProps = ({ record, playIndex }, ownProps) => { 
-    const play = record[playIndex] ? record[playIndex][ownProps.triggerKey] : undefined;
-    return { play };
+const mapStateToProps = ({ record: { playing, recording }, controls: { playIndex } }, ownProps) => { 
+    const key = ownProps.triggerKey;
+    const playback = recording[playIndex] ? recording[playIndex][key] : undefined;
+    const isKeyDown = playing[key];
+    
+    return { playback, isKeyDown };
+
 }
 export default connect(mapStateToProps, { keyPress })(DrumPad);
 

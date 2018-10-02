@@ -32,7 +32,7 @@ export const drums = [
         name: 'Ride',
         triggerKey: 's',
         source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
-        volume: 0.75
+        volume: 0.8
     }, 
     {
         id: 6,
@@ -54,14 +54,14 @@ export const drums = [
         name: 'Snare',
         triggerKey: 'x',
         source: 'sounds/drums/Snare On/Snare 6.wav',
-        volume: 0.85
+        volume: 0.81
     }, 
     {
         id: 9,
         name: 'Hi-Hat Closed',
         triggerKey: 'c',
         source: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
-        volume: 0.75,
+        volume: 0.77,
         exclusiveZone: 2
     },
 ]

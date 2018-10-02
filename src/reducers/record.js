@@ -1,22 +1,34 @@
-import { KEY_PRESS } from '../actions/types';
+import { KEY_PRESS, CLEAR_RECORDING } from '../actions/types';
 
-const record = (state = [], action) => {
+const initialState = {
+    playing: {},
+    recording: []
+}
+
+const record = (state = initialState, action) => {
     switch(action.type) {
         case KEY_PRESS:
-            const { playIndex, key, isKeyUp, isPlayBack } = action.payload;
+            const { playIndex, key, isKeyUp, isRecordingOn } = action.payload;
+            let newPlaying = { ...state.playing };
+            let newRecording = [ ...state.recording];
+            
+            // Update currently playing keys
+            newPlaying[key] = isKeyUp ? false : true;
 
-            // Don't record keys being played back
-            if (isPlayBack) { return state; }
-
-            let newPressedKeys = { ...state[playIndex] };
-            if (isKeyUp) {
-                newPressedKeys[key] = 'u'
-            } else {
-                newPressedKeys[key] = 'd'
+            // If recording is enabled, add key status to recording
+            // 'd' = keydown, 'u' = keyup
+            if (isRecordingOn) {
+                let newRecordingAtIndex = { ...newRecording[playIndex] };
+                newRecordingAtIndex[key] = isKeyUp ? 'u' : 'd';
+                newRecording[playIndex] = newRecordingAtIndex;
             }
-            const newState = [ ...state ];
-            newState[playIndex] = newPressedKeys;
-            return newState;
+            
+            return {
+                playing: newPlaying,
+                recording: newRecording
+            }
+        case CLEAR_RECORDING:
+            return initialState;
         default:
             return state;
     }
