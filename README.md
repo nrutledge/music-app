@@ -5,3 +5,5 @@ A work in progress app for creating awesome music with nothing more than a QWERT
 ## Try It
 
 https://nrutledge.github.io/music-app/
+
+*Currently only supported in Chrome*
