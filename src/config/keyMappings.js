@@ -4,42 +4,42 @@ export default {
         id: 1,
         name: 'High Tom',
         triggerKey: 'q',
-        source: 'sounds/drums/Tom High/Tom High 4.wav',
+        source: 'sounds/drums/Tom High/Tom High 4.mp3',
         volume: 1.0,
     }, 
     {
         id: 2,
         name: 'Mid Tom',
         triggerKey: 'w',
-        source: 'sounds/drums/Tom Mid/Tom Mid 4.wav',
+        source: 'sounds/drums/Tom Mid/Tom Mid 4.mp3',
         volume: 1.0
     }, 
     {
         id: 3,
         name: 'Floor Tom',
         triggerKey: 'e',
-        source: 'sounds/drums/Tom Floor/Tom Floor 5.wav',
+        source: 'sounds/drums/Tom Floor/Tom Floor 5.mp3',
         volume: 1.0
     }, 
     {
         id: 4,
         name: 'Crash',
         triggerKey: 'a',
-        source: 'sounds/drums/Crash A/Crash A 5.wav',
+        source: 'sounds/drums/Crash A/Crash A 5.mp3',
         volume: 0.55
     }, 
     {
         id: 5,
         name: 'Ride',
         triggerKey: 's',
-        source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.wav',
+        source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.mp3',
         volume: 0.8
     }, 
     {
         id: 6,
         name: 'Hi-Hat Open',
         triggerKey: 'd',
-        source: 'sounds/drums/Hi Hat/Hi Hat Open 5.wav',
+        source: 'sounds/drums/Hi Hat/Hi Hat Open 5.mp3',
         volume: 0.5,
         exclusiveZone: 2
     }, 
@@ -47,21 +47,21 @@ export default {
         id: 7,
         name: 'Kick',
         triggerKey: 'z',
-        source: 'sounds/drums2/kick-softy.wav',
+        source: 'sounds/drums2/kick-softy.mp3',
         volume: 0.9
     }, 
     {
         id: 8,
         name: 'Snare',
         triggerKey: 'x',
-        source: 'sounds/drums/Snare On/Snare 6.wav',
+        source: 'sounds/drums/Snare On/Snare 6.mp3',
         volume: 0.81
     }, 
     {
         id: 9,
         name: 'Hi-Hat Closed',
         triggerKey: 'c',
-        source: 'sounds/drums/Hi Hat/Hi Hat 8.wav',
+        source: 'sounds/drums/Hi Hat/Hi Hat 8.mp3',
         volume: 0.77,
         exclusiveZone: 2
     },
@@ -200,6 +200,16 @@ export default {
         //exclusiveZone: 1,
         detune: 700
     },
+    {
+      id: 7,
+      name: 'Piano Chord 7',
+      triggerKey: '\'',
+      source: 'sounds/piano/Chord_3.mp3',
+      volume: 1.0,
+      pan: -0.5,
+      //exclusiveZone: 1,
+      detune: 900
+    }
   ], 
   piano2: [
     {
@@ -307,6 +317,7 @@ export default {
     },    
   ],
   cello: [
+    /*
     {
         id: 1,
         name: 'Cello G',
@@ -331,10 +342,11 @@ export default {
         volume: 0.96,
         detune: 400
     }, 
+    */
     {
         id: 4,
         name: 'Cello C',
-        triggerKey: '4',
+        triggerKey: 'r',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.94,
         detune: 500
@@ -342,7 +354,7 @@ export default {
     {
         id: 5,
         name: 'Cello D',
-        triggerKey: '5',
+        triggerKey: 't',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.92,
         detune: 700
@@ -350,7 +362,7 @@ export default {
     {
         id: 6,
         name: 'Cello E',
-        triggerKey: '6',
+        triggerKey: 'y',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.90,
         detune: 900
@@ -358,7 +370,7 @@ export default {
     {
         id: 7,
         name: 'Cello F#',
-        triggerKey: '7',
+        triggerKey: 'u',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.88,
         detune: 1100
@@ -366,7 +378,7 @@ export default {
     {
         id: 8,
         name: 'Cello G',
-        triggerKey: '8',
+        triggerKey: 'i',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.86,
         detune: 1200
@@ -374,7 +386,7 @@ export default {
     {
         id: 9,
         name: 'Cello A',
-        triggerKey: '9',
+        triggerKey: 'o',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.84,
         detune: 1400
@@ -382,7 +394,7 @@ export default {
     {
         id: 10,
         name: 'Cello B',
-        triggerKey: '0',
+        triggerKey: 'p',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.82,
         detune: 1600
@@ -390,19 +402,21 @@ export default {
     {
         id: 11,
         name: 'Cello C',
-        triggerKey: '-',
+        triggerKey: '[',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.80,
         detune: 1700
     }, 
+    /*
     {
         id: 12,
         name: 'Cello D',
-        triggerKey: '=',
+        triggerKey: ']',
         source: 'sounds/strings/cello_G_major.wav',
         volume: 0.78,
         detune: 1900
     }, 
+    */
   ],
   synthDrums: [
     {

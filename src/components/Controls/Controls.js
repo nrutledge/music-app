@@ -20,38 +20,38 @@ export default (props) => {
     return (
         <div className="controls">
             <div className="controls-section">
+              <button className="button-play" onClick={timerStart}>Play</button>
+              <button 
+                  className={'button-record ' + recordingStatus} 
+                  onClick={props.toggleRecord}
+              >
+                Record
+              </button>
+              <button className="button-stop" onClick={props.timerStop}>
+                Stop
+              </button>
+              <button className="button-restart" onClick={props.timerRestart}>
+                Restart
+              </button>
             </div>
             <div className="controls-section">
-                <button className="button-play" onClick={timerStart}>Play</button>
-                <button 
-                    className={'button-record ' + recordingStatus} 
-                    onClick={props.toggleRecord}
-                >
-                  Record
-                </button>
-                <button className="button-stop" onClick={props.timerStop}>
-                  Stop
-                </button>
-                <button className="button-restart" onClick={props.timerRestart}>
-                  Restart
-                </button>
-                <label className="controls-label" for="play-position">Position</label>
-                <div className="play-position" name="play-position">
-                  {`${currentBar} ${currentBeat}`}
-                </div>
-                <label className="controls-label" for="tempo">Tempo</label>
-                <input 
-                    className="tempo" 
-                    name="tempo"
-                    type="number" 
-                    onChange={(e) => props.tempoChange(e.target.value)} 
-                    value={props.tempo} 
-                />
+              <label className="controls-label" for="play-position">Position</label>
+              <div className="play-position" name="play-position">
+                {`${currentBar} ${currentBeat}`}
+              </div>
+              <label className="controls-label" for="tempo">Tempo</label>
+              <input 
+                  className="tempo" 
+                  name="tempo"
+                  type="number" 
+                  onChange={(e) => props.tempoChange(e.target.value)} 
+                  value={props.tempo} 
+              />
             </div>
             <div className="controls-section">
-                <button className="button-clear" onClick={props.clearRecording}>
-                    Clear Recording
-                </button>
+              <button className="button-clear" onClick={props.clearRecording}>
+                Clear Recording
+              </button>
             </div>
         </div>
     )
