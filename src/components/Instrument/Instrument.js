@@ -48,7 +48,7 @@ export default class Instrument extends Component {
               this.props.audioCtx, 
               this.state.dryGain, 
               this.state.wetGain, 
-              this.state.rever
+              this.state.reverb
             );
         }
     }
