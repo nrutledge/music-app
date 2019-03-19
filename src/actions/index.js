@@ -22,23 +22,17 @@ export const timerStart = (interval) => {
 }
 
 export const timerTick = () => {
-    return {
-        type: TIMER_TICK
-    };
+    return { type: TIMER_TICK };
 }
 
 export const timerStop = () => {
     clearInterval(timer);
     timer = null;
-    return {
-        type: TIMER_STOP
-    };
+    return { type: TIMER_STOP };
 }
 
 export const timerRestart = () => {
-    return {
-        type: TIMER_RESTART
-    };
+    return { type: TIMER_RESTART };
 }
 
 export const keyPress = (key, isKeyUp, isPlayBack) => {

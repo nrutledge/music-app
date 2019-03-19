@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import InstrumentDisplay from '../InstrumentDisplay/InstrumentDisplay';
 import PadBank from '../PadBank/PadBank';
 import InputRange from '../InputRange/InputRange';
-import detectMobile from '../../helpers/detectMobile';
+import { detectMobile } from '../../services';
 import './Instrument.css';
 
 export default class Instrument extends Component {
@@ -26,30 +26,17 @@ export default class Instrument extends Component {
     componentDidMount() {
         const initialDisplay = detectMobile() ? 'Not mobile optimized' : 'Booting...'
         this.setDisplayContent(initialDisplay);
-        this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
-
+        this.setReverbLevel(
+          this.props.audioCtx, 
+          this.state.dryGain, 
+          this.state.wetGain, 
+          this.state.reverb
+        );
         this.state.panner.connect(this.state.dryGain);
         this.state.dryGain.connect(this.props.audioCtx.destination);
         this.state.panner.connect(this.state.wetGain);
         this.state.wetGain.connect(this.props.convolverGain);
     }
-
-    /*
-    shouldComponentUpdate(nextProps, nextState) {
-        if (
-            nextState.displayContent !== this.state.displayContent ||
-            nextState.hue !== this.state.hue ||
-            nextState.volume !== this.state.volume ||
-            nextState.panning !== this.state.panning ||
-            nextState.tuning !== this.state.tuning ||
-            nextState.reverb !== this.state.reverb
-        ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    */
 
     componentDidUpdate(prevProps, prevState) {
         if (this.state.panning !== prevState.panning) {
@@ -57,7 +44,12 @@ export default class Instrument extends Component {
         }
 
         if (this.state.reverb !== prevState.reverb) {
-            this.setReverbLevel(this.props.audioCtx, this.state.dryGain, this.state.wetGain, this.state.reverb);
+            this.setReverbLevel(
+              this.props.audioCtx, 
+              this.state.dryGain, 
+              this.state.wetGain, 
+              this.state.rever
+            );
         }
     }
 
@@ -103,7 +95,11 @@ export default class Instrument extends Component {
     render() {
         return (
             <div className="instrument">
-                <InstrumentDisplay hue={this.state.hue} displayName={this.props.name} displayContent={this.state.displayContent} />
+                <InstrumentDisplay 
+                  hue={this.state.hue} 
+                  displayName={this.props.name} 
+                  displayContent={this.state.displayContent} 
+                />
                 <InputRange 
                     name="Volume" 
                     min={0} 
@@ -148,7 +144,6 @@ export default class Instrument extends Component {
                     instrumentVolume={this.state.volume / 100}
                     instrumentPanning={this.state.panning / 50}
                     instrumentDetune={this.state.tuning * 100}
-                    playSound={this.playSound}
                     incrementLoadedCount={this.incrementLoadedCount}
                     setDisplayContent={this.setDisplayContent}
                 />

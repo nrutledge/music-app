@@ -1,5 +1,4 @@
 .controls {
-    position: fixed;
     top: 0;
     left: 0;
     display: flex;
@@ -12,16 +11,22 @@
 }
 
 .controls button {
-    padding: 8px 18px;
+    padding: 10px 20px;
     margin: 5px 2px;
-    background-color: #EEE;
+    background-color: rgb(103, 103, 103);
+    color: white;
 }
 
 .controls-section {
-    width: 33%;
+    width: 40%;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.controls-label {
+  color: rgb(169, 169, 169);
+  margin: 0 10px 0 12px;
 }
 
 .button-record.on {
@@ -44,7 +49,6 @@
     box-sizing: border-box;
     width: 70px;
     height: 40px;
-    margin: 5px 10px;
     background-color: #444;
 }
 
@@ -53,5 +57,10 @@
     box-sizing: border-box;
     width: 50px;
     height: 40px;
-    text-align: right;
+    text-align: center;
+    background-color: rgb(58, 58, 58);
+    color: rgb(216, 216, 216);
+    border: none;
+    width: 70px;
+    padding-left: 10px;
 }

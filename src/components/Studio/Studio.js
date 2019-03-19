@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { keyPress } from '../../actions';
-import Controls from '../Controls/Controls';
+import ControlsContainer from '../../containers/ControlsContainer';
+import { handleKeyEvent, loadAudioBuffer } from '../../services';
 import Instrument from '../Instrument/Instrument';
-import { handleKeyEvent, loadAudioBuffer } from '../../common';
-import { drums, synth, piano, synthDrums, cello } from '../../common/keyMappings'
+import keyMappings from '../../config/keyMappings';
+import reverbs from '../../config/reverbs';
+import instruments from '../../config/instruments';
 import './Studio.css';
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
-class Studio extends Component {
+export default class Studio extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,9 +31,7 @@ class Studio extends Component {
       audioCtx, 
       this.state.convolverGain,
       loadAudioBuffer, 
-      'sounds/reverb/falkland_tennis_court_ortf.wav'
-      //'sounds/reverb/hm2_000_ortf_48k.wav'
-      //'sounds/reverb/lyd3_000_ortf_48k.wav'
+      reverbs.tennisCourt
     ); 
   }
 
@@ -56,106 +54,39 @@ class Studio extends Component {
   setConvolverBuffer = (convolver, src) => {
     convolver.buffer = src;
   }
-/*
-  playRecord = (key, isKeyUp) => {
-    if (!key) { return; }
 
-    this.setState(state => {
-      const newKeysDown = { ...state.keysDown };
-      isKeyUp ? delete newKeysDown[key] : newKeysDown[key] = true;
-      
-      return { keysDown: newKeysDown };
-    });
-  }
-*/
   handleKeyDown = handleKeyEvent(this.props.keyPress, false);
   handleKeyUp = handleKeyEvent(this.props.keyPress, true);
 
   render() {
-    // Set the amount to vary hue per instrument
-    const instrumentCount = 5;
-    const hueRange = 270;
-    const hueShift = hueRange / instrumentCount; 
+    // Amount to vary hue between each instrument
+    const hueShift = 45; 
 
     return (
       <div className="studio">
-        <Controls />
+        <ControlsContainer />
         <div className="workspace">
-          <Instrument 
-            audioCtx={audioCtx} 
-            convolverGain={this.state.convolverGain} 
-            setConvolverBuffer={this.setConvolverBuffer} 
-            keyMappings={drums} 
-            name={'Rock Drums (ง\'̀-\'́)ง'} 
-            volume={50} 
-            panning={0} 
-            reverb={0}
-            stopDelay={2}
-            decayTime={4}
-            transitionTime={0.005}
-            hue={this.state.baseHue + (hueShift * 0)}
-          />
-          <Instrument 
-            audioCtx={audioCtx} 
-            convolverGain={this.state.convolverGain} 
-            setConvolverBuffer={this.setConvolverBuffer} 
-            keyMappings={synthDrums} 
-            name={'Synth Drums'} 
-            volume={50} 
-            panning={0} 
-            reverb={0}
-            stopDelay={0.1}
-            decayTime={0.25}
-            transitionTime={0.005}
-            hue={this.state.baseHue + (hueShift * 1)}
-          />
-          <Instrument 
-            audioCtx={audioCtx} 
-            convolverGain={this.state.convolverGain} 
-            setConvolverBuffer={this.setConvolverBuffer} 
-            keyMappings={piano} 
-            name={'Piano'} 
-            volume={100} 
-            panning={-25} 
-            reverb={35}
-            stopDelay={0.01}
-            decayTime={0.25}
-            transitionTime={0.005}
-            hue={this.state.baseHue + (hueShift * 2)}
-          />
-          <Instrument 
-            audioCtx={audioCtx} 
-            convolverGain={this.state.convolverGain} 
-            setConvolverBuffer={this.setConvolverBuffer} 
-            keyMappings={synth} 
-            name={'Synth'} 
-            volume={75} 
-            panning={25} 
-            reverb={35}
-            stopDelay={0.01}
-            decayTime={0.25}
-            transitionTime={0.005}
-            hue={this.state.baseHue + (hueShift * 3)}
-          />
-          <Instrument 
-            audioCtx={audioCtx} 
-            convolverGain={this.state.convolverGain} 
-            setConvolverBuffer={this.setConvolverBuffer} 
-            keyMappings={cello} 
-            name={'Cello'} 
-            volume={35} 
-            panning={-3} 
-            reverb={80}
-            stopDelay={0.01}
-            decayTime={0.2}
-            transitionTime={0.005}
-            hue={this.state.baseHue + (hueShift * 4)}
-          />
+          {instruments.map((instrument, index) => {
+            return (
+              <Instrument
+                key={instrument.id}
+                audioCtx={audioCtx} 
+                convolverGain={this.state.convolverGain} 
+                setConvolverBuffer={this.setConvolverBuffer} 
+                keyMappings={keyMappings[instrument.keyMapping]} 
+                name={instrument.name} 
+                volume={instrument.volume}
+                panning={instrument.panning}
+                reverb={instrument.reverb}
+                stopDelay={instrument.stopDelay}
+                decayTime={instrument.decayTime}
+                transitionTime={instrument.transitionTime}
+                hue={this.state.baseHue + (hueShift * index)}              
+              />
+            )
+          })}
         </div>
       </div>
     );
   }
 }
-
-
-export default connect(null, { keyPress })(Studio);

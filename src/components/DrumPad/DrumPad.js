@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
-import { handleKeyEvent, loadAudioBuffer } from '../../common';
+import { handleKeyEvent, loadAudioBuffer } from '../../services';
 import { keyPress } from '../../actions';
 import './DrumPad.css';
 
@@ -145,7 +145,8 @@ class DrumPad extends Component {
     handleMouseUp = handleKeyEvent(this.props.keyPress, true, this.props.triggerKey);
 
     // If currently playing, stop when mouse leaves key
-    handleMouseLeave = () => this.props.play && handleKeyEvent(this.props.keyPress, true, this.props.triggerKey)();
+    handleMouseLeave = () => this.props.play && 
+      handleKeyEvent(this.props.keyPress, true, this.props.triggerKey)();
 
     render() {
         //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';

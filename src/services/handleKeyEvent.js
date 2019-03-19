@@ -1,5 +1,9 @@
+/**
+ * Configurable event handler for use with both key and mouse events.
+ * Specify 'key' for mouse events so they can act as a keydown/keyup.
+ */
 export const handleKeyEvent = (callback, isKeyUp, key) => {
-    return (e) => {
+    return e => {
       if (e) {
         if (e.repeat) { return; }
         if (e.key) { key = e.key ;}

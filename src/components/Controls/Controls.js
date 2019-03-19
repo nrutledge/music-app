@@ -1,24 +1,22 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { timerStart, 
-    timerStop, 
-    timerRestart, 
-    tempoChange, 
-    toggleRecord, 
-    clearRecording 
-} from '../../actions';
 import './Controls.css';
 
 // Number of slices to record per bar
 const precision = 96;
 
-const Controls = (props) => {
+export default (props) => {
+    // Length of each bar in seconds (60 / beats per minute * 4)
     const barLength = 240 / props.tempo;
+
+    // Length of each slice of the recording in milliseconds
     const interval = barLength / precision * 1000;
+
+    const currentBar = Math.floor(props.playIndex / precision) + 1;
+    const currentBeat = Math.floor((props.playIndex / (precision / 4) % 4)) + 1;
+    const recordingStatus = props.isRecordingOn ? 'on' : '';
+
     const timerStart = () => props.timerStart(interval);
-    const recordingStatus = props.controls.isRecordingOn ? 'on' : '';
-    const currentbar = Math.floor(props.controls.playIndex / 96) + 1;
-    const currentBeat = Math.floor((props.controls.playIndex / 24 % 4)) + 1;
+
     return (
         <div className="controls">
             <div className="controls-section">
@@ -28,12 +26,23 @@ const Controls = (props) => {
                 <button 
                     className={'button-record ' + recordingStatus} 
                     onClick={props.toggleRecord}
-                >Record</button>
-                <button className="button-stop" onClick={props.timerStop}>Stop</button>
-                <button className="button-restart" onClick={props.timerRestart}>Restart</button>
-                <div className="play-position">{`${currentbar} ${currentBeat}`}</div>
+                >
+                  Record
+                </button>
+                <button className="button-stop" onClick={props.timerStop}>
+                  Stop
+                </button>
+                <button className="button-restart" onClick={props.timerRestart}>
+                  Restart
+                </button>
+                <label className="controls-label" for="play-position">Position</label>
+                <div className="play-position" name="play-position">
+                  {`${currentBar} ${currentBeat}`}
+                </div>
+                <label className="controls-label" for="tempo">Tempo</label>
                 <input 
                     className="tempo" 
+                    name="tempo"
                     type="number" 
                     onChange={(e) => props.tempoChange(e.target.value)} 
                     value={props.tempo} 
@@ -47,14 +56,3 @@ const Controls = (props) => {
         </div>
     )
 }
-
-const mapStateToProps = ({ controls, tempo }) => ({ controls, tempo });
-const mapDispatchToProps = { 
-    timerStart, 
-    timerStop, 
-    timerRestart, 
-    tempoChange, 
-    toggleRecord, 
-    clearRecording 
-};
-export default connect(mapStateToProps, mapDispatchToProps)(Controls);

@@ -1,4 +1,4 @@
-const detectMobile = () => { 
+export const detectMobile = () => { 
     if (
         navigator.userAgent.match(/Android/i) ||
         navigator.userAgent.match(/webOS/i) ||
@@ -14,5 +14,3 @@ const detectMobile = () => {
         return false;
     }
 }
-
-export default detectMobile;

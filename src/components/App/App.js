@@ -1,17 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import Studio from '../Studio/Studio';
+import StudioContainer from '../../containers/StudioContainer';
 
-const App = () => {
-    return (
-        <div className={container}>
-            <BrowserRouter>
-                <div>
-                    <Route exact path="/" component={Studio} />
-                </div>
-            </BrowserRouter>
-        </div>
-    );
+export default () => {
+  return (
+    <div className="container" style={{ height: '100%' }}>
+      <BrowserRouter>
+          <Route exact path="/" component={StudioContainer} />
+      </BrowserRouter>
+    </div>
+  );
 }
-
-export default App;

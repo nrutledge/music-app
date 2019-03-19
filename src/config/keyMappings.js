@@ -1,4 +1,5 @@
-export const drums = [
+export default {
+  drums: [
     {
         id: 1,
         name: 'High Tom',
@@ -64,68 +65,8 @@ export const drums = [
         volume: 0.77,
         exclusiveZone: 2
     },
-]
-
-export const synth = [
-    /*
-    {
-        name: 'Synth C Minor',
-        triggerKey: '4',
-        source: 'sounds/synth/I_Do_Remember_Cm_01.wav',
-        volume: 0.75,
-        pan: 0.5,
-        //exclusiveZone: 3
-    },
-    {
-        name: 'Synth D Minor',
-        triggerKey: '5',
-        source: 'sounds/synth/I_Do_Remember_Dm_01.wav',
-        volume: 0.75,
-        pan: 0.5,
-        //exclusiveZone: 3
-    },  
-    {
-        name: 'Synth E Minor',
-        triggerKey: '6',
-        source: 'sounds/synth/I_Do_Remember_Em_01.wav',
-        volume: 0.75,
-        pan: 0.5,
-        //exclusiveZone: 3
-    },  
-    {
-        name: 'Synth F Minor',
-        triggerKey: '7',
-        source: 'sounds/synth/I_Do_Remember_Fm_01.wav',
-        volume: 0.75,
-        pan: 0.5,
-        //exclusiveZone: 3,
-        detune: 100
-    },  
-    {
-        name: 'Synth G Minor',
-        triggerKey: '8',
-        source: 'sounds/synth/I_Do_Remember_Gm_01.wav',
-        volume: 0.75,
-        pan: 0.5,
-        //exclusiveZone: 3
-    },
-    {
-        name: 'Synth A Minor',
-        triggerKey: '9',
-        source: 'sounds/synth/I_Do_Remember_Am_01.wav',
-        volume: 0.75,
-        pan: 0.5,
-        //exclusiveZone: 3
-    },
-    {
-        name: 'Synth B Minor',
-        triggerKey: '0',
-        source: 'sounds/synth/I_Do_Remember_Bm_01.wav',
-        volume: 0.75,
-        pan: 0.5,
-        //exclusiveZone: 3
-    },
-    */
+  ],
+  synth: [
     {
         id: 1,
         name: 'Synth C Major',
@@ -190,10 +131,8 @@ export const synth = [
         pan: 0.5,
         //exclusiveZone: 3
     },
-]
-
-
-export const piano = [
+  ], 
+  piano: [
     {
         id: 1,
         name: 'Piano Chord 1',
@@ -261,9 +200,8 @@ export const piano = [
         //exclusiveZone: 1,
         detune: 700
     },
-]
-
-export const piano2 = [
+  ], 
+  piano2: [
     {
         id: 1,
         name: 'Piano G',
@@ -367,9 +305,8 @@ export const piano2 = [
         volume: 0.76,
         pan: -0.5,
     },    
-]
-
-export const cello = [
+  ],
+  cello: [
     {
         id: 1,
         name: 'Cello G',
@@ -466,9 +403,8 @@ export const cello = [
         volume: 0.78,
         detune: 1900
     }, 
-]
-
-export const synthDrums = [
+  ],
+  synthDrums: [
     {
         id: 1,
         name: '808 C',
@@ -527,13 +463,9 @@ export const synthDrums = [
         volume: 1.0,
         detune: 500,
         //exclusiveZone: 6
-    },  
-]
-
-
-
-
-
+    }
+  ]
+}
 
     /*
     {

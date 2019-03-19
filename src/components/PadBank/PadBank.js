@@ -24,7 +24,6 @@ class PadBank extends Component {
                         instrumentDetune={this.props.instrumentDetune}
                         exclusiveZone={keyMap.exclusiveZone}
                         hue={this.props.hue}
-                        playSound={this.props.playSound}
                         incrementLoadedCount={this.props.incrementLoadedCount}
                         setDisplayContent={this.props.setDisplayContent}
                     />
