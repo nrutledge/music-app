@@ -10,7 +10,6 @@ export default [
     decayTime: 4,
     transitionTime: 0.005
   },
-  /*
   {
     id: 2,
     keyMapping: 'synthDrums', 
@@ -22,7 +21,6 @@ export default [
     decayTime: 0.25,
     transitionTime: 0.005
   },
-  */
   {
     id: 3,
     keyMapping: 'piano', 

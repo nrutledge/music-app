@@ -201,14 +201,14 @@ export default {
         detune: 700
     },
     {
-      id: 7,
-      name: 'Piano Chord 7',
-      triggerKey: '\'',
-      source: 'sounds/piano/Chord_3.mp3',
-      volume: 1.0,
-      pan: -0.5,
-      //exclusiveZone: 1,
-      detune: 900
+        id: 8,
+        name: 'Piano Chord 7',
+        triggerKey: '\'',
+        source: 'sounds/piano/Chord_3.mp3',
+        volume: 1.0,
+        pan: -0.5,
+        //exclusiveZone: 1,
+        detune: 900
     }
   ], 
   piano2: [
