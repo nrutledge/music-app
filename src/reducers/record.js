@@ -28,7 +28,10 @@ const record = (state = initialState, action) => {
                 recording: recording
             }
         case CLEAR_RECORDING:
-            return initialState;
+            return {
+              playing: {},
+              recording: []
+            }
         default:
             return state;
     }
