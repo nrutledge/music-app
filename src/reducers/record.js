@@ -10,7 +10,7 @@ const record = (state = initialState, action) => {
         case KEY_PRESS:
             const { playIndex, key, isKeyUp, isRecordingOn } = action.payload;
             let newPlaying = { ...state.playing };
-            let newRecording = [ ...state.recording];
+            let recording = state.recording; // Mutating original array for performance
             
             // Update currently playing keys
             newPlaying[key] = isKeyUp ? false : true;
@@ -18,14 +18,14 @@ const record = (state = initialState, action) => {
             // If recording is enabled, add key status to recording
             // 'd' = keydown, 'u' = keyup
             if (isRecordingOn) {
-                let newRecordingAtIndex = { ...newRecording[playIndex] };
+                let newRecordingAtIndex = { ...recording[playIndex] };
                 newRecordingAtIndex[key] = isKeyUp ? 'u' : 'd';
-                newRecording[playIndex] = newRecordingAtIndex;
+                recording[playIndex] = newRecordingAtIndex;
             }
             
             return {
                 playing: newPlaying,
-                recording: newRecording
+                recording: recording
             }
         case CLEAR_RECORDING:
             return initialState;
