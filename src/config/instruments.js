@@ -5,7 +5,7 @@ export default [
     name: 'Rock Drums (ง\'̀-\'́)ง',
     volume: 50,
     panning: 0,
-    reverb: 0,
+    reverb: 5,
     stopDelay: 2,
     decayTime: 4,
     transitionTime: 0.005
@@ -16,20 +16,20 @@ export default [
     name: 'Synth Drums', 
     volume: 50, 
     panning: 0, 
-    reverb: 0,
-    stopDelay: 0.1,
-    decayTime: 0.25,
+    reverb: 20,
+    stopDelay: 0.02,
+    decayTime: 0.3,
     transitionTime: 0.005
   },
   {
     id: 3,
     keyMapping: 'piano', 
     name: 'Piano', 
-    volume: 100, 
+    volume: 55, 
     panning: -25, 
-    reverb: 35,
+    reverb: 30,
     stopDelay: 0.01,
-    decayTime: 0.25,
+    decayTime: 0.4,
     transitionTime: 0.005
   },
   /*
@@ -49,11 +49,11 @@ export default [
     id: 5,
     keyMapping: 'cello', 
     name: 'Cello', 
-    volume: 35, 
+    volume: 33, 
     panning: -3, 
-    reverb: 80,
+    reverb: 33,
     stopDelay: 0.01,
-    decayTime: 0.2,
+    decayTime: 0.3,
     transitionTime: 0.005
   }
 ]

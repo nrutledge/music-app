@@ -1,58 +1,36 @@
 import React, { Component } from 'react';
+
+import { Audio, Reverb } from '../../services/audio';
 import ControlsContainer from '../../containers/ControlsContainer';
-import { handleKeyEvent, loadAudioBuffer } from '../../services';
+import { handleKeyEvent } from '../../services';
 import Instrument from '../Instrument/Instrument';
 import keyMappings from '../../config/keyMappings';
-import reverbs from '../../config/reverbs';
 import instruments from '../../config/instruments';
 import './Studio.css';
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const audioCtx = Audio.audioCtx;
 
 export default class Studio extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      convolver: null,
-      convolverBuffer: null,
-      convolverGain: audioCtx.createGain(),
       baseHue: Math.random() * 360,
       isRecordingOn: false,
       isPlaybackOn: false
     }
+    this.reverb = new Reverb();
   }
 
   componentDidMount() {
     window.focus();
     document.addEventListener('keydown', this.handleKeyDown);
-    document.addEventListener('keyup', this.handleKeyUp);      
-
-    this.loadConvolver(
-      audioCtx, 
-      this.state.convolverGain,
-      loadAudioBuffer, 
-      reverbs.tennisCourt
-    ); 
+    document.addEventListener('keyup', this.handleKeyUp);  
+    this.reverb.connect(audioCtx.destination);
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleKeyDown);
     document.removeEventListener('keyup', this.handleKeyUp);       
-  }
-
-  loadConvolver = async (audioCtx, convolverGain, loadAudioBuffer, src) => {
-    const audioBuffer = await loadAudioBuffer(audioCtx, src);
-    const convolver = audioCtx.createConvolver();
-
-    convolverGain.connect(convolver);
-    convolver.connect(audioCtx.destination);
-    convolver.buffer = audioBuffer;
-
-    this.setState({ convolver });
-  }
-
-  setConvolverBuffer = (convolver, src) => {
-    convolver.buffer = src;
   }
 
   handleKeyDown = handleKeyEvent(this.props.keyPress, false);
@@ -70,14 +48,13 @@ export default class Studio extends Component {
             return (
               <Instrument
                 key={instrument.id}
-                audioCtx={audioCtx} 
-                convolverGain={this.state.convolverGain} 
-                setConvolverBuffer={this.setConvolverBuffer} 
+                audioCtx={audioCtx}
+                reverb={this.reverb} 
                 keyMappings={keyMappings[instrument.keyMapping]} 
                 name={instrument.name} 
                 volume={instrument.volume}
                 panning={instrument.panning}
-                reverb={instrument.reverb}
+                reverbLevel={instrument.reverb}
                 stopDelay={instrument.stopDelay}
                 decayTime={instrument.decayTime}
                 transitionTime={instrument.transitionTime}
