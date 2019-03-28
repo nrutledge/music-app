@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 
-import { Audio, Reverb } from '../../services/audio';
+import audioCtx, { Reverb } from '../../services/audio';
 import ControlsContainer from '../../containers/ControlsContainer';
 import { handleKeyEvent } from '../../services';
 import Instrument from '../Instrument/Instrument';
 import keyMappings from '../../config/keyMappings';
 import instruments from '../../config/instruments';
 import './Studio.css';
-
-const audioCtx = Audio.audioCtx;
 
 export default class Studio extends Component {
   constructor(props) {

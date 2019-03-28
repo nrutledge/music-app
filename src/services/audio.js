@@ -1,21 +1,18 @@
 import Freeverb from 'freeverb';
 import clamp from '../util/clamp';
 
-// @TODO: remove export of audioCtx once DrumPad is refactored
-export const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-// @TODO: Use dependency injection or some other means instead of extending Audio class
 /**
- * Base class for providing audio context to child classes
+ * The root audio node that other nodes connect to
  */
-export class Audio {
-  static get audioCtx() { return audioCtx; }
-} 
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+export default audioCtx;
 
-export class Reverb extends Audio {
+/**
+ * Reverb node with a slightly improved interface over freeverb
+ */
+export class Reverb {
   constructor(roomSize = 0.9, dampening = 3000, level = 0.5) {
-    super();
-    this._reverb = new Freeverb(Reverb.audioCtx);
+    this._reverb = new Freeverb(audioCtx);
     this.roomSize = roomSize;
     this.dampening = dampening;
     this.level = level;
@@ -43,13 +40,15 @@ export class Reverb extends Audio {
   }
 }
 
-export class Splitter extends Audio {
+/**
+ * Splitter node used to route audio to two separate nodes
+ */
+export class Splitter {
   constructor(mix = 0) {
-    super();
     this._mix = mix;
-    this._leftGain = Splitter.audioCtx.createGain();
-    this._rightGain = Splitter.audioCtx.createGain();
-    this._inputGain = Splitter.audioCtx.createGain();
+    this._leftGain = audioCtx.createGain();
+    this._rightGain = audioCtx.createGain();
+    this._inputGain = audioCtx.createGain();
     this._inputGain.connect(this._leftGain);
     this._inputGain.connect(this._rightGain);
     this.input = this._inputGain;
@@ -62,8 +61,8 @@ export class Splitter extends Audio {
     // Change range from (-1 to 1) to (0 to 1)
     value = (value + 1) / 2;
 
-    this._leftGain.gain.setValueAtTime(1 - value, Splitter.audioCtx.currentTime);
-    this._rightGain.gain.setValueAtTime(value, Splitter.audioCtx.currentTime);
+    this._leftGain.gain.setValueAtTime(1 - value, audioCtx.currentTime);
+    this._rightGain.gain.setValueAtTime(value, audioCtx.currentTime);
   }
 
   connectL(audioNode) {
@@ -77,10 +76,12 @@ export class Splitter extends Audio {
   }
 }
 
-export class Gain extends Audio {
+/**
+ * Gain for controlling volume
+ */
+export class Gain {
   constructor(level = 0.5) {
-    super();
-    this._gainNode = Gain.audioCtx.createGain();
+    this._gainNode = audioCtx.createGain();
     this.level = level;
     this.input = this._gainNode;
   }
@@ -88,7 +89,7 @@ export class Gain extends Audio {
   get level() { return this._gainNode.gain.value; }
   set level(value) { 
     value = clamp(value, 0, 1);
-    this._gainNode.gain.setValueAtTime(value, Gain.audioCtx.currentTime);
+    this._gainNode.gain.setValueAtTime(value, audioCtx.currentTime);
   }
 
   connect(audioNode) {
@@ -96,17 +97,19 @@ export class Gain extends Audio {
   }
 }
 
-export class Panner extends Audio {
+/**
+ * Stereo panner node for controlling levels between left/right speakers
+ */
+export class Panner {
   constructor() {
-    super();
-    this._pannerNode = Panner.audioCtx.createStereoPanner();
+    this._pannerNode = audioCtx.createStereoPanner();
     this.input = this._pannerNode;
   }
 
   get panning() { return this._pannerNode.pan.value; }
   set panning(value) { 
     value = clamp(value, -1, 1);
-    this._pannerNode.pan.setValueAtTime(value, Panner.audioCtx.currentTime);
+    this._pannerNode.pan.setValueAtTime(value, audioCtx.currentTime);
   }
 
   connect(audioNode) {
@@ -114,7 +117,10 @@ export class Panner extends Audio {
   }
 }
 
-export class AudioSource extends Audio {
+/**
+ * Audio source node that plays provided source files (mp3, wav, etc.)
+ */
+export class AudioSource {
   constructor(
     volume = 0.5, 
     detune = 0, 
@@ -124,13 +130,12 @@ export class AudioSource extends Audio {
     stopDelay = 0,
     decayTime = 0
   ) {
-    super();
     this._connectedTo = null;
     this._audioBuffer = null;
     this._audioSource = null;
     this._gainNode = null;
     this._isPlaying = false;
-    this._lastStartTime = AudioSource.audioCtx.currentTime;
+    this._lastStartTime = audioCtx.currentTime;
     this._onLoaded = null;
 
     this._volume = volume;
@@ -173,7 +178,7 @@ export class AudioSource extends Audio {
   set source(source) {
     fetch(source)
       .then(response => response.arrayBuffer())
-      .then(arrayBuffer => AudioSource.audioCtx.decodeAudioData(arrayBuffer))
+      .then(arrayBuffer => audioCtx.decodeAudioData(arrayBuffer))
       .then(decodedData => {
         this._audioBuffer = decodedData;
         if (typeof this._onLoaded === 'function') { this._onLoaded(); }
@@ -188,8 +193,8 @@ export class AudioSource extends Audio {
     if (!this._audioBuffer) { 
       return console.log('No audio buffer to play');
     }
-    const source = AudioSource.audioCtx.createBufferSource();
-    const gainNode = AudioSource.audioCtx.createGain();
+    const source = audioCtx.createBufferSource();
+    const gainNode = audioCtx.createGain();
     source.buffer = this._audioBuffer;
   
     // Max time (in seconds) that is considered to be fast playing
@@ -203,7 +208,7 @@ export class AudioSource extends Audio {
     // physics of shorter stick travel having less force
     let newVolume = this.volume;
     if (this._lastStartTime) {
-      let playedTime = AudioSource.audioCtx.currentTime - this._lastStartTime;
+      let playedTime = audioCtx.currentTime - this._lastStartTime;
       if (playedTime > fastCutoff) { playedTime = fastCutoff; }
       newVolume *= minVolume + (playedTime * (1 - minVolume) / fastCutoff);
     }
@@ -212,20 +217,20 @@ export class AudioSource extends Audio {
     const maxVariance = 0.1;
     newVolume -= Math.random() * maxVariance;
   
-    gainNode.gain.setValueAtTime(0, AudioSource.audioCtx.currentTime);
-    gainNode.gain.linearRampToValueAtTime(newVolume * this.instrumentVolume, AudioSource.audioCtx.currentTime + this.attackTime);
+    gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+    gainNode.gain.linearRampToValueAtTime(newVolume * this.instrumentVolume, audioCtx.currentTime + this.attackTime);
   
-    source.detune.setValueAtTime(this.instrumentDetune + this.detune, AudioSource.audioCtx.currentTime);
+    source.detune.setValueAtTime(this.instrumentDetune + this.detune, audioCtx.currentTime);
   
     source.connect(gainNode);
     gainNode.connect(this._connectedTo);
   
-    source.start(AudioSource.audioCtx.currentTime);
+    source.start(audioCtx.currentTime);
   
     this._audioSource = source;
     this._gainNode = gainNode;
     this._isPlaying = true;
-    this._lastStartTime = AudioSource.audioCtx.currentTime;
+    this._lastStartTime = audioCtx.currentTime;
 
     source.onended = () => { 
       this._isPlaying = false;
@@ -236,13 +241,13 @@ export class AudioSource extends Audio {
     if (this.stopDelay === 0) {
       this._gainNode && this._gainNode.gain.linearRampToValueAtTime(
         0, 
-        AudioSource.audioCtx.currentTime + this.decayTime
+        audioCtx.currentTime + this.decayTime
       ); 
     } else {
     setTimeout(() => {
       this._gainNode && this._gainNode.gain.linearRampToValueAtTime(
         0, 
-        AudioSource.audioCtx.currentTime + this.decayTime
+        audioCtx.currentTime + this.decayTime
       );
     }, this.stopDelay * 1000)
     }
