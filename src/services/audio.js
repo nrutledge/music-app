@@ -13,6 +13,8 @@ export default audioCtx;
 export class Reverb {
   constructor(roomSize = 0.9, dampening = 3000, level = 0.5) {
     this._reverb = new Freeverb(audioCtx);
+    this._level = level;
+
     this.roomSize = roomSize;
     this.dampening = dampening;
     this.level = level;
@@ -24,12 +26,13 @@ export class Reverb {
   get roomSize() { return this._reverb.roomSize; }
   set roomSize(value) { this._reverb.roomSize = clamp(value, 0, 1); }
 
-  get dampening() { return this.dampening; }
+  get dampening() { return this._reverb.dampening; }
   set dampening(value) { this._reverb.dampening = clamp(value, 0, 20000); }
 
-  get level() { return this.dampening; }
+  get level() { return this._level; }
   set level(value) {
     value = clamp(value, 0, 1);
+    this._level = value;
     this._reverb.wet.value = value;
     this._reverb.dry.value = 1 - value;
   }
