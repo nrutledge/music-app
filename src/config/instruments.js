@@ -32,19 +32,17 @@ export default [
     decayTime: 0.4,
     transitionTime: 0.005
   },
-  /*
-  {
-    id: 4,
-    keyMapping: 'synth', 
-    name: 'Synth', 
-    volume: 75, 
-    panning: 25, 
-    reverb: 35,
-    stopDelay: 0.01,
-    decayTime: 0.25,
-    transitionTime: 0.005
-  },
-  */
+  // {
+  //   id: 4,
+  //   keyMapping: 'synth', 
+  //   name: 'Synth', 
+  //   volume: 55, 
+  //   panning: 25, 
+  //   reverb: 25,
+  //   stopDelay: 0.01,
+  //   decayTime: 0.3,
+  //   transitionTime: 0.005
+  // },
   {
     id: 5,
     keyMapping: 'cello', 
@@ -52,7 +50,7 @@ export default [
     volume: 33, 
     panning: -3, 
     reverb: 33,
-    stopDelay: 0.01,
+    stopDelay: 0.025,
     decayTime: 0.3,
     transitionTime: 0.005
   }

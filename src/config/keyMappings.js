@@ -48,14 +48,14 @@ export default {
         name: 'Kick',
         triggerKey: 'z',
         source: 'sounds/drums2/kick-softy.mp3',
-        volume: 0.9
+        volume: 1
     }, 
     {
         id: 8,
         name: 'Snare',
         triggerKey: 'x',
         source: 'sounds/drums/Snare On/Snare 6.mp3',
-        volume: 0.81
+        volume: 0.7
     }, 
     {
         id: 9,
@@ -70,7 +70,7 @@ export default {
     {
         id: 1,
         name: 'Synth C Major',
-        triggerKey: 'r',
+        triggerKey: '4',
         source: 'sounds/synth/I_Do_Remember_C_01.wav',
         volume: 0.75,
         pan: 0.5,
@@ -79,7 +79,7 @@ export default {
     {
         id: 2,
         name: 'Synth D Major',
-        triggerKey: 't',
+        triggerKey: '5',
         source: 'sounds/synth/I_Do_Remember_D_01.wav',
         volume: 0.75,
         pan: 0.5,
@@ -88,7 +88,7 @@ export default {
     {
         id: 3,
         name: 'Synth E Major',
-        triggerKey: 'y',
+        triggerKey: '6',
         source: 'sounds/synth/I_Do_Remember_E_01.wav',
         volume: 0.75,
         pan: 0.5,
@@ -97,7 +97,7 @@ export default {
     {
         id: 4,
         name: 'Synth F# Major',
-        triggerKey: 'u',
+        triggerKey: '7',
         source: 'sounds/synth/I_Do_Remember_F_01.wav',
         volume: 0.75,
         pan: 0.5,
@@ -107,7 +107,7 @@ export default {
     {
         id: 5,
         name: 'Synth G Major',
-        triggerKey: 'i',
+        triggerKey: '8',
         source: 'sounds/synth/I_Do_Remember_G_01.wav',
         volume: 0.75,
         pan: 0.5,
@@ -116,7 +116,7 @@ export default {
     {
         id: 6,
         name: 'Synth A Major',
-        triggerKey: 'o',
+        triggerKey: '9',
         source: 'sounds/synth/I_Do_Remember_A_01.wav',
         volume: 0.75,
         pan: 0.5,
@@ -125,7 +125,7 @@ export default {
     {
         id: 7,
         name: 'Synth B Major',
-        triggerKey: 'p',
+        triggerKey: '0',
         source: 'sounds/synth/I_Do_Remember_B_01.wav',
         volume: 0.75,
         pan: 0.5,

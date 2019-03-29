@@ -12,9 +12,6 @@ export default audioCtx;
  */
 export class Reverb {
   constructor(roomSize = 0.9, dampening = 3000, level = 0.5) {
-    this._reverb = new Freeverb(audioCtx);
-    this._level = level;
-
     this.roomSize = roomSize;
     this.dampening = dampening;
     this.level = level;
@@ -22,6 +19,9 @@ export class Reverb {
     // Other nodes connect to this prop
     this.input = this._reverb;
   }
+
+  _reverb = new Freeverb(audioCtx);
+  _level;
 
   get roomSize() { return this._reverb.roomSize; }
   set roomSize(value) { this._reverb.roomSize = clamp(value, 0, 1); }
@@ -48,14 +48,16 @@ export class Reverb {
  */
 export class Splitter {
   constructor(mix = 0) {
-    this._mix = mix;
-    this._leftGain = audioCtx.createGain();
-    this._rightGain = audioCtx.createGain();
-    this._inputGain = audioCtx.createGain();
+    this.mix = mix;
     this._inputGain.connect(this._leftGain);
     this._inputGain.connect(this._rightGain);
     this.input = this._inputGain;
   }
+
+  _mix;
+  _leftGain = audioCtx.createGain();
+  _rightGain = audioCtx.createGain();
+  _inputGain = audioCtx.createGain();
 
   get mix() { return this._mix; }
   set mix(value) {
@@ -84,10 +86,11 @@ export class Splitter {
  */
 export class Gain {
   constructor(level = 0.5) {
-    this._gainNode = audioCtx.createGain();
     this.level = level;
     this.input = this._gainNode;
   }
+
+  _gainNode = audioCtx.createGain();
 
   get level() { return this._gainNode.gain.value; }
   set level(value) { 
@@ -105,9 +108,10 @@ export class Gain {
  */
 export class Panner {
   constructor() {
-    this._pannerNode = audioCtx.createStereoPanner();
     this.input = this._pannerNode;
   }
+
+  _pannerNode = audioCtx.createStereoPanner();
 
   get panning() { return this._pannerNode.pan.value; }
   set panning(value) { 
@@ -133,22 +137,6 @@ export class AudioSource {
     stopDelay = 0,
     decayTime = 0
   ) {
-    this._connectedTo = null;
-    this._audioBuffer = null;
-    this._audioSource = null;
-    this._gainNode = null;
-    this._isPlaying = false;
-    this._lastStartTime = audioCtx.currentTime;
-    this._onLoaded = null;
-
-    this._volume = volume;
-    this._detune = detune;
-    this._instrumentVolume = instrumentVolume; 
-    this._instrumentDetune = instrumentDetune;
-    this._attackTime = attackTime;
-    this._stopDelay = stopDelay;
-    this._decayTime = decayTime;
-
     this.volume = volume;
     this.detune = detune;
     this.instrumentVolume = instrumentVolume; 
@@ -157,6 +145,22 @@ export class AudioSource {
     this.stopDelay = stopDelay;
     this.decayTime = decayTime;
   }
+
+  _connectedTo = null;
+  _audioBuffer = null;
+  _audioSource = null;
+  _gainNode = null;
+  _isPlaying = false;
+  _lastStartTime = audioCtx.currentTime;
+  _onLoaded = null;
+  _volume;
+  _detune;
+  _instrumentVolume;
+  _instrumentDetune;
+  _attackTime;
+  _stopDelay;
+  _decayTime;
+
   get volume() { return this._volume; }
   set volume(value) { this._volume = clamp(value, 0, 1); }
   
