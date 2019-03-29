@@ -96,7 +96,8 @@ export class Gain {
   }
 
   connect(audioNode) {
-    this._gainNode.connect(audioNode);
+    const input = audioNode.input ? audioNode.input : audioNode;
+    this._gainNode.connect(input);
   }
 }
 
@@ -116,7 +117,8 @@ export class Panner {
   }
 
   connect(audioNode) {
-    this._pannerNode.connect(audioNode);
+    const input = audioNode.input ? audioNode.input : audioNode;
+    this._pannerNode.connect(input);
   }
 }
 

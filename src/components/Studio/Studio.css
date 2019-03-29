@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'LedDisplay';
-  src: url('../../fonts/The Led Display St.ttf');
+  src: url('/fonts/The Led Display St.ttf');
 }
 
 @font-face {
   font-family: 'Pixel';
-  src: url('../../fonts/LLPIXEL3.ttf');
+  src: url('/fonts/LLPIXEL3.ttf');
 }
 
 .studio {
