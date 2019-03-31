@@ -24,11 +24,41 @@
 }
 
 .workspace {
+  width: 100%;
+}
+
+.section-top {
+  align-items: center;  
+  display: flex;
+  justify-content: left;
+  margin: 0;
+  padding: 5px;
+  overflow-x: scroll;
+  scrollbar-color: #333 #111;
+}
+
+.section-bottom {
   display: flex;
   justify-content: center;
-  align-items: flex-start;  
+  align-items: center;  
   flex-wrap: wrap;
+  margin: 0;
+  padding: 5px;
+  overflow-x: scroll;
+  scrollbar-color: #333 #111;
+}
+
+.browser-warning {
+  color: #FFF;
+  font-size: 2em;
+  background-color: #111;
   width: 100%;
-  height: 100%;
-  margin-top: 10px;
+  text-align: center;
+  padding: 20px;
+}
+
+@media (max-width: 1200px) {
+  .section-bottom {
+    justify-content: left;
+  }
 }

@@ -1,4 +1,4 @@
-import Freeverb from 'freeverb';
+import Tone from 'tone';
 import clamp from '../util/clamp';
 
 /**
@@ -6,6 +6,8 @@ import clamp from '../util/clamp';
  */
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 export default audioCtx;
+
+Tone.setContext(audioCtx);
 
 /**
  * Reverb node with a slightly improved interface over freeverb
@@ -16,25 +18,25 @@ export class Reverb {
     this.dampening = dampening;
     this.level = level;
 
-    // Other nodes connect to this prop
-    this.input = this._reverb;
+    // // Other nodes connect to this prop
+    // this.input = this._reverb;
   }
 
-  _reverb = new Freeverb(audioCtx);
+  _reverb = new Tone.Freeverb();
+  input = this._reverb;
   _level;
 
-  get roomSize() { return this._reverb.roomSize; }
-  set roomSize(value) { this._reverb.roomSize = clamp(value, 0, 1); }
+  get roomSize() { return this._reverb.roomSize.value; }
+  set roomSize(value) { this._reverb.roomSize.value = clamp(value, 0, 1); }
 
-  get dampening() { return this._reverb.dampening; }
-  set dampening(value) { this._reverb.dampening = clamp(value, 0, 20000); }
+  get dampening() { return this._reverb.dampening.value; }
+  set dampening(value) { this._reverb.dampening.value = clamp(value, 0, 20000); }
 
   get level() { return this._level; }
   set level(value) {
     value = clamp(value, 0, 1);
     this._level = value;
     this._reverb.wet.value = value;
-    this._reverb.dry.value = 1 - value;
   }
 
   connect(audioNode) {
