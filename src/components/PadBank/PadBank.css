@@ -1,0 +1,10 @@
+.key-pad {
+  margin: 10px;
+  padding: 40px;
+  background-color: rgba(38, 38, 38, 1);
+  border-radius: 20px;
+}
+
+.key-row {
+  display: flex;
+}

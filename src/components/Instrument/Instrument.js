@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
+import Sound from '../Sound/Sound';
 
 import { Gain, Panner, Splitter } from '../../services/audio';
 import InstrumentDisplay from '../InstrumentDisplay/InstrumentDisplay';
-import PadBank from '../PadBank/PadBank';
 import InputRange from '../InputRange/InputRange';
-import { detectMobile } from '../../services';
+import { detectBrowser } from '../../services';
 import './Instrument.css';
 
 export default class Instrument extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      sounds: this.props.sounds,
       displayContent: '',
-      hue: this.props.hue,
       loadedCount: 0,
-      totalCount: this.props.keyMappings.length,
       volume: this.props.volume || 100,
       panning: this.props.panning || 0,
       tuning: this.props.tuning || 0,
       reverbLevel: this.props.reverbLevel || 0,
+      stopDelay: this.props.stopDelay,
+      decayTime: this.props.decayTime
     }
     this.gain = new Gain(this.props.volume / 100);
     this.panner = new Panner(this.props.panning / 50);
@@ -26,7 +27,7 @@ export default class Instrument extends Component {
   }
 
   componentDidMount() {
-    const initialDisplay = detectMobile() ? 'Not mobile optimized' : 'Booting...'
+    const initialDisplay = detectBrowser().isMobile ? 'Not mobile optimized' : 'Booting...'
     this.setDisplayContent(initialDisplay);
 
     this.gain.connect(this.panner.input);
@@ -50,15 +51,17 @@ export default class Instrument extends Component {
   }
 
   incrementLoadedCount = () => {
-    if (this.state.loadedCount >= this.state.totalCount) { return; }
+    const totalCount = this.state.sounds.length;
+
+    if (this.state.loadedCount >= totalCount) { return; }
 
     this.setState(prevState => { 
       const newCount = prevState.loadedCount + 1;
       let newDisplayContent = '';
-      if (newCount === this.state.totalCount) {
+      if (newCount === totalCount) {
         newDisplayContent = 'Ready to Play';
       } else {
-        newDisplayContent = `Loaded ${newCount}/${this.state.totalCount} Sounds`;
+        newDisplayContent = `Loaded ${newCount}/${totalCount} Sounds`;
       }
       return { 
         displayContent: newDisplayContent,
@@ -80,10 +83,26 @@ export default class Instrument extends Component {
   }
 
   render() {
+    const sounds = this.state.sounds.map(sound => {
+      return <Sound
+        triggerKey={sound.triggerKey}
+        instrumentInput={this.gain}
+        source={sound.source}
+        volume={sound.volume}
+        detune={sound.detune}
+        instrumentVolume={this.state.volume}
+        instrumentPanning={this.state.panning}
+        instrumentDetune={this.state.tuning * 100}
+        stopDelay={this.state.stopDelay}
+        decayTime={this.state.decayTime}
+        incrementLoadedCount={this.incrementLoadedCount}
+      />
+    });
+
     return (
-      <div className="instrument">
+      <div className="instrument" style={{ border: `3px solid hsl(${this.props.hue}, 65%, 70%)` }}>
         <InstrumentDisplay 
-          hue={this.state.hue} 
+          hue={this.props.hue} 
           displayName={this.props.name} 
           displayContent={this.state.displayContent} 
         />
@@ -119,23 +138,9 @@ export default class Instrument extends Component {
           handleInputRangeChange={this.handleInputRangeChange('tuning')} 
           setDisplayContent={this.setDisplayContent}
         />
-        <PadBank 
-          instrumentInput={this.gain}
-          keyMappings={this.props.keyMappings} 
-          hue={this.state.hue}
-          stopDelay={this.props.stopDelay}
-          decayTime={this.props.decayTime}
-          transitionTime={this.props.transitionTime}
-          instrumentVolume={this.state.volume / 100}
-          instrumentPanning={this.state.panning / 50}
-          instrumentDetune={this.state.tuning * 100}
-          incrementLoadedCount={this.incrementLoadedCount}
-          setDisplayContent={this.setDisplayContent}
-        />
+        {sounds}
       </div>
     )
   }
 }
-
-
  

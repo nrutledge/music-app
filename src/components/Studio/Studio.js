@@ -1,22 +1,22 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import audioCtx, { Reverb } from '../../services/audio';
 import ControlsContainer from '../../containers/ControlsContainer';
+import PadBank from '../PadBank/PadBank';
 import { handleKeyEvent } from '../../services';
 import Instrument from '../Instrument/Instrument';
-import keyMappings from '../../config/keyMappings';
-import instruments from '../../config/instruments';
+import { detectBrowser } from '../../services';
 import './Studio.css';
 
-export default class Studio extends Component {
+export class Studio extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      baseHue: Math.random() * 360,
       isRecordingOn: false,
       isPlaybackOn: false
     }
-    this.reverb = new Reverb();
+    this.reverb = new Reverb(0.88, 1000);
   }
 
   componentDidMount() {
@@ -35,33 +35,41 @@ export default class Studio extends Component {
   handleKeyUp = handleKeyEvent(this.props.keyPress, true);
 
   render() {
-    // Amount to vary hue between each instrument
-    const hueShift = 45; 
+    const browserWarning = !detectBrowser().isChrome && 
+      <div className="browser-warning">This browser is not supported. Please use Chrome.</div>;
 
     return (
       <div className="studio">
         <ControlsContainer />
         <div className="workspace">
-          {instruments.map((instrument, index) => {
-            return (
-              <Instrument
-                key={instrument.id}
-                audioCtx={audioCtx}
-                reverb={this.reverb} 
-                keyMappings={keyMappings[instrument.keyMapping]} 
-                name={instrument.name} 
-                volume={instrument.volume}
-                panning={instrument.panning}
-                reverbLevel={instrument.reverb}
-                stopDelay={instrument.stopDelay}
-                decayTime={instrument.decayTime}
-                transitionTime={instrument.transitionTime}
-                hue={this.state.baseHue + (hueShift * index)}              
-              />
-            )
-          })}
+            {browserWarning}
+          <div className="section-top">
+            {this.props.instruments.map((instrument, index) => {
+              return (
+                <Instrument
+                  key={instrument.id}
+                  audioCtx={audioCtx}
+                  reverb={this.reverb} 
+                  sounds={instrument.sounds} 
+                  name={instrument.name} 
+                  volume={instrument.volume}
+                  panning={instrument.panning}
+                  reverbLevel={instrument.reverb}
+                  stopDelay={instrument.stopDelay}
+                  decayTime={instrument.decayTime}
+                  transitionTime={instrument.transitionTime}
+                  hue={instrument.hue}              
+                />
+              )
+            })}
+          </div>
+          <div class="section-bottom">
+            <PadBank />
+          </div>
         </div>
       </div>
     );
   }
 }
+
+export default connect(({ instruments }) => ({ instruments }))(Studio);

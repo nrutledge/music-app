@@ -1,38 +1,81 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import keyboards from '../../config/keyboards';
 import DrumPad from '../DrumPad/DrumPad';
+import './PadBank.css';
 
 class PadBank extends Component {
   render() {
-    const drumPads = this.props.keyMappings.map((keyMap, index) => {
-      return <DrumPad 
-        key={keyMap.id}
-        name={keyMap.name}
-        source={keyMap.source}
-        triggerKey={keyMap.triggerKey} 
-        sound={keyMap.sound} 
-        volume={keyMap.volume} 
-        pan={keyMap.pan}
-        detune={keyMap.detune}
-        instrumentInput={this.props.instrumentInput}
-        stopDelay={this.props.stopDelay}
-        decayTime={this.props.decayTime}
-        transitionTime={this.props.transitionTime}
-        instrumentVolume={this.props.instrumentVolume}
-        instrumentPanning={this.props.instrumentPanning}
-        instrumentDetune={this.props.instrumentDetune}
-        exclusiveZone={keyMap.exclusiveZone}
-        hue={this.props.hue}
-        incrementLoadedCount={this.props.incrementLoadedCount}
-        setDisplayContent={this.props.setDisplayContent}
-      />
+    const drumPads = keyboards.mac.map(row => {
+      return (
+        <div className="key-row">
+          {row.map(([key, widthMultiplier, fontStyle]) => {
+            const width = widthMultiplier ? 4 * widthMultiplier : 4;
+            let fontSize;
+            if (fontStyle === 's') {
+              fontSize = 0.9;
+            } else {
+              fontSize = 1.5;
+            }
+
+
+            const instrumentMatches = this.props.instruments.reduce((acc, instrument) => {
+              let hasMatchingKey = false;
+
+              instrument.sounds.forEach(sound => {
+                if (sound.triggerKey === key) {
+                  hasMatchingKey = true;
+                }
+              });
+
+              if (hasMatchingKey) {
+                return [...acc, instrument]; 
+              } else {
+                return acc;
+              }
+            
+            }, []);
+
+            const isActive = instrumentMatches.length > 0 ? true : false;
+
+            let hue = null;
+            if (isActive) {
+              hue = instrumentMatches.reduce((acc, instrument) => {
+                if (acc === null) {
+                  return instrument.hue;
+                } else {
+                  return (instrument.hue + acc);
+                }
+              }, null);
+            }
+
+            // Use instrument hue or avg. of hues in case of multiple instruments
+            if (hue === null) { 
+              hue = 0;
+            } else {
+              hue = hue / instrumentMatches.length;
+            }
+
+            return <DrumPad 
+              isActive={isActive} 
+              key={key} 
+              triggerKey={key} 
+              hue={hue} 
+              width={width} 
+              fontSize={fontSize}
+            />
+          })}
+        </div>
+      );
     });
 
     return (
-      <div className="pad-bank">
+      <div className="key-pad">
         {drumPads}
       </div> 
     );
   }
 }
 
-export default PadBank;
+export default connect(({ instruments }) => ({ instruments }))(PadBank);
