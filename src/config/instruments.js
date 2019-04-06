@@ -1,9 +1,12 @@
+const baseHue = 0;
+const spread = 72;
+
 export default [
   {
     id: 1,
     keyMapping: 'drums', 
     name: 'Rock Drums (ง\'̀-\'́)ง',
-    hue: 0,
+    hue: baseHue,
     volume: 55,
     panning: 0,
     reverb: 5,
@@ -82,7 +85,7 @@ export default [
     id: 2,
     keyMapping: 'synthDrums', 
     name: 'Synth Drums', 
-    hue: 72,
+    hue: baseHue + (spread * 1),
     volume: 40, 
     panning: 0, 
     reverb: 15,
@@ -155,7 +158,7 @@ export default [
     id: 3,
     keyMapping: 'piano', 
     name: 'Piano', 
-    hue: 144,
+    hue: baseHue + (spread * 2),
     volume: 57, 
     panning: -25, 
     reverb: 20,
@@ -246,7 +249,7 @@ export default [
     id: 4,
     keyMapping: 'synth', 
     name: 'Synth', 
-    hue: 216,
+    hue: baseHue + (spread * 3),
     volume: 50, 
     panning: 25, 
     reverb: 20,
@@ -344,7 +347,7 @@ export default [
     id: 5,
     keyMapping: 'cello', 
     name: 'Cello', 
-    hue: 288,
+    hue: baseHue + (spread * 4),
     volume: 25, 
     panning: -3, 
     reverb: 33,

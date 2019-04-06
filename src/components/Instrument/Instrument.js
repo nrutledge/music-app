@@ -100,7 +100,7 @@ export default class Instrument extends Component {
     });
 
     return (
-      <div className="instrument" style={{ border: `3px solid hsl(${this.props.hue}, 65%, 70%)` }}>
+      <div className="instrument">
         <InstrumentDisplay 
           hue={this.props.hue} 
           displayName={this.props.name} 

@@ -50,9 +50,10 @@ class DrumPad extends Component {
               onMouseLeave={this.handleMouseLeave}
               style={{ 
                   width: this.props.width + 'rem',
+                  height: this.props.height + 'rem',
                   fontSize: this.props.fontSize + 'rem',
                   backgroundColor: bgColor,
-                  border: `3px solid hsl(${this.props.hue}, ${saturation}, ${lightness})`,
+                  border: `2px solid hsl(${this.props.hue}, ${saturation}, ${lightness})`,
                   boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, ${saturation}, 60%, ${shadowAlpha})`,
                   color: `hsl(${this.props.hue}, ${saturation}, ${lightness})`
               }}

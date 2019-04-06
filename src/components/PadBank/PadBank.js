@@ -5,18 +5,20 @@ import keyboards from '../../config/keyboards';
 import DrumPad from '../DrumPad/DrumPad';
 import './PadBank.css';
 
+const baseKeySize = 3.5;
+
 class PadBank extends Component {
   render() {
     const drumPads = keyboards.mac.map(row => {
       return (
         <div className="key-row">
           {row.map(([key, widthMultiplier, fontStyle]) => {
-            const width = widthMultiplier ? 4 * widthMultiplier : 4;
+            const width = widthMultiplier ? baseKeySize * widthMultiplier : baseKeySize;
             let fontSize;
             if (fontStyle === 's') {
-              fontSize = 0.9;
+              fontSize = 0.8;
             } else {
-              fontSize = 1.5;
+              fontSize = 1.3;
             }
 
 
@@ -63,6 +65,7 @@ class PadBank extends Component {
               triggerKey={key} 
               hue={hue} 
               width={width} 
+              height={baseKeySize}
               fontSize={fontSize}
             />
           })}
