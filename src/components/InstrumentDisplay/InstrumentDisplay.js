@@ -3,7 +3,7 @@ import React from 'react';
 const Display = (props) => {
     return (
         <div className="display" style={{ 
-          borderTop: `4px solid hsl(${props.hue}, 75%, 70%)` 
+          borderTop: `4px solid hsl(${props.hue}, 65%, 70%)` 
         }}>
             <div className="display-title">
                 {props.displayName}
