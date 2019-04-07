@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
 
-import { handleKeyEvent } from '../../services';
+import handleKeyEvent from '../../util/handleKeyEvent';
 import { keyPress } from '../../actions';
 import './DrumPad.css';
 
@@ -37,7 +37,7 @@ class DrumPad extends Component {
       //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';
       const bgColor = this.state.isPressed ? 'rgb(65, 65, 65)' : 'rgb(55, 55, 55)';
       const lightness = this.props.isActive ? this.state.isPressed ? '88%' : '70%' : '40%';
-      const saturation = this.props.isActive ? '65%' : '0%';
+      const saturation = this.props.isActive ? '75%' : '0%';
       const shadowAlpha = this.props.isActive ? this.state.isPressed ? '0.6' : '0.2' : '0';
 
       return (

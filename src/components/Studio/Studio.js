@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import audioCtx, { Reverb } from '../../services/audio';
 import ControlsContainer from '../../containers/ControlsContainer';
 import PadBank from '../PadBank/PadBank';
-import { handleKeyEvent } from '../../services';
+import handleKeyEvent from '../../util/handleKeyEvent';
 import Instrument from '../Instrument/Instrument';
-import { detectBrowser } from '../../services';
+import detectBrowser from '../../util/detectBrowser';
+import backgrounds from '../../config/backgrounds';
 import './Studio.css';
 
 export class Studio extends Component {
@@ -38,8 +39,12 @@ export class Studio extends Component {
     const browserWarning = !detectBrowser().isChrome && 
       <div className="browser-warning">This browser is not supported. Please use Chrome.</div>;
 
+    const backgroundImage = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+
     return (
-      <div className="studio">
+      <div className="studio" style={{ 
+        backgroundImage: `url('../../images/${backgroundImage}')`
+      }}>
         <ControlsContainer />
         <div className="workspace">
             {browserWarning}

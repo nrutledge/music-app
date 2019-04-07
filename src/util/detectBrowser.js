@@ -1,4 +1,4 @@
-export const detectBrowser = () => { 
+export default () => { 
   let isMobile = false;
   let isChrome = false;
   if (

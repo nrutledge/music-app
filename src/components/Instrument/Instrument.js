@@ -4,7 +4,7 @@ import Sound from '../Sound/Sound';
 import { Gain, Panner, Splitter } from '../../services/audio';
 import InstrumentDisplay from '../InstrumentDisplay/InstrumentDisplay';
 import InputRange from '../InputRange/InputRange';
-import { detectBrowser } from '../../services';
+import detectBrowser from '../../util/detectBrowser';
 import './Instrument.css';
 
 export default class Instrument extends Component {
