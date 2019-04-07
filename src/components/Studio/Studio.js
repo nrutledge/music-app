@@ -43,7 +43,7 @@ export class Studio extends Component {
 
     return (
       <div className="studio" style={{ 
-        backgroundImage: `url('/images/${backgroundImage}')`
+        backgroundImage: `url(${backgroundImage})`
       }}>
         <ControlsContainer />
         <div className="workspace">
