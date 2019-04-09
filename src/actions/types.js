@@ -6,3 +6,4 @@ export const TIMER_RESTART = 'timer_restart';
 export const KEY_PRESS = 'key_press';
 export const TEMPO_CHANGE = 'tempo_change';
 export const CLEAR_RECORDING = 'clear_recording';
+export const TOGGLE_INSTRUMENT_RECORD = 'toggle_instrument_record';

@@ -15,7 +15,8 @@ export class Studio extends Component {
     super(props);
     this.state = {
       isRecordingOn: false,
-      isPlaybackOn: false
+      isPlaybackOn: false,
+      backgroundImage: backgrounds[Math.floor(Math.random() * backgrounds.length)]
     }
     this.reverb = new Reverb(0.88, 1000);
   }
@@ -39,20 +40,19 @@ export class Studio extends Component {
     const browserWarning = !detectBrowser().isChrome && 
       <div className="browser-warning">This browser is not supported. Please use Chrome.</div>;
 
-    const backgroundImage = backgrounds[Math.floor(Math.random() * backgrounds.length)];
-
     return (
       <div className="studio" style={{ 
-        backgroundImage: `url(${backgroundImage})`
+        backgroundImage: `url(${this.state.backgroundImage})`
       }}>
         <ControlsContainer />
         <div className="workspace">
             {browserWarning}
           <div className="section-top">
-            {this.props.instruments.map((instrument, index) => {
+            {Object.values(this.props.instruments).map((instrument, index) => {
               return (
                 <Instrument
                   key={instrument.id}
+                  id={instrument.id}
                   audioCtx={audioCtx}
                   reverb={this.reverb} 
                   sounds={instrument.sounds} 
@@ -63,7 +63,8 @@ export class Studio extends Component {
                   stopDelay={instrument.stopDelay}
                   decayTime={instrument.decayTime}
                   transitionTime={instrument.transitionTime}
-                  hue={instrument.hue}              
+                  hue={instrument.hue}   
+                  armed={instrument.armed}           
                 />
               )
             })}
@@ -77,4 +78,4 @@ export class Studio extends Component {
   }
 }
 
-export default connect(({ instruments }) => ({ instruments }))(Studio);
+export default connect(({ instruments: { byId } }) => ({ instruments: byId }))(Studio);

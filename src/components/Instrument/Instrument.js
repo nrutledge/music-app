@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import Sound from '../Sound/Sound';
+import { connect } from 'react-redux';
 
+import { toggleInstrumentRecord } from '../../actions';
+import Sound from '../Sound/Sound';
 import { Gain, Panner, Splitter } from '../../services/audio';
 import InstrumentDisplay from '../InstrumentDisplay/InstrumentDisplay';
 import InputRange from '../InputRange/InputRange';
 import detectBrowser from '../../util/detectBrowser';
 import './Instrument.css';
 
-export default class Instrument extends Component {
+class Instrument extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -86,6 +88,7 @@ export default class Instrument extends Component {
     const sounds = this.state.sounds.map(sound => {
       return <Sound
         triggerKey={sound.triggerKey}
+        instrumentId={this.props.id}
         instrumentInput={this.gain}
         source={sound.source}
         volume={sound.volume}
@@ -100,11 +103,16 @@ export default class Instrument extends Component {
     });
 
     return (
-      <div className="instrument">
+      <div 
+        className="instrument" 
+        onClick={() => this.props.toggleInstrumentRecord(this.props.id)}
+      >
+        {/* <button >Toggle Record</button> */}
         <InstrumentDisplay 
           hue={this.props.hue} 
           displayName={this.props.name} 
           displayContent={this.state.displayContent} 
+          armed={this.props.armed}
         />
         <InputRange 
           name="Volume" 
@@ -144,3 +152,4 @@ export default class Instrument extends Component {
   }
 }
  
+export default connect(null, { toggleInstrumentRecord })(Instrument);
