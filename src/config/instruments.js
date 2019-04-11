@@ -1,10 +1,9 @@
 const baseHue = 0;
 const spread = 72;
 
-export default [
-  {
+export default {
+  1: {
     id: 1,
-    keyMapping: 'drums', 
     name: 'Rock Drums (ง\'̀-\'́)ง',
     hue: baseHue,
     volume: 55,
@@ -13,6 +12,7 @@ export default [
     stopDelay: 2,
     decayTime: 4,
     transitionTime: 0.005,
+    armed: true,
     sounds: [
       {
           id: 1,
@@ -62,7 +62,7 @@ export default [
           name: 'Kick',
           triggerKey: 'z',
           source: 'sounds/drums2/kick-softy.mp3',
-          volume: 1
+          volume: 0.95
       }, 
       {
           id: 8,
@@ -81,17 +81,17 @@ export default [
       },
     ]
   },
-  {
+  2: {
     id: 2,
-    keyMapping: 'synthDrums', 
     name: 'Synth Drums', 
     hue: baseHue + (spread * 1),
     volume: 40, 
     panning: 0, 
-    reverb: 15,
+    reverb: 10,
     stopDelay: 0.02,
     decayTime: 0.3,
     transitionTime: 0.005,
+    armed: true,
     sounds: [
       {
           id: 1,
@@ -154,17 +154,18 @@ export default [
       }
     ]
   },
-  {
+  3: {
     id: 3,
     keyMapping: 'piano', 
     name: 'Piano', 
     hue: baseHue + (spread * 2),
-    volume: 57, 
-    panning: -25, 
+    volume: 55, 
+    panning: -15, 
     reverb: 20,
     stopDelay: 0.01,
     decayTime: 0.4,
     transitionTime: 0.005,
+    armed: true,
     sounds: [
       {
           id: 1,
@@ -245,17 +246,17 @@ export default [
       }
     ]
   },
-  {
+  4: {
     id: 4,
-    keyMapping: 'synth', 
     name: 'Synth', 
     hue: baseHue + (spread * 3),
     volume: 50, 
-    panning: 25, 
+    panning: 15, 
     reverb: 20,
     stopDelay: 0.01,
     decayTime: 0.3,
     transitionTime: 0.005,
+    armed: true,
     sounds: [
       {
           id: 1,
@@ -343,19 +344,128 @@ export default [
   }
     ]
   },
-  {
+  5: {
     id: 5,
-    keyMapping: 'cello', 
-    name: 'Cello', 
+    name: 'Cello 1', 
     hue: baseHue + (spread * 4),
-    volume: 25, 
-    panning: -3, 
-    reverb: 33,
+    volume: 22, 
+    panning: -30, 
+    reverb: 30,
     stopDelay: 0.025,
     decayTime: 0.3,
     transitionTime: 0.005,
+    armed: true,
     sounds: [
-
+      {
+          id: 1,
+          name: 'Cello G',
+          triggerKey: '1',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 1.0,
+          detune: -1200
+      }, 
+      {
+          id: 2,
+          name: 'Cello A',
+          triggerKey: '2',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.97,
+          detune: -1000
+      }, 
+      {
+          id: 3,
+          name: 'Cello B',
+          triggerKey: '3',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.94,
+          detune: -800
+      }, 
+      {
+          id: 4,
+          name: 'Cello C',
+          triggerKey: '4',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.91,
+          detune: -700
+      }, 
+      {
+          id: 5,
+          name: 'Cello D',
+          triggerKey: '5',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.88,
+          detune: -500
+      }, 
+      {
+          id: 6,
+          name: 'Cello E',
+          triggerKey: '6',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.85,
+          detune: -300
+      }, 
+      {
+          id: 7,
+          name: 'Cello F#',
+          triggerKey: '7',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.82,
+          detune: -100
+      }, 
+      {
+          id: 8,
+          name: 'Cello G',
+          triggerKey: '8',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.79,
+          detune: 0
+      }, 
+      {
+          id: 9,
+          name: 'Cello A',
+          triggerKey: '9',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.76,
+          detune: 200
+      }, 
+      {
+          id: 10,
+          name: 'Cello B',
+          triggerKey: '0',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.74,
+          detune: 400
+      }, 
+      {
+          id: 11,
+          name: 'Cello C',
+          triggerKey: '-',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.71,
+          detune: 500
+      }, 
+      {
+          id: 12,
+          name: 'Cello D',
+          triggerKey: '=',
+          source: 'sounds/strings/cello_G_major.wav',
+          volume: 0.68,
+          detune: 700
+      }
+    ]
+  },
+  6: {
+    id: 6,
+    name: 'Cello 2', 
+    hue: baseHue + (spread * 4),
+    volume: 22, 
+    panning: 30, 
+    reverb: 40,
+    stopDelay: 0.025,
+    decayTime: 0.3,
+    transitionTime: 0.005,
+    armed: true,
+    sounds: [
       {
           id: 1,
           name: 'Cello G',
@@ -454,7 +564,7 @@ export default [
       }
     ]
   }
-]
+}
 
 
 

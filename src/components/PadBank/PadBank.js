@@ -9,6 +9,17 @@ const baseKeySize = 3.5;
 
 class PadBank extends Component {
   render() {
+    // Get color for each armed instrument's keys
+    const activeKeys = Object.values(this.props.instruments).reduce((acc, instrument) => {
+      if (!instrument.armed) { return acc; }
+
+      const keySounds = instrument.sounds.reduce((acc, sound) => {
+        acc[sound.triggerKey] = { instrumentId: instrument.id, hue: instrument.hue };
+        return acc;
+      }, {});
+      return { ...acc, ...keySounds };
+    }, {});
+
     const drumPads = keyboards.mac.map(row => {
       return (
         <div className="key-row">
@@ -21,49 +32,11 @@ class PadBank extends Component {
               fontSize = 1.3;
             }
 
-
-            const instrumentMatches = this.props.instruments.reduce((acc, instrument) => {
-              let hasMatchingKey = false;
-
-              instrument.sounds.forEach(sound => {
-                if (sound.triggerKey === key) {
-                  hasMatchingKey = true;
-                }
-              });
-
-              if (hasMatchingKey) {
-                return [...acc, instrument]; 
-              } else {
-                return acc;
-              }
-            
-            }, []);
-
-            const isActive = instrumentMatches.length > 0 ? true : false;
-
-            let hue = null;
-            if (isActive) {
-              hue = instrumentMatches.reduce((acc, instrument) => {
-                if (acc === null) {
-                  return instrument.hue;
-                } else {
-                  return (instrument.hue + acc);
-                }
-              }, null);
-            }
-
-            // Use instrument hue or avg. of hues in case of multiple instruments
-            if (hue === null) { 
-              hue = 0;
-            } else {
-              hue = hue / instrumentMatches.length;
-            }
-
             return <DrumPad 
-              isActive={isActive} 
-              key={key} 
+              isActive={activeKeys[key] !== undefined ? true : false} 
               triggerKey={key} 
-              hue={hue} 
+              instrumentId={activeKeys[key] && activeKeys[key].instrumentId}
+              hue={(activeKeys[key] && activeKeys[key].hue) || 0} 
               width={width} 
               height={baseKeySize}
               fontSize={fontSize}
@@ -81,4 +54,4 @@ class PadBank extends Component {
   }
 }
 
-export default connect(({ instruments }) => ({ instruments }))(PadBank);
+export default connect(({ instruments: { byId } }) => ({ instruments: byId }))(PadBank);

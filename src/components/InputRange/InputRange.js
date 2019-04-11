@@ -14,7 +14,7 @@ export default class InputRange extends Component {
 
     render() {
         return (
-            <div className="input-range">
+            <div className="input-range" onClick={event => event.stopPropagation()}>
                 <label>
                     <div className="range-label">
                         {this.props.name}

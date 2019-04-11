@@ -20,8 +20,6 @@ class Sound extends Component {
     this.state = {
       audioBuffer: null,
       gainNode: null,
-      isPlaying: false,
-      isPressed: false,
       lastStartTime: null
     }
     this.audioSource = new AudioSource();
@@ -56,14 +54,12 @@ class Sound extends Component {
         }
       })
        
-      if ((this.props.playback && this.props.playback !== prevProps.playback) || 
+      if ((this.props.playback !== undefined && this.props.playback !== prevProps.playback) || 
         this.props.isKeyDown !== prevProps.isKeyDown
       ) {
-        if (this.props.playback === 'd' || this.props.isKeyDown) {
-          this.setState({ isPressed: true });
+        if (this.props.playback === true || this.props.isKeyDown === true) {
           this.audioSource.play();
-        } else {
-          this.setState({ isPressed: false });
+        } else if (this.props.playback === false || this.props.isKeyDown === false) {
           this.audioSource.stop();
         }
       } 
@@ -76,11 +72,16 @@ const mapStateToProps = (
   { record: { playing, recording }, controls: { playIndex } }, 
   ownProps
 ) => { 
-    const key = ownProps.triggerKey;
-    const playback = recording[playIndex] ? recording[playIndex][key] : undefined;
-    const isKeyDown = playing[key];
-    
-    return { playback, isKeyDown };
+  const { triggerKey: key, instrumentId } = ownProps;
+
+  const playback = (
+    recording[instrumentId] && 
+    recording[instrumentId][playIndex] &&
+    recording[instrumentId][playIndex][key]
+  );
+  const isKeyDown = playing[instrumentId] && playing[instrumentId][key];
+
+  return { playback, isKeyDown };
 }
 
 export default connect(mapStateToProps)(Sound);
