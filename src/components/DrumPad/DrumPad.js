@@ -14,15 +14,25 @@ class DrumPad extends Component {
   }
 
   componentDidUpdate(prevProps) {   
-    if ((this.props.playback !== undefined && this.props.playback !== prevProps.playback) || 
-      this.props.isKeyDown !== prevProps.isKeyDown
-    ) {
-      if (this.props.playback === true || this.props.isKeyDown === true) {
-        this.setState({ isPressed: true });
-      } else if (this.props.playback === false || this.props.isKeyDown === false) {
-        this.setState({ isPressed: false });
-      }
+    if (this.props.reset) {
+      return this.setState({ isPressed: false });
     } 
+    
+    if (
+      (
+        this.props.playbackState === undefined || 
+        this.props.playbackState === prevProps.playbackState
+      ) && 
+      this.props.keydownState === prevProps.keydownState
+    ) {
+      return;
+    }
+
+    if (this.props.playbackState === true || this.props.keydownState === true) {
+      this.setState({ isPressed: true });
+    } else {
+      this.setState({ isPressed: false });
+    }
   }
 
   // handleMouseEnter = () => this.props.setDisplayContent(this.props.name);
@@ -69,17 +79,19 @@ const mapStateToProps = (
   { record: { playing, recording }, controls: { playIndex } }, 
   ownProps
 ) => { 
-  const { triggerKey: key, instrumentId } = ownProps;
+  const { triggerKey: key, instrumentId, reset } = ownProps;
 
-  const playback = (
+  // down, up or no change (true, false or undefined)
+  const playbackState = (
     recording[instrumentId] && 
     recording[instrumentId][playIndex] &&
     recording[instrumentId][playIndex][key]
   );
-  const isKeyDown = playing[instrumentId] && playing[instrumentId][key];
 
-  key === 'm' && console.log({ key, playback, isKeyDown })
-  return { playback, isKeyDown };
+  // down, up or unplayed (true, false or undefined
+  const keydownState = playing[instrumentId] && playing[instrumentId][key];
+
+  return { playbackState, keydownState };
 }
 
 export default connect(mapStateToProps, { keyPress })(DrumPad);

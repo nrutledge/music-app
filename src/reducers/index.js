@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-import record from './record';
 import controls from './controls';
 import instruments from './instruments';
+import keyboards from './keyboards';
+import record from './record';
 
 export default combineReducers({
-    record,
     controls,
-    instruments
+    instruments,
+    keyboards,
+    record
 });

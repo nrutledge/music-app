@@ -17,6 +17,9 @@ export default (props) => {
 
     const timerStart = () => props.timerStart(interval);
 
+    // Preventing event from being passed in (should only be instrumentId)
+    const clearRecording = () => props.clearRecording();;
+
     return (
         <div className="controls">
             <div className="controls-section">
@@ -49,7 +52,7 @@ export default (props) => {
               />
             </div>
             <div className="controls-section">
-              <button className="button-clear" onClick={props.clearRecording}>
+              <button className="button-clear" onClick={clearRecording}>
                 Clear Recording
               </button>
             </div>

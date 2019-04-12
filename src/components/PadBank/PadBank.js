@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import keyboards from '../../config/keyboards';
+import { toggleKeyReset } from '../../actions';
+
 import DrumPad from '../DrumPad/DrumPad';
 import './PadBank.css';
 
@@ -20,7 +21,7 @@ class PadBank extends Component {
       return { ...acc, ...keySounds };
     }, {});
 
-    const drumPads = keyboards.mac.map(row => {
+    const drumPads = this.props.keyboard.map(row => {
       return (
         <div className="key-row">
           {row.map(([key, widthMultiplier, fontStyle]) => {
@@ -40,11 +41,16 @@ class PadBank extends Component {
               width={width} 
               height={baseKeySize}
               fontSize={fontSize}
+              reset={this.props.reset}
             />
           })}
         </div>
       );
     });
+
+    // If key reset was issued, disable reset command
+    // (otherwise keys will be permenantly reset to a keyup state)
+    this.props.reset && this.props.toggleKeyReset();
 
     return (
       <div className="key-pad">
@@ -54,4 +60,12 @@ class PadBank extends Component {
   }
 }
 
-export default connect(({ instruments: { byId } }) => ({ instruments: byId }))(PadBank);
+const mapStateToProps = ({ instruments, keyboards }) => {
+  return { 
+    instruments: instruments.byId, 
+    keyboard: keyboards.keyboard,
+    reset: keyboards.reset
+  }
+}
+
+export default connect(mapStateToProps, { toggleKeyReset })(PadBank);

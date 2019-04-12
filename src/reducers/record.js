@@ -18,7 +18,7 @@ const record = (state = initialState, action) => {
                 newPlaying[instrumentId] = {};
               }
 
-              const newPlayingInstrument = { ...newPlaying[instrumentId][key] };
+              const newPlayingInstrument = { ...newPlaying[instrumentId] };
               newPlayingInstrument[key] = isKeyUp ? false : true;
               newPlaying[instrumentId] = newPlayingInstrument;
             });
@@ -42,10 +42,16 @@ const record = (state = initialState, action) => {
                 recording: recording
             }     
         case CLEAR_RECORDING:
-            return {
-              playing: {},
-              recording: {}
+            const { instrumentId } = action.payload;
+            let newRecording = { ...state.recording };
+
+            if (instrumentId) {
+              newRecording[instrumentId] = {};
+            } else {
+              newRecording = {};
             }
+
+            return { playing: state.playing, recording: newRecording }      
         default:
             return state;
     }
