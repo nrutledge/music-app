@@ -8,7 +8,6 @@ const audioSourcePropNames = [
   'volume',
   'detune',
   'instrumentVolume',
-  'instrumentPanning',
   'instrumentDetune',
   'stopDelay',
   'decayTime'
@@ -54,15 +53,19 @@ class Sound extends Component {
         }
       })
        
-      if ((this.props.playback !== undefined && this.props.playback !== prevProps.playback) || 
-        this.props.isKeyDown !== prevProps.isKeyDown
+      if (
+        (
+          this.props.playbackState !== undefined && 
+          this.props.playbackState !== prevProps.playbackState
+        ) || 
+        this.props.keydownState !== prevProps.keydownState
       ) {
-        if (this.props.playback === true || this.props.isKeyDown === true) {
+        if (this.props.playbackState === true || this.props.keydownState === true) {
           this.audioSource.play();
-        } else if (this.props.playback === false || this.props.isKeyDown === false) {
+        } else {
           this.audioSource.stop();
         }
-      } 
+      }
     }
 
     render() { return null; }
@@ -74,14 +77,17 @@ const mapStateToProps = (
 ) => { 
   const { triggerKey: key, instrumentId } = ownProps;
 
-  const playback = (
+  // down, up or no change (true, false or undefined)
+  const playbackState = (
     recording[instrumentId] && 
     recording[instrumentId][playIndex] &&
     recording[instrumentId][playIndex][key]
   );
-  const isKeyDown = playing[instrumentId] && playing[instrumentId][key];
 
-  return { playback, isKeyDown };
+  // down, up or unplayed (true, false or undefined
+  const keydownState = playing[instrumentId] && playing[instrumentId][key];
+
+  return { playbackState, keydownState };
 }
 
 export default connect(mapStateToProps)(Sound);

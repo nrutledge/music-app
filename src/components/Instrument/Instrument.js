@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleInstrumentRecord } from '../../actions';
+import * as actions from '../../actions';
 import Sound from '../Sound/Sound';
 import { Gain, Panner, Splitter } from '../../services/audio';
 import InstrumentDisplay from '../InstrumentDisplay/InstrumentDisplay';
@@ -107,7 +107,15 @@ class Instrument extends Component {
         className="instrument" 
         onClick={() => this.props.toggleInstrumentRecord(this.props.id)}
       >
-        {/* <button >Toggle Record</button> */}
+        <div className="instrument__container-top">
+          <button 
+            className="instrument__button-clear" 
+            onClick={event => {
+              event.stopPropagation();
+              this.props.clearRecording(this.props.id);
+            }}
+          >Clear</button>
+        </div>
         <InstrumentDisplay 
           hue={this.props.hue} 
           displayName={this.props.name} 
@@ -152,4 +160,4 @@ class Instrument extends Component {
   }
 }
  
-export default connect(null, { toggleInstrumentRecord })(Instrument);
+export default connect(null, actions)(Instrument);

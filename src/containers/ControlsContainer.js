@@ -5,7 +5,7 @@ import {
   timerRestart, 
   tempoChange, 
   toggleRecord, 
-  clearRecording 
+  clearRecording
 } from '../actions';
 import Controls from '../components/Controls/Controls';
 
@@ -24,7 +24,7 @@ const mapDispatchToProps = {
   timerRestart, 
   tempoChange, 
   toggleRecord, 
-  clearRecording 
+  clearRecording
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

@@ -109,8 +109,9 @@ export class Gain {
  * Stereo panner node for controlling levels between left/right speakers
  */
 export class Panner {
-  constructor() {
+  constructor(panning) {
     this.input = this._pannerNode;
+    this.panning = panning;
   }
 
   _pannerNode = audioCtx.createStereoPanner();
