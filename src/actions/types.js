@@ -7,4 +7,4 @@ export const KEY_PRESS = 'key_press';
 export const TEMPO_CHANGE = 'tempo_change';
 export const CLEAR_RECORDING = 'clear_recording';
 export const TOGGLE_INSTRUMENT_RECORD = 'toggle_instrument_record';
-export const TOGGLE_KEY_RESET = 'toggle_key_reset';
+export const KEY_RESET_COMPLETED = 'key_reset_completed';

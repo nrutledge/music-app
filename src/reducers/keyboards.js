@@ -1,5 +1,5 @@
 import keyboards from '../config/keyboards';
-import { TOGGLE_KEY_RESET } from '../actions/types';
+import { KEY_RESET_COMPLETED, TIMER_STOP, TIMER_RESTART, CLEAR_RECORDING } from '../actions/types';
 
 const initialState = {
   keyboard: keyboards.mac,
@@ -8,10 +8,17 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case TOGGLE_KEY_RESET:
+    case TIMER_STOP:
+    case TIMER_RESTART:
+    case CLEAR_RECORDING:
       return {
         ...state,
-        reset: !state.reset
+        reset: true
+      }
+    case KEY_RESET_COMPLETED:
+      return {
+        ...state,
+        reset: false
       }
     default:
       return state;

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { FaTrash } from 'react-icons/fa';
 
 import * as actions from '../../actions';
 import Sound from '../Sound/Sound';
@@ -114,7 +115,9 @@ class Instrument extends Component {
               event.stopPropagation();
               this.props.clearRecording(this.props.id);
             }}
-          >Clear</button>
+          >
+            <FaTrash />
+          </button>
         </div>
         <InstrumentDisplay 
           hue={this.props.hue} 

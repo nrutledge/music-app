@@ -10,41 +10,51 @@
     overflow-x: hidden;
 }
 
-.controls button {
+.controls__button {
+    height: 42px;
     padding: 10px 20px;
-    margin: 5px 2px;
-    background-color: rgb(103, 103, 103);
+    margin: 5px 3px;
+    background-color: #676767;
     color: white;
 }
 
-.controls .button-clear {
-  width: 170px;
+.controls__button:active {
+  background-color: #747474
 }
 
-.controls-section {
+.controls__button--red {
+  background-color: #e90f0f;
+  color: #FFF;
+}
+
+.controls__button-clear:active {
+  background-color: #ff0000;
+}
+
+.controls__button-clear {
+  width: 190px;
+  border: 2px solid #e90f0f;
+  background-color: #222;
+}
+
+.controls__button-clear:active {
+  border: 2px solid #ff0000;
+  background-color: #ff0000;
+}
+
+.controls__section {
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 5px 10px;
 }
 
-.controls-label {
+.controls__label {
   color: rgb(169, 169, 169);
   margin: 0 10px 0 0px;
 }
 
-.button-record.on {
-    background-color: #FF0000;
-    color: #FFF;
-}
-
-.button-clear {
-    border: 2px solid #FF0000 !important;
-    background-color: #222 !important;
-    color: #FFF;
-}
-
-.play-position {
+.controls__display-data {
     font-size: 18px;
     display: flex;
     justify-content: center;
@@ -55,20 +65,20 @@
     width: 70px;
     height: 40px;
     margin-right: 10px;
+    border: none;
     background-color: #444;
 }
 
-.tempo {
-    font-size: 18px;
-    box-sizing: border-box;
-    width: 50px;
-    height: 40px;
-    text-align: center;
-    background-color: rgb(58, 58, 58);
-    color: rgb(216, 216, 216);
-    border: none;
-    width: 70px;
-    padding-left: 10px;
+.controls__display-data--tempo {
+  padding-left: 10px;
+}
+
+.controls__button-text {
+  display: none;
+}
+
+.react-icons {
+  vertical-align: middle;
 }
 
 @media (max-width: 900px) {
