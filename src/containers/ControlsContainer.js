@@ -9,10 +9,11 @@ import {
 } from '../actions';
 import Controls from '../components/Controls/Controls';
 
-const mapStateToProps = ({ controls: { playIndex, status, isRecordingOn, tempo }}) => {
+const mapStateToProps = ({ controls: { playIndex, status, isPlaying, isRecordingOn, tempo }}) => {
   return {
     playIndex, 
     status, 
+    isPlaying,
     isRecordingOn, 
     tempo 
   }

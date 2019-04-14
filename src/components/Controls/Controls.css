@@ -22,9 +22,20 @@
   background-color: #747474
 }
 
+.controls__button--green {
+  background-color: #00ab75;
+}
+
+.controls__button--green:active {
+  background-color: #00bb80;
+}
+
 .controls__button--red {
   background-color: #e90f0f;
-  color: #FFF;
+}
+
+.controls__button--red:active {
+  background-color: #ff0000;
 }
 
 .controls__button-clear:active {

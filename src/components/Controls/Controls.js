@@ -14,6 +14,7 @@ export default (props) => {
 
     const currentBar = Math.floor(props.playIndex / precision) + 1;
     const currentBeat = Math.floor((props.playIndex / (precision / 4) % 4)) + 1;
+    const playButtonStyle = (props.isPlaying && !props.isRecordingOn && ' controls__button--green') || '';
     const recordButtonStyle = props.isRecordingOn ? ' controls__button--red' : '';
 
     const play = () => props.timerStart(interval);
@@ -44,7 +45,7 @@ export default (props) => {
               <button className="controls__button" onClick={stop}>
                 <FaStop /><span className="controls__button-text"> Stop</span>
               </button>
-              <button className="controls__button" onClick={play}>
+              <button className={'controls__button' + playButtonStyle} onClick={play}>
                 <FaPlay /><span className="controls__button-text"> Play</span> 
               </button>
               <button 
