@@ -17,7 +17,13 @@ export default (props) => {
     const playButtonStyle = (props.isPlaying && !props.isRecordingOn && ' controls__button--green') || '';
     const recordButtonStyle = props.isRecordingOn ? ' controls__button--red' : '';
 
-    const play = () => props.timerStart(interval);
+    const play = () => {
+      if (props.isRecordingOn) {
+        props.toggleRecord();
+      } else {
+        props.timerStart(interval)
+      }
+    };
     const stop = () => {
       if (props.isRecordingOn) {
         props.toggleRecord();
