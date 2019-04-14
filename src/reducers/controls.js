@@ -1,4 +1,4 @@
-import { TIMER_TICK, TIMER_RESTART, TOGGLE_RECORD, TEMPO_CHANGE } from '../actions/types';
+import { TIMER_TICK, TIMER_RESTART, TOGGLE_RECORD, TEMPO_CHANGE, CLEAR_RECORDING } from '../actions/types';
 
 const initialState = {
   playIndex: 0,
@@ -23,7 +23,12 @@ export default (state = initialState, action) => {
       if (typeof newTempo === 'string') {
         newTempo = parseFloat(newTempo);
       }
-      return ({ ...state, tempo: newTempo });
+      return { ...state, tempo: newTempo };
+    case CLEAR_RECORDING:
+      // Disable recording mode if entire recording was cleared
+      if (!action.payload.instrumentId) {
+        return { ...state, isRecordingOn: false }
+      }
     default:
       return state;
   }

@@ -40,8 +40,11 @@ class DrumPad extends Component {
   handleMouseUp = handleKeyEvent(this.props.keyPress, true, this.props.triggerKey);
 
   // If currently playing, stop when mouse leaves key
-  handleMouseLeave = () => this.props.isKeyDown && 
-    handleKeyEvent(this.props.keyPress, true, this.props.triggerKey)();
+  handleMouseLeave = () => {
+      if (this.state.isPressed) {
+        handleKeyEvent(this.props.keyPress, true, this.props.triggerKey)();
+      }
+  }
 
   render() {
       //const bgColor = this.state.isPressed ? `hsl(${this.props.hue}, 40%, 50%)` : 'rgb(60, 60, 60)';

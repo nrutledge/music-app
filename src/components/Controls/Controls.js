@@ -1,5 +1,6 @@
 import React from 'react';
 import './Controls.css';
+import { FaPlay, FaStop, FaCircle, FaBackward, FaTrash } from 'react-icons/fa';
 
 // Number of slices to record per bar
 const precision = 96;
@@ -13,47 +14,66 @@ export default (props) => {
 
     const currentBar = Math.floor(props.playIndex / precision) + 1;
     const currentBeat = Math.floor((props.playIndex / (precision / 4) % 4)) + 1;
-    const recordingStatus = props.isRecordingOn ? 'on' : '';
+    const recordButtonStyle = props.isRecordingOn ? ' controls__button--red' : '';
 
-    const timerStart = () => props.timerStart(interval);
+    const play = () => props.timerStart(interval);
+    const stop = () => {
+      if (props.isRecordingOn) {
+        props.toggleRecord();
+      }
+      props.timerStop();
+    }
+    const startRecording = () => {
+      if (!props.isRecordingOn) {
+        props.toggleRecord();
+        play();
+      } else {
+        stop();
+      }
+    }
 
     // Preventing event from being passed in (should only be instrumentId)
     const clearRecording = () => props.clearRecording();;
 
     return (
         <div className="controls">
-            <div className="controls-section">
-              <button className="button-play" onClick={timerStart}>Play</button>
+            <div className="controls__section">
+              <button className="controls__button" onClick={props.timerRestart}>
+                <FaBackward /><span className="controls__button-text"> Restart</span>
+              </button>
+              <button className="controls__button" onClick={stop}>
+                <FaStop /><span className="controls__button-text"> Stop</span>
+              </button>
+              <button className="controls__button" onClick={play}>
+                <FaPlay /><span className="controls__button-text"> Play</span> 
+              </button>
               <button 
-                  className={'button-record ' + recordingStatus} 
-                  onClick={props.toggleRecord}
+                  className={'controls__button' + recordButtonStyle} 
+                  onClick={startRecording}
               >
-                Record
-              </button>
-              <button className="button-stop" onClick={props.timerStop}>
-                Stop
-              </button>
-              <button className="button-restart" onClick={props.timerRestart}>
-                Restart
+                <FaCircle /><span className="controls__button-text">  Record</span>
               </button>
             </div>
-            <div className="controls-section">
-              <label className="controls-label" for="play-position">Position</label>
-              <div className="play-position" name="play-position">
+            <div className="controls__section">
+              <label className="controls__label" for="play-position">Position</label>
+              <div className="controls__display-data" name="play-position">
                 {`${currentBar} ${currentBeat}`}
               </div>
-              <label className="controls-label" for="tempo">Tempo</label>
+              <label className="controls__label" for="tempo">Tempo</label>
               <input 
-                  className="tempo" 
+                  className="controls__display-data controls__display-data--tempo" 
                   name="tempo"
                   type="number" 
-                  onChange={(e) => props.tempoChange(e.target.value)} 
+                  onChange={(e) => {
+                    e.stopPropagation();
+                    props.tempoChange(e.target.value);
+                  }} 
                   value={props.tempo} 
               />
             </div>
-            <div className="controls-section">
-              <button className="button-clear" onClick={clearRecording}>
-                Clear Recording
+            <div className="controls__section">
+              <button className="controls__button controls__button-clear" onClick={clearRecording}>
+                <FaTrash style={{ verticalAlign: 'baseline' }} /> Clear Recording
               </button>
             </div>
         </div>

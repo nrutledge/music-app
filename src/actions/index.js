@@ -8,7 +8,7 @@ import {
     TOGGLE_RECORD,
     CLEAR_RECORDING,
     TOGGLE_INSTRUMENT_RECORD,
-    TOGGLE_KEY_RESET
+    KEY_RESET_COMPLETED
 } from './types';
 
 let timer = null;
@@ -55,22 +55,28 @@ export const toggleInstrumentRecord = (instrumentId) => {
   return { type: TOGGLE_INSTRUMENT_RECORD, payload: { instrumentId } };
 }
 
-export const toggleKeyReset = () => ({ type: TOGGLE_KEY_RESET });
+export const keyResetCompleted = () => ({ type: KEY_RESET_COMPLETED });
 
-export const timerStop = () => dispatch => {
+export const timerStop = () => {
     clearInterval(timer);
     timer = null;
 
-    dispatch({ type: TOGGLE_KEY_RESET });
-    dispatch({ type: TIMER_STOP });
+    return { type: TIMER_STOP };
 }
 
-export const timerRestart = () => dispatch => {
-    dispatch({ type: TOGGLE_KEY_RESET });
-    dispatch({ type: TIMER_RESTART });
+export const timerRestart = () => {
+    return { type: TIMER_RESTART };
 }
 
 export const clearRecording = instrumentId => dispatch => {
+    // Stop timer only if entire recording was cleared
+    if (!instrumentId) {
+      clearInterval(timer);
+      timer = null;
+      dispatch({ type: TIMER_STOP });
+      dispatch({ type: TIMER_RESTART });
+    }
+
     dispatch({ type: CLEAR_RECORDING, payload: { instrumentId } });
 }
 

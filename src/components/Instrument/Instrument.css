@@ -19,8 +19,16 @@
   }
 
   .instrument__button-clear {
-    background-color: transparent;
+    background-color: #3e3e3e;
     color: #DDD;
-    margin: 15px 0 15px 15px;
-    padding: 0;
+    margin: 10px 0 10px 10px;
+    padding: 3px 15px;
+  }
+
+  .instrument__button-clear:active {
+    background-color: #ff0000;
+  }
+
+  .instrument__button-clear .react-icons {
+    vertical-align: middle;
   }

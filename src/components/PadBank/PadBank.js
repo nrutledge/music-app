@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { toggleKeyReset } from '../../actions';
+import { keyResetCompleted } from '../../actions';
 
 import DrumPad from '../DrumPad/DrumPad';
 import './PadBank.css';
@@ -48,9 +48,9 @@ class PadBank extends Component {
       );
     });
 
-    // If key reset was issued, disable reset command
-    // (otherwise keys will be permenantly reset to a keyup state)
-    this.props.reset && this.props.toggleKeyReset();
+    // If keys were reset to a key-up state, send confirmation back
+    // to keyboards reducer (otherwise keys will be stuck in key-up state) 
+    this.props.reset && this.props.keyResetCompleted();
 
     return (
       <div className="key-pad">
@@ -68,4 +68,4 @@ const mapStateToProps = ({ instruments, keyboards }) => {
   }
 }
 
-export default connect(mapStateToProps, { toggleKeyReset })(PadBank);
+export default connect(mapStateToProps, { keyResetCompleted })(PadBank);
