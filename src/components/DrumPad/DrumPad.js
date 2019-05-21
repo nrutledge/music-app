@@ -82,7 +82,7 @@ const mapStateToProps = (
   { record: { playing, recording }, controls: { playIndex } }, 
   ownProps
 ) => { 
-  const { triggerKey: key, instrumentId, reset } = ownProps;
+  const { triggerKey: key, instrumentId } = ownProps;
 
   // down, up or no change (true, false or undefined)
   const playbackState = (

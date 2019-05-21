@@ -80,7 +80,7 @@ export default (props) => {
             </div>
             <div className="controls__section">
               <button className="controls__button controls__button-clear" onClick={clearRecording}>
-                <FaTrash style={{ verticalAlign: 'baseline' }} /> Clear Recording
+                Clear Recording
               </button>
             </div>
         </div>

@@ -64,7 +64,8 @@ export class Studio extends Component {
                   decayTime={instrument.decayTime}
                   transitionTime={instrument.transitionTime}
                   hue={instrument.hue}   
-                  armed={instrument.armed}           
+                  armed={instrument.armed}
+                  muted={instrument.muted}           
                 />
               )
             })}

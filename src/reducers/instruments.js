@@ -1,5 +1,8 @@
-import { TOGGLE_INSTRUMENT_RECORD } from '../actions/types';
 import instruments from '../config/instruments';
+import { 
+  TOGGLE_INSTRUMENT_PLAYBACK, 
+  TOGGLE_INSTRUMENT_RECORD 
+} from '../actions/types';
 
 // Returns new activeKeys object based on provided instruments and their
 // current armed status. If instrumentId is provided, only that instrument's
@@ -36,7 +39,14 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case TOGGLE_INSTRUMENT_RECORD:
+    case TOGGLE_INSTRUMENT_PLAYBACK: {
+      const newInstruments = { ...state.byId };
+      const targetInstrument = newInstruments[action.payload.instrumentId];
+      targetInstrument.muted = !targetInstrument.muted;
+
+      return { byId: newInstruments, activeKeys: state.activeKeys };
+    }
+    case TOGGLE_INSTRUMENT_RECORD: {
       const newInstruments = { ...state.byId };
       const currentActiveKeys = { ...state.activeKeys };
 
@@ -50,8 +60,9 @@ export default (state = initialState, action) => {
       );
 
       return { byId: newInstruments, activeKeys: newActiveKeys };
-      
-    default:
+    }
+    default: {
       return state;
+    }
   }
 }

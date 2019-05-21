@@ -8,6 +8,7 @@ import {
     TOGGLE_RECORD,
     CLEAR_RECORDING,
     TOGGLE_INSTRUMENT_RECORD,
+    TOGGLE_INSTRUMENT_PLAYBACK,
     KEY_RESET_COMPLETED
 } from './types';
 
@@ -50,6 +51,10 @@ export const tempoChange = (tempo) => {
 export const toggleRecord = () => {
   return { type: TOGGLE_RECORD };
 };
+
+export const toggleInstrumentPlayback = (instrumentId) => {
+  return { type: TOGGLE_INSTRUMENT_PLAYBACK, payload: { instrumentId } };
+}
 
 export const toggleInstrumentRecord = (instrumentId) => {
   return { type: TOGGLE_INSTRUMENT_RECORD, payload: { instrumentId } };

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FaTrash } from 'react-icons/fa';
+import { FaVolume, FaVolumeMute, FaCircle, FaTrash } from 'react-icons/fa';
 
 import * as actions from '../../actions';
 import Sound from '../Sound/Sound';
@@ -9,6 +9,9 @@ import InstrumentDisplay from '../InstrumentDisplay/InstrumentDisplay';
 import InputRange from '../InputRange/InputRange';
 import detectBrowser from '../../util/detectBrowser';
 import './Instrument.css';
+
+// TODO: move state to redux store
+// TODO: move instrument buttons into separate components
 
 class Instrument extends Component {
   constructor(props) {
@@ -94,7 +97,7 @@ class Instrument extends Component {
         source={sound.source}
         volume={sound.volume}
         detune={sound.detune}
-        instrumentVolume={this.state.volume}
+        instrumentVolume={this.props.muted ? 0 : this.state.volume}
         instrumentPanning={this.state.panning}
         instrumentDetune={this.state.tuning * 100}
         stopDelay={this.state.stopDelay}
@@ -109,8 +112,28 @@ class Instrument extends Component {
         onClick={() => this.props.toggleInstrumentRecord(this.props.id)}
       >
         <div className="instrument__container-top">
+        <button 
+            className="instrument__button" 
+            style={{ backgroundColor: !this.props.muted ? '#5A5A5A' : '#3e3e3e' }}
+            onClick={event => {
+              event.stopPropagation();
+              this.props.toggleInstrumentPlayback(this.props.id);
+            }}
+          >
+            {this.props.muted ? <FaVolumeMute /> : <FaVolume />}
+          </button>
           <button 
-            className="instrument__button-clear" 
+            className="instrument__button" 
+            style={{ backgroundColor: this.props.armed ? '#5A5A5A' : '#3e3e3e' }}
+            onClick={event => {
+              event.stopPropagation();
+              this.props.toggleInstrumentRecord(this.props.id);
+            }}
+          >
+            <FaCircle />
+          </button>
+          <button 
+            className="instrument__button" 
             onClick={event => {
               event.stopPropagation();
               this.props.clearRecording(this.props.id);
