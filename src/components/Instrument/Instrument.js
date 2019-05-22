@@ -103,6 +103,7 @@ class Instrument extends Component {
         stopDelay={this.state.stopDelay}
         decayTime={this.state.decayTime}
         incrementLoadedCount={this.incrementLoadedCount}
+        key={sound.id}
       />
     });
 

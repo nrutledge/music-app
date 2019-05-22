@@ -21,10 +21,10 @@ class PadBank extends Component {
       return { ...acc, ...keySounds };
     }, {});
 
-    const drumPads = this.props.keyboard.map(row => {
+    const drumPads = this.props.keyboard.map((row, i) => {
       return (
-        <div className="key-row">
-          {row.map(([key, widthMultiplier, fontStyle]) => {
+        <div className="key-row" key={i}>
+          {row.map(([key, widthMultiplier, fontStyle], j) => {
             const width = widthMultiplier ? baseKeySize * widthMultiplier : baseKeySize;
             let fontSize;
             if (fontStyle === 's') {
@@ -42,6 +42,7 @@ class PadBank extends Component {
               height={baseKeySize}
               fontSize={fontSize}
               reset={this.props.reset}
+              key={j}
             />
           })}
         </div>

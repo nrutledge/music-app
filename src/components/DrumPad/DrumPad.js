@@ -82,17 +82,17 @@ const mapStateToProps = (
   { record: { playing, recording }, controls: { playIndex } }, 
   ownProps
 ) => { 
-  const { triggerKey: key, instrumentId } = ownProps;
+  const { triggerKey, instrumentId } = ownProps;
 
   // down, up or no change (true, false or undefined)
   const playbackState = (
     recording[instrumentId] && 
     recording[instrumentId][playIndex] &&
-    recording[instrumentId][playIndex][key]
+    recording[instrumentId][playIndex][triggerKey]
   );
 
   // down, up or unplayed (true, false or undefined
-  const keydownState = playing[instrumentId] && playing[instrumentId][key];
+  const keydownState = playing[instrumentId] && playing[instrumentId][triggerKey];
 
   return { playbackState, keydownState };
 }

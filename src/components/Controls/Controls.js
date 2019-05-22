@@ -62,11 +62,11 @@ export default (props) => {
               </button>
             </div>
             <div className="controls__section">
-              <label className="controls__label" for="play-position">Position</label>
+              <label className="controls__label" htmlFor="play-position">Position</label>
               <div className="controls__display-data" name="play-position">
                 {`${currentBar} ${currentBeat}`}
               </div>
-              <label className="controls__label" for="tempo">Tempo</label>
+              <label className="controls__label" htmlFor="tempo">Tempo</label>
               <input 
                   className="controls__display-data controls__display-data--tempo" 
                   name="tempo"
