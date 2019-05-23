@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import audioCtx, { Reverb } from '../../services/audio';
 import ControlsContainer from '../../containers/ControlsContainer';
 import PadBank from '../PadBank/PadBank';
-import InstrumentSettings from '../InstrumentSettings/InstrumentSettings';
+import Modal from '../Modal/Modal';
+import DrumPadSettings from '../DrumPadSettings/DrumPadSettings';
 import handleKeyEvent from '../../util/handleKeyEvent';
 import Instrument from '../Instrument/Instrument';
 import detectBrowser from '../../util/detectBrowser';
@@ -48,7 +49,7 @@ export class Studio extends Component {
         <ControlsContainer />
         <div className="workspace">
           {browserWarning}
-          <InstrumentSettings instrumentId={1} />
+          <Modal title="Test Modal" content={<DrumPadSettings instrumentId={1} />} />
           <div className="section-top">
             {Object.values(this.props.instruments).map((instrument, index) => {
               return (

@@ -1,4 +1,8 @@
-.instrument-settings {
+.modal.hidden {
+  visibility: hidden;
+}
+
+.modal {
   position: absolute;
   top: 10vh;
   left: 50%;
@@ -10,27 +14,19 @@
   padding: 20px;
 }
 
-.instrument-settings h1 {
+.modal h1 {
   margin-top: 0;
 }
 
-.instrument-settings__form {
-  height: 70vh;
-  overflow-y: scroll;
-}
-
-.instrument-settings__input-row {
-  margin: 5px;
-}
-
-.instrument-settings__label {
+.modal__content label {
   display: inline-block;
   width: 100px;
   text-align: right;
   margin-right: 10px;
 }
 
-.instrument-settings__input {
+.modal__content input {
+  margin: 5px;
   padding: 5px;
   width: 350px;
   font-size: 16px;

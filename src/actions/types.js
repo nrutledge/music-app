@@ -9,3 +9,4 @@ export const CLEAR_RECORDING = 'clear_recording';
 export const TOGGLE_INSTRUMENT_RECORD = 'toggle_instrument_record';
 export const TOGGLE_INSTRUMENT_PLAYBACK = 'toggle_instrument_playback';
 export const KEY_RESET_COMPLETED = 'key_reset_completed';
+export const SHOW_KEY_SETTINGS = 'show_key_settings';
