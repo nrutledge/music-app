@@ -3,7 +3,7 @@ const spread = 72;
 
 export default {
   1: {
-    id: 1,
+    id: '1',
     name: 'Rock Drums (ง\'̀-\'́)ง',
     hue: baseHue,
     volume: 55,
@@ -15,42 +15,42 @@ export default {
     armed: true,
     sounds: [
       {
-          id: 1,
+          id: '1',
           name: 'High Tom',
           triggerKey: 'q',
           source: 'sounds/drums/Tom High/Tom High 4.mp3',
           volume: 0.8,
       }, 
       {
-          id: 2,
+          id: '2',
           name: 'Mid Tom',
           triggerKey: 'w',
           source: 'sounds/drums/Tom Mid/Tom Mid 4.mp3',
           volume: 0.8
       }, 
       {
-          id: 3,
+          id: '3',
           name: 'Floor Tom',
           triggerKey: 'e',
           source: 'sounds/drums/Tom Floor/Tom Floor 5.mp3',
           volume: 0.8
       }, 
       {
-          id: 4,
+          id: '4',
           name: 'Crash',
           triggerKey: 'a',
           source: 'sounds/drums/Crash A/Crash A 5.mp3',
           volume: 0.5
       }, 
       {
-          id: 5,
+          id: '5',
           name: 'Ride',
           triggerKey: 's',
           source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.mp3',
           volume: 0.8
       }, 
       {
-          id: 6,
+          id: '6',
           name: 'Hi-Hat Open',
           triggerKey: 'd',
           source: 'sounds/drums/Hi Hat/Hi Hat Open 5.mp3',
@@ -58,21 +58,21 @@ export default {
           exclusiveZone: 2
       }, 
       {
-          id: 7,
+          id: '7',
           name: 'Kick',
           triggerKey: 'z',
           source: 'sounds/drums2/kick-softy.mp3',
           volume: 0.95
       }, 
       {
-          id: 8,
+          id: '8',
           name: 'Snare',
           triggerKey: 'x',
           source: 'sounds/drums/Snare On/Snare 6.mp3',
           volume: 0.7
       }, 
       {
-          id: 9,
+          id: '9',
           name: 'Hi-Hat Closed',
           triggerKey: 'c',
           source: 'sounds/drums/Hi Hat/Hi Hat 8.mp3',
@@ -82,7 +82,7 @@ export default {
     ]
   },
   2: {
-    id: 2,
+    id: '2',
     name: 'Synth Drums', 
     hue: baseHue + (spread * 1),
     volume: 40, 
@@ -94,7 +94,7 @@ export default {
     armed: true,
     sounds: [
       {
-          id: 1,
+          id: '1',
           name: '808 C',
           triggerKey: 'v',
           source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -103,7 +103,7 @@ export default {
           //exclusiveZone: 6
       }, 
       {
-          id: 2,
+          id: '2',
           name: '808 D',
           triggerKey: 'b',
           source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -112,7 +112,7 @@ export default {
           //exclusiveZone: 6
       }, 
       {
-          id: 3,
+          id: '3',
           name: '808 E',
           triggerKey: 'n',
           source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -120,7 +120,7 @@ export default {
           detune: -200,
           //exclusiveZone: 6
       }, {
-          id: 4,
+          id: '4',
           name: '808 F#',
           triggerKey: 'm',
           source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -128,7 +128,7 @@ export default {
           detune: 0,
           //exclusiveZone: 6
       }, {
-          id: 5,
+          id: '5',
           name: '808 G',
           triggerKey: ',',
           source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -136,7 +136,7 @@ export default {
           detune: 100,
           //exclusiveZone: 6
       }, {
-          id: 6,
+          id: '6',
           name: '808 A',
           triggerKey: '.',
           source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -144,7 +144,7 @@ export default {
           detune: 300,
           //exclusiveZone: 6
       }, {
-          id: 7,
+          id: '7',
           name: '808 B',
           triggerKey: '/',
           source: 'sounds/drums2/808-bass-f-raw_Fsharp.wav',
@@ -155,7 +155,7 @@ export default {
     ]
   },
   3: {
-    id: 3,
+    id: '3',
     keyMapping: 'piano', 
     name: 'Piano', 
     hue: baseHue + (spread * 2),
@@ -168,7 +168,7 @@ export default {
     armed: true,
     sounds: [
       {
-          id: 1,
+          id: '1',
           name: 'Piano Chord 1',
           triggerKey: 'f',
           source: 'sounds/piano/Chord_1.mp3',
@@ -177,7 +177,7 @@ export default {
           //exclusiveZone: 1
       }, 
       {
-          id: 2,
+          id: '2',
           name: 'Piano Chord 2',
           triggerKey: 'g',
           source: 'sounds/piano/Chord_2.mp3',
@@ -186,7 +186,7 @@ export default {
           //exclusiveZone: 1
       }, 
       {
-          id: 3,
+          id: '3',
           name: 'Piano Chord 3',
           triggerKey: 'h',
           source: 'sounds/piano/Chord_3.mp3',
@@ -195,7 +195,7 @@ export default {
           //exclusiveZone: 1
       }, 
       {
-          id: 4,
+          id: '4',
           name: 'Piano Chord 4',
           triggerKey: 'j',
           source: 'sounds/piano/Chord_3.mp3',
@@ -205,7 +205,7 @@ export default {
           detune: 200
       }, 
       {
-          id: 5,
+          id: '5',
           name: 'Piano Chord 5',
           triggerKey: 'k',
           source: 'sounds/piano/Chord_3.mp3',
@@ -215,7 +215,7 @@ export default {
           detune: 300
       },
       {
-          id: 6,
+          id: '6',
           name: 'Piano Chord 6',
           triggerKey: 'l',
           source: 'sounds/piano/Chord_3.mp3',
@@ -225,7 +225,7 @@ export default {
           detune: 500
       },
       {
-          id: 7,
+          id: '7',
           name: 'Piano Chord 7',
           triggerKey: ';',
           source: 'sounds/piano/Chord_3.mp3',
@@ -235,7 +235,7 @@ export default {
           detune: 700
       },
       {
-          id: 8,
+          id: '8',
           name: 'Piano Chord 8',
           triggerKey: '\'',
           source: 'sounds/piano/Chord_3.mp3',
@@ -247,7 +247,7 @@ export default {
     ]
   },
   4: {
-    id: 4,
+    id: '4',
     name: 'Synth', 
     hue: baseHue + (spread * 3),
     volume: 50, 
@@ -259,7 +259,7 @@ export default {
     armed: true,
     sounds: [
       {
-          id: 1,
+          id: '1',
           name: 'Synth C Major',
           triggerKey: 'r',
           source: 'sounds/synth/I_Do_Remember_C_01.wav',
@@ -268,7 +268,7 @@ export default {
           //exclusiveZone: 3
       },
       {
-          id: 2,
+          id: '2',
           name: 'Synth D Major',
           triggerKey: 't',
           source: 'sounds/synth/I_Do_Remember_D_01.wav',
@@ -286,7 +286,7 @@ export default {
           //exclusiveZone: 3
       },  
       {
-          id: 4,
+          id: '4',
           name: 'Synth F# Major',
           triggerKey: 'u',
           source: 'sounds/synth/I_Do_Remember_F_01.wav',
@@ -296,7 +296,7 @@ export default {
           detune: 100
       },  
       {
-          id: 5,
+          id: '5',
           name: 'Synth G Major',
           triggerKey: 'i',
           source: 'sounds/synth/I_Do_Remember_G_01.wav',
@@ -305,7 +305,7 @@ export default {
           //exclusiveZone: 3
       },
       {
-          id: 6,
+          id: '6',
           name: 'Synth A Major',
           triggerKey: 'o',
           source: 'sounds/synth/I_Do_Remember_A_01.wav',
@@ -314,7 +314,7 @@ export default {
           //exclusiveZone: 3
       },
       {
-          id: 7,
+          id: '7',
           name: 'Synth B Major',
           triggerKey: 'p',
           source: 'sounds/synth/I_Do_Remember_B_01.wav',
@@ -323,7 +323,7 @@ export default {
           //exclusiveZone: 3
       },
       {
-        id: 8,
+        id: '8',
         name: 'Synth C Major',
         triggerKey: '[',
         source: 'sounds/synth/I_Do_Remember_B_01.wav',
@@ -333,7 +333,7 @@ export default {
         //exclusiveZone: 3
     },
     {
-      id: 9,
+      id: '9',
       name: 'Synth D Major',
       triggerKey: ']',
       source: 'sounds/synth/I_Do_Remember_B_01.wav',
@@ -345,7 +345,7 @@ export default {
     ]
   },
   5: {
-    id: 5,
+    id: '5',
     name: 'Cello Low', 
     hue: baseHue + (spread * 4),
     volume: 20, 
@@ -357,7 +357,7 @@ export default {
     armed: true,
     sounds: [
       {
-          id: 1,
+          id: '1',
           name: 'Cello G',
           triggerKey: '1',
           source: 'sounds/strings/cello_G_major.wav',
@@ -365,7 +365,7 @@ export default {
           detune: -1200
       }, 
       {
-          id: 2,
+          id: '2',
           name: 'Cello A',
           triggerKey: '2',
           source: 'sounds/strings/cello_G_major.wav',
@@ -373,7 +373,7 @@ export default {
           detune: -1000
       }, 
       {
-          id: 3,
+          id: '3',
           name: 'Cello B',
           triggerKey: '3',
           source: 'sounds/strings/cello_G_major.wav',
@@ -381,7 +381,7 @@ export default {
           detune: -800
       }, 
       {
-          id: 4,
+          id: '4',
           name: 'Cello C',
           triggerKey: '4',
           source: 'sounds/strings/cello_G_major.wav',
@@ -389,7 +389,7 @@ export default {
           detune: -700
       }, 
       {
-          id: 5,
+          id: '5',
           name: 'Cello D',
           triggerKey: '5',
           source: 'sounds/strings/cello_G_major.wav',
@@ -397,7 +397,7 @@ export default {
           detune: -500
       }, 
       {
-          id: 6,
+          id: '6',
           name: 'Cello E',
           triggerKey: '6',
           source: 'sounds/strings/cello_G_major.wav',
@@ -405,7 +405,7 @@ export default {
           detune: -300
       }, 
       {
-          id: 7,
+          id: '7',
           name: 'Cello F#',
           triggerKey: '7',
           source: 'sounds/strings/cello_G_major.wav',
@@ -413,7 +413,7 @@ export default {
           detune: -100
       }, 
       {
-          id: 8,
+          id: '8',
           name: 'Cello G',
           triggerKey: '8',
           source: 'sounds/strings/cello_G_major.wav',
@@ -421,7 +421,7 @@ export default {
           detune: 0
       }, 
       {
-          id: 9,
+          id: '9',
           name: 'Cello A',
           triggerKey: '9',
           source: 'sounds/strings/cello_G_major.wav',
@@ -429,7 +429,7 @@ export default {
           detune: 200
       }, 
       {
-          id: 10,
+          id: '10',
           name: 'Cello B',
           triggerKey: '0',
           source: 'sounds/strings/cello_G_major.wav',
@@ -437,7 +437,7 @@ export default {
           detune: 400
       }, 
       {
-          id: 11,
+          id: '11',
           name: 'Cello C',
           triggerKey: '-',
           source: 'sounds/strings/cello_G_major.wav',
@@ -445,7 +445,7 @@ export default {
           detune: 500
       }, 
       {
-          id: 12,
+          id: '12',
           name: 'Cello D',
           triggerKey: '=',
           source: 'sounds/strings/cello_G_major.wav',
@@ -455,7 +455,7 @@ export default {
     ]
   },
   6: {
-    id: 6,
+    id: '6',
     name: 'Cello High', 
     hue: baseHue + (spread * 4),
     volume: 20, 
@@ -467,7 +467,7 @@ export default {
     armed: true,
     sounds: [
       {
-          id: 1,
+          id: '1',
           name: 'Cello G',
           triggerKey: '1',
           source: 'sounds/strings/cello_G_major.wav',
@@ -475,7 +475,7 @@ export default {
           detune: 0
       }, 
       {
-          id: 2,
+          id: '2',
           name: 'Cello A',
           triggerKey: '2',
           source: 'sounds/strings/cello_G_major.wav',
@@ -483,7 +483,7 @@ export default {
           detune: 200
       }, 
       {
-          id: 3,
+          id: '3',
           name: 'Cello B',
           triggerKey: '3',
           source: 'sounds/strings/cello_G_major.wav',
@@ -491,7 +491,7 @@ export default {
           detune: 400
       }, 
       {
-          id: 4,
+          id: '4',
           name: 'Cello C',
           triggerKey: '4',
           source: 'sounds/strings/cello_G_major.wav',
@@ -499,7 +499,7 @@ export default {
           detune: 500
       }, 
       {
-          id: 5,
+          id: '5',
           name: 'Cello D',
           triggerKey: '5',
           source: 'sounds/strings/cello_G_major.wav',
@@ -507,7 +507,7 @@ export default {
           detune: 700
       }, 
       {
-          id: 6,
+          id: '6',
           name: 'Cello E',
           triggerKey: '6',
           source: 'sounds/strings/cello_G_major.wav',
@@ -515,7 +515,7 @@ export default {
           detune: 900
       }, 
       {
-          id: 7,
+          id: '7',
           name: 'Cello F#',
           triggerKey: '7',
           source: 'sounds/strings/cello_G_major.wav',
@@ -523,7 +523,7 @@ export default {
           detune: 1100
       }, 
       {
-          id: 8,
+          id: '8',
           name: 'Cello G',
           triggerKey: '8',
           source: 'sounds/strings/cello_G_major.wav',
@@ -531,7 +531,7 @@ export default {
           detune: 1200
       }, 
       {
-          id: 9,
+          id: '9',
           name: 'Cello A',
           triggerKey: '9',
           source: 'sounds/strings/cello_G_major.wav',
@@ -539,7 +539,7 @@ export default {
           detune: 1400
       }, 
       {
-          id: 10,
+          id: '10',
           name: 'Cello B',
           triggerKey: '0',
           source: 'sounds/strings/cello_G_major.wav',
@@ -547,7 +547,7 @@ export default {
           detune: 1600
       }, 
       {
-          id: 11,
+          id: '11',
           name: 'Cello C',
           triggerKey: '-',
           source: 'sounds/strings/cello_G_major.wav',
@@ -555,7 +555,7 @@ export default {
           detune: 1700
       }, 
       {
-          id: 12,
+          id: '12',
           name: 'Cello D',
           triggerKey: '=',
           source: 'sounds/strings/cello_G_major.wav',
