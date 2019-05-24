@@ -142,6 +142,15 @@ class Instrument extends Component {
           >
             <FaTrash />
           </button>
+          <button
+            className="instrument__button" 
+            onClick={event => {
+              event.stopPropagation();
+              this.props.editInstrument(this.props.id);
+            }}
+          >
+            Edit
+          </button>
         </div>
         <InstrumentDisplay 
           hue={this.props.hue} 

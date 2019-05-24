@@ -10,8 +10,8 @@ const baseKeySize = 3.5;
 
 class PadBank extends Component {
   render() {
-    // Get color for each armed instrument's keys
-    const activeKeys = Object.values(this.props.instruments).reduce((acc, instrument) => {
+    // Get instrument IDs and color for each key based on armed instruments
+    const keyDetails = Object.values(this.props.instruments).reduce((acc, instrument) => {
       if (!instrument.armed) { return acc; }
 
       const keySounds = instrument.sounds.reduce((acc, sound) => {
@@ -33,11 +33,17 @@ class PadBank extends Component {
               fontSize = 1.3;
             }
 
+            console.log({ 
+              instruments: this.props.instruments, 
+              keyDetails: keyDetails,
+              activeKeys: this.props.activeKeys 
+            })
+
             return <DrumPad 
-              isActive={activeKeys[key] !== undefined ? true : false} 
+              isActive={this.props.activeKeys[key] && this.props.activeKeys[key].length > 0} 
               triggerKey={key} 
-              instrumentId={activeKeys[key] && activeKeys[key].instrumentId}
-              hue={(activeKeys[key] && activeKeys[key].hue) || 0} 
+              instrumentId={keyDetails[key] && keyDetails[key].instrumentId}
+              hue={(keyDetails[key] && keyDetails[key].hue) || 0} 
               width={width} 
               height={baseKeySize}
               fontSize={fontSize}
@@ -64,6 +70,7 @@ class PadBank extends Component {
 const mapStateToProps = ({ instruments, keyboards }) => {
   return { 
     instruments: instruments.byId, 
+    activeKeys: instruments.activeKeys,
     keyboard: keyboards.keyboard,
     reset: keyboards.reset
   }

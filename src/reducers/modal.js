@@ -1,19 +1,19 @@
-import { SHOW_KEY_SETTINGS } from '../actions/types';
+import { EDIT_INSTRUMENT, CLOSE_MODAL } from '../actions/types';
 
 const initialState = { 
   hidden: true,
-  editMode: false,
-  source: ''
+  title: '',
+  content: ''
 }
 
 export default (state = initialState, action) => {
   switch(action.type) {
-    case SHOW_KEY_SETTINGS:
-      return {
-        ...state,
-        hidden: false
-      }
-    default:
+    case CLOSE_MODAL: {
+      return initialState;
+    }
+    
+    default: {
       return state;
+    }
   }
 }

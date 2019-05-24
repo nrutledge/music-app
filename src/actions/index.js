@@ -9,7 +9,9 @@ import {
     CLEAR_RECORDING,
     TOGGLE_INSTRUMENT_RECORD,
     TOGGLE_INSTRUMENT_PLAYBACK,
-    KEY_RESET_COMPLETED
+    KEY_RESET_COMPLETED,
+    EDIT_INSTRUMENT,
+    CLOSE_MODAL
 } from './types';
 
 let timer = null;
@@ -85,3 +87,12 @@ export const clearRecording = instrumentId => dispatch => {
     dispatch({ type: CLEAR_RECORDING, payload: { instrumentId } });
 }
 
+export const editInstrument = instrumentId => (dispatch, getState) => {
+  const instrument = getState().instruments.byId[instrumentId];
+
+  dispatch({ type: EDIT_INSTRUMENT, payload: instrument });
+}
+
+export const closeModal = () => {
+  return { type: CLOSE_MODAL }
+}
