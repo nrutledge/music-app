@@ -10,4 +10,6 @@ export const TOGGLE_INSTRUMENT_RECORD = 'toggle_instrument_record';
 export const TOGGLE_INSTRUMENT_PLAYBACK = 'toggle_instrument_playback';
 export const KEY_RESET_COMPLETED = 'key_reset_completed';
 export const EDIT_INSTRUMENT = 'edit_instrument';
+export const CLOSE_EDIT_MODE = 'close_edit_mode';
+export const EDIT_KEY_SETTINGS = 'edit_key_settings';
 export const CLOSE_MODAL = 'close_modal';

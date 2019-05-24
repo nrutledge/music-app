@@ -2,7 +2,8 @@ import instruments from '../config/instruments';
 import { 
   TOGGLE_INSTRUMENT_PLAYBACK, 
   TOGGLE_INSTRUMENT_RECORD, 
-  EDIT_INSTRUMENT
+  EDIT_INSTRUMENT,
+  CLOSE_EDIT_MODE
 } from '../actions/types';
 
 // Returns new activeKeys object based on provided instruments and their
@@ -40,6 +41,7 @@ const getNewActiveKeys = (instruments, currentKeys = {}, instrumentId = null) =>
 };
 
 const initialState = {
+  isEditMode: false,
   activeKeys: getNewActiveKeys(instruments),
   byId: instruments
 }
@@ -51,7 +53,7 @@ export default (state = initialState, action) => {
       const targetInstrument = newInstruments[action.payload.instrumentId];
       targetInstrument.muted = !targetInstrument.muted;
 
-      return { byId: newInstruments, activeKeys: state.activeKeys };
+      return { ...state, activeKeys: state.activeKeys, byId: newInstruments };
     }
 
     case TOGGLE_INSTRUMENT_RECORD: {
@@ -67,7 +69,7 @@ export default (state = initialState, action) => {
         action.payload.instrumentId
       );
 
-      return { byId: newInstruments, activeKeys: newActiveKeys };
+      return { ...state, activeKeys: newActiveKeys, byId: newInstruments,  };
     }
 
     case EDIT_INSTRUMENT: {
@@ -80,7 +82,6 @@ export default (state = initialState, action) => {
         tempInstruments[instrumentId] = newInstrument;
       }
 
-      console.log({ tempInstruments });
       // Generate new active keys based on only the instrument to be edited
       // being active
       const newActiveKeys = getNewActiveKeys(
@@ -88,11 +89,20 @@ export default (state = initialState, action) => {
         { ...state.activeKeys }
       );
 
-      console.log({ newActiveKeys })
+      // Preserve the instrument state for use after editing but set the new 
+      // active keys
+      return { ...state, isEditMode: true, activeKeys: newActiveKeys };
+    }
+
+    case CLOSE_EDIT_MODE: {
+      const newActiveKeys = getNewActiveKeys(
+        state.byId, 
+        { ...state.activeKeys }
+      );
 
       // Preserve the instrument state for use after editing but set the new 
       // active keys
-      return { ...state, byId: { ...state.byId }, activeKeys: newActiveKeys };
+      return { ...state, isEditMode: false, activeKeys: newActiveKeys };
     }
 
     default: {

@@ -1,13 +1,22 @@
-import { EDIT_INSTRUMENT, CLOSE_MODAL } from '../actions/types';
+import { EDIT_KEY_SETTINGS, CLOSE_MODAL } from '../actions/types';
 
 const initialState = { 
   hidden: true,
   title: '',
-  content: ''
+  renderProp: ''
 }
 
 export default (state = initialState, action) => {
   switch(action.type) {
+    case EDIT_KEY_SETTINGS: {
+      return { 
+        ...state, 
+        hidden: false, 
+        title: action.payload.title, 
+        renderProp: action.payload.renderProp 
+      }
+    }
+
     case CLOSE_MODAL: {
       return initialState;
     }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
 
 import handleKeyEvent from '../../util/handleKeyEvent';
-import { keyPress } from '../../actions';
+import * as actions from '../../actions';
 import './DrumPad.css';
 
 class DrumPad extends Component {
@@ -36,7 +36,13 @@ class DrumPad extends Component {
   }
 
   // handleMouseEnter = () => this.props.setDisplayContent(this.props.name);
-  handleMouseDown = handleKeyEvent(this.props.keyPress, false, this.props.triggerKey);
+  handleMouseDown = () => {
+    if (this.props.isEditMode) {
+      this.props.editKeySettings(this.props.instrumentId, this.props.triggerKey);
+    }
+    handleKeyEvent(this.props.keyPress, false, this.props.triggerKey)();
+  };
+
   handleMouseUp = handleKeyEvent(this.props.keyPress, true, this.props.triggerKey);
 
   // If currently playing, stop when mouse leaves key
@@ -79,7 +85,7 @@ class DrumPad extends Component {
 }
 
 const mapStateToProps = (
-  { record: { playing, recording }, controls: { playIndex } }, 
+  { instruments: { isEditMode }, record: { playing, recording }, controls: { playIndex } }, 
   ownProps
 ) => { 
   const { triggerKey, instrumentId } = ownProps;
@@ -94,8 +100,8 @@ const mapStateToProps = (
   // down, up or unplayed (true, false or undefined
   const keydownState = playing[instrumentId] && playing[instrumentId][triggerKey];
 
-  return { playbackState, keydownState };
+  return { isEditMode, playbackState, keydownState };
 }
 
-export default connect(mapStateToProps, { keyPress })(DrumPad);
+export default connect(mapStateToProps, actions)(DrumPad);
 

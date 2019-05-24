@@ -1,3 +1,4 @@
+import React from 'react';
 import { 
     TIMER_START, 
     TIMER_TICK, 
@@ -11,6 +12,8 @@ import {
     TOGGLE_INSTRUMENT_PLAYBACK,
     KEY_RESET_COMPLETED,
     EDIT_INSTRUMENT,
+    CLOSE_EDIT_MODE,
+    EDIT_KEY_SETTINGS,
     CLOSE_MODAL
 } from './types';
 
@@ -93,6 +96,39 @@ export const editInstrument = instrumentId => (dispatch, getState) => {
   dispatch({ type: EDIT_INSTRUMENT, payload: instrument });
 }
 
+export const closeEditMode = () => {
+  return { type: CLOSE_EDIT_MODE };
+}
+
+export const editKeySettings = (instrumentId, key) => (dispatch, getState) => {
+  const { name, source, volume }= getState()
+    .instruments
+    .byId[instrumentId]
+    .sounds
+    .find(sound => sound.triggerKey === key)
+  const title = `Settings for Key: ${key.toUpperCase()}`
+  const renderProp = () => {
+    return (
+      <div>
+        <div>
+          <label htmlFor="name">Name</label>
+          <input name="name" type="text" value={name}></input>
+        </div>
+        <div>
+          <label htmlFor="source">Source</label>
+          <input name="source" type="text" value={source}></input>
+        </div>
+        <div>
+          <label htmlFor="source">Volume</label>
+          <input name="volume" type="text" value={volume}></input>
+        </div>
+      </div>
+    );
+  }
+
+  dispatch({ type: EDIT_KEY_SETTINGS, payload: { title, renderProp } });
+}
+
 export const closeModal = () => {
-  return { type: CLOSE_MODAL }
+  return { type: CLOSE_MODAL };
 }

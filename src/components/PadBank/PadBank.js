@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { keyResetCompleted } from '../../actions';
+import * as actions from '../../actions';
 
 import DrumPad from '../DrumPad/DrumPad';
 import './PadBank.css';
@@ -33,12 +33,6 @@ class PadBank extends Component {
               fontSize = 1.3;
             }
 
-            console.log({ 
-              instruments: this.props.instruments, 
-              keyDetails: keyDetails,
-              activeKeys: this.props.activeKeys 
-            })
-
             return <DrumPad 
               isActive={this.props.activeKeys[key] && this.props.activeKeys[key].length > 0} 
               triggerKey={key} 
@@ -62,6 +56,18 @@ class PadBank extends Component {
     return (
       <div className="key-pad">
         {drumPads}
+        <div className="key-pad__bottom-section">
+          {
+            this.props.isEditMode && 
+            <button 
+              className="key-pad__button--close"
+              onClick={() => {
+                this.props.closeEditMode();
+                this.props.closeModal();
+              }}
+            >Close Edit Mode</button>
+          }
+        </div>
       </div> 
     );
   }
@@ -69,6 +75,7 @@ class PadBank extends Component {
 
 const mapStateToProps = ({ instruments, keyboards }) => {
   return { 
+    isEditMode: instruments.isEditMode,
     instruments: instruments.byId, 
     activeKeys: instruments.activeKeys,
     keyboard: keyboards.keyboard,
@@ -76,4 +83,4 @@ const mapStateToProps = ({ instruments, keyboards }) => {
   }
 }
 
-export default connect(mapStateToProps, { keyResetCompleted })(PadBank);
+export default connect(mapStateToProps, actions)(PadBank);
