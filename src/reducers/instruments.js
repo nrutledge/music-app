@@ -3,6 +3,8 @@ import {
   TOGGLE_INSTRUMENT_PLAYBACK, 
   TOGGLE_INSTRUMENT_RECORD, 
   EDIT_INSTRUMENT,
+  UPDATE_INSTRUMENT,
+  UPDATE_INSTRUMENT_SOUND,
   CLOSE_EDIT_MODE
 } from '../actions/types';
 
@@ -78,7 +80,7 @@ export default (state = initialState, action) => {
       const tempInstruments = { ...state.byId };
       for (let instrumentId in tempInstruments) {
         const newInstrument = { ...tempInstruments[instrumentId] };
-        newInstrument.armed = instrumentId == action.payload.id ? true : false;
+        newInstrument.armed = instrumentId === action.payload.id ? true : false;
         tempInstruments[instrumentId] = newInstrument;
       }
 
@@ -92,6 +94,35 @@ export default (state = initialState, action) => {
       // Preserve the instrument state for use after editing but set the new 
       // active keys
       return { ...state, isEditMode: true, activeKeys: newActiveKeys };
+    }
+
+    case UPDATE_INSTRUMENT: {
+      const { instrumentId, settings } = action.payload;
+      const newInstruments = { ...state.byId };
+      newInstruments[instrumentId] = { 
+        ...state.byId[instrumentId],
+        ...settings
+      }
+      return {
+        ...state,
+        byId: newInstruments
+      }
+    }
+
+    case UPDATE_INSTRUMENT_SOUND: {
+      const { instrumentId, key, settings } = action.payload;
+      const newInstruments = { ...state.byId };
+
+      newInstruments[instrumentId] = { ...newInstruments[instrumentId] };
+      newInstruments[instrumentId].sounds = newInstruments[instrumentId].sounds.map(sound => {
+        if (sound.triggerKey === key) {
+          return { ...sound, ...settings };
+        } else {
+          return sound;
+        }
+      });
+
+      return { ...state, byId: newInstruments };
     }
 
     case CLOSE_EDIT_MODE: {

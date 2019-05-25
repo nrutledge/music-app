@@ -4,9 +4,9 @@
 
 .modal {
   position: absolute;
-  top: 35%;
+  top: 10%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
   background-color: #333;
   border-radius: 10px;
   color: #FFF;

@@ -20,34 +20,39 @@ export default {
           triggerKey: 'q',
           source: 'sounds/drums/Tom High/Tom High 4.mp3',
           volume: 0.8,
+          detune: 0
       }, 
       {
           id: '2',
           name: 'Mid Tom',
           triggerKey: 'w',
           source: 'sounds/drums/Tom Mid/Tom Mid 4.mp3',
-          volume: 0.8
+          volume: 0.8,
+          detune: 0
       }, 
       {
           id: '3',
           name: 'Floor Tom',
           triggerKey: 'e',
           source: 'sounds/drums/Tom Floor/Tom Floor 5.mp3',
-          volume: 0.8
+          volume: 0.8,
+          detune: 0
       }, 
       {
           id: '4',
           name: 'Crash',
           triggerKey: 'a',
           source: 'sounds/drums/Crash A/Crash A 5.mp3',
-          volume: 0.5
+          volume: 0.5,
+          detune: 0
       }, 
       {
           id: '5',
           name: 'Ride',
           triggerKey: 's',
           source: 'sounds/drums/Ride Cymbal/Ride Cymbal 3.mp3',
-          volume: 0.8
+          volume: 0.8,
+          detune: 0
       }, 
       {
           id: '6',
@@ -55,6 +60,7 @@ export default {
           triggerKey: 'd',
           source: 'sounds/drums/Hi Hat/Hi Hat Open 5.mp3',
           volume: 0.45,
+          detune: 0,
           exclusiveZone: 2
       }, 
       {
@@ -62,14 +68,16 @@ export default {
           name: 'Kick',
           triggerKey: 'z',
           source: 'sounds/drums2/kick-softy.mp3',
-          volume: 0.95
+          volume: 0.95,
+          detune: 0
       }, 
       {
           id: '8',
           name: 'Snare',
           triggerKey: 'x',
           source: 'sounds/drums/Snare On/Snare 6.mp3',
-          volume: 0.7
+          volume: 0.7,
+          detune: 0
       }, 
       {
           id: '9',
@@ -77,6 +85,7 @@ export default {
           triggerKey: 'c',
           source: 'sounds/drums/Hi Hat/Hi Hat 8.mp3',
           volume: 0.7,
+          detune: 0,
           exclusiveZone: 2
       },
     ]
@@ -173,7 +182,7 @@ export default {
           triggerKey: 'f',
           source: 'sounds/piano/Chord_1.mp3',
           volume: 1.0,
-          pan: -0.5,
+          detune: 0
           //exclusiveZone: 1
       }, 
       {
@@ -182,7 +191,7 @@ export default {
           triggerKey: 'g',
           source: 'sounds/piano/Chord_2.mp3',
           volume: 1.0,
-          pan: -0.5,   
+          detune: 0   
           //exclusiveZone: 1
       }, 
       {
@@ -191,7 +200,7 @@ export default {
           triggerKey: 'h',
           source: 'sounds/piano/Chord_3.mp3',
           volume: 1.0,
-          pan: -0.5,
+          detune: 0
           //exclusiveZone: 1
       }, 
       {
@@ -200,9 +209,8 @@ export default {
           triggerKey: 'j',
           source: 'sounds/piano/Chord_3.mp3',
           volume: 1.0,
-          pan: -0.5,
-          //exclusiveZone: 1,
           detune: 200
+          //exclusiveZone: 1,
       }, 
       {
           id: '5',
@@ -210,9 +218,8 @@ export default {
           triggerKey: 'k',
           source: 'sounds/piano/Chord_3.mp3',
           volume: 1.0,
-          pan: -0.5,
-          //exclusiveZone: 1,
           detune: 300
+          //exclusiveZone: 1,
       },
       {
           id: '6',
@@ -220,9 +227,8 @@ export default {
           triggerKey: 'l',
           source: 'sounds/piano/Chord_3.mp3',
           volume: 1.0,
-          pan: -0.5,
-          //exclusiveZone: 1,
           detune: 500
+          //exclusiveZone: 1,
       },
       {
           id: '7',
@@ -230,9 +236,8 @@ export default {
           triggerKey: ';',
           source: 'sounds/piano/Chord_3.mp3',
           volume: 0.95,
-          pan: -0.5,
-          //exclusiveZone: 1,
           detune: 700
+          //exclusiveZone: 1,
       },
       {
           id: '8',
@@ -240,9 +245,8 @@ export default {
           triggerKey: '\'',
           source: 'sounds/piano/Chord_3.mp3',
           volume: 0.9,
-          pan: -0.5,
-          //exclusiveZone: 1,
           detune: 800
+          //exclusiveZone: 1,
       }
     ]
   },
@@ -264,7 +268,7 @@ export default {
           triggerKey: 'r',
           source: 'sounds/synth/I_Do_Remember_C_01.wav',
           volume: 0.75,
-          pan: 0.5,
+          detune: 0
           //exclusiveZone: 3
       },
       {
@@ -273,7 +277,7 @@ export default {
           triggerKey: 't',
           source: 'sounds/synth/I_Do_Remember_D_01.wav',
           volume: 0.75,
-          pan: 0.5,
+          detune: 0
           //exclusiveZone: 3
       },  
       {
@@ -282,7 +286,7 @@ export default {
           triggerKey: 'y',
           source: 'sounds/synth/I_Do_Remember_E_01.wav',
           volume: 0.75,
-          pan: 0.5,
+          detune: 0
           //exclusiveZone: 3
       },  
       {
@@ -291,9 +295,8 @@ export default {
           triggerKey: 'u',
           source: 'sounds/synth/I_Do_Remember_F_01.wav',
           volume: 0.75,
-          pan: 0.5,
-          //exclusiveZone: 3,
           detune: 100
+          //exclusiveZone: 3,
       },  
       {
           id: '5',
@@ -301,7 +304,7 @@ export default {
           triggerKey: 'i',
           source: 'sounds/synth/I_Do_Remember_G_01.wav',
           volume: 0.75,
-          pan: 0.5,
+          detune: 0
           //exclusiveZone: 3
       },
       {
@@ -310,7 +313,7 @@ export default {
           triggerKey: 'o',
           source: 'sounds/synth/I_Do_Remember_A_01.wav',
           volume: 0.75,
-          pan: 0.5,
+          detune: 0
           //exclusiveZone: 3
       },
       {
@@ -319,7 +322,7 @@ export default {
           triggerKey: 'p',
           source: 'sounds/synth/I_Do_Remember_B_01.wav',
           volume: 0.75,
-          pan: 0.5,
+          detune: 0
           //exclusiveZone: 3
       },
       {
@@ -328,7 +331,6 @@ export default {
         triggerKey: '[',
         source: 'sounds/synth/I_Do_Remember_B_01.wav',
         volume: 0.75,
-        pan: 0.5,
         detune: 100
         //exclusiveZone: 3
     },
@@ -338,7 +340,6 @@ export default {
       triggerKey: ']',
       source: 'sounds/synth/I_Do_Remember_B_01.wav',
       volume: 0.75,
-      pan: 0.5,
       detune: 300
       //exclusiveZone: 3
   }

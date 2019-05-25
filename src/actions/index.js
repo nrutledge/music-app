@@ -1,4 +1,5 @@
 import React from 'react';
+import KeySettingsForm from '../components/KeySettingsForm/KeySettingsForm';
 import { 
     TIMER_START, 
     TIMER_TICK, 
@@ -12,6 +13,8 @@ import {
     TOGGLE_INSTRUMENT_PLAYBACK,
     KEY_RESET_COMPLETED,
     EDIT_INSTRUMENT,
+    UPDATE_INSTRUMENT,
+    UPDATE_INSTRUMENT_SOUND,
     CLOSE_EDIT_MODE,
     EDIT_KEY_SETTINGS,
     CLOSE_MODAL
@@ -96,37 +99,29 @@ export const editInstrument = instrumentId => (dispatch, getState) => {
   dispatch({ type: EDIT_INSTRUMENT, payload: instrument });
 }
 
+// settings is an object that will be merged into the instrument
+export const updateInstrument = (instrumentId, settings) => {
+  return { type: UPDATE_INSTRUMENT, payload: { instrumentId, settings }};
+};
+
+// settings is an object that will be merged into the sound object
+export const updateInstrumentSound = (instrumentId, key, settings) => {
+  return { type: UPDATE_INSTRUMENT_SOUND, payload: { instrumentId, key, settings }};
+};
+
 export const closeEditMode = () => {
   return { type: CLOSE_EDIT_MODE };
 }
 
-export const editKeySettings = (instrumentId, key) => (dispatch, getState) => {
-  const { name, source, volume }= getState()
-    .instruments
-    .byId[instrumentId]
-    .sounds
-    .find(sound => sound.triggerKey === key)
+export const editKeySettings = (key, instrumentId) => {
   const title = `Settings for Key: ${key.toUpperCase()}`
   const renderProp = () => {
     return (
-      <div>
-        <div>
-          <label htmlFor="name">Name</label>
-          <input name="name" type="text" value={name}></input>
-        </div>
-        <div>
-          <label htmlFor="source">Source</label>
-          <input name="source" type="text" value={source}></input>
-        </div>
-        <div>
-          <label htmlFor="source">Volume</label>
-          <input name="volume" type="text" value={volume}></input>
-        </div>
-      </div>
+      <KeySettingsForm keyName={key} instrumentId={instrumentId} />
     );
   }
 
-  dispatch({ type: EDIT_KEY_SETTINGS, payload: { title, renderProp } });
+  return { type: EDIT_KEY_SETTINGS, payload: { title, renderProp } };
 }
 
 export const closeModal = () => {

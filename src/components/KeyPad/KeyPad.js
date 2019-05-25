@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import DrumPad from '../DrumPad/DrumPad';
-import './PadBank.css';
+import './KeyPad.css';
 
 const baseKeySize = 3.5;
 
-class PadBank extends Component {
+class KeyPad extends Component {
   render() {
     // Get instrument IDs and color for each key based on armed instruments
     const keyDetails = Object.values(this.props.instruments).reduce((acc, instrument) => {
@@ -36,7 +36,7 @@ class PadBank extends Component {
             return <DrumPad 
               isActive={this.props.activeKeys[key] && this.props.activeKeys[key].length > 0} 
               triggerKey={key} 
-              instrumentId={keyDetails[key] && keyDetails[key].instrumentId}
+              instrumentId={this.props.activeKeys[key] && this.props.activeKeys[key][0]}
               hue={(keyDetails[key] && keyDetails[key].hue) || 0} 
               width={width} 
               height={baseKeySize}
@@ -83,4 +83,4 @@ const mapStateToProps = ({ instruments, keyboards }) => {
   }
 }
 
-export default connect(mapStateToProps, actions)(PadBank);
+export default connect(mapStateToProps, actions)(KeyPad);

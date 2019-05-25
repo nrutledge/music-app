@@ -1,6 +1,6 @@
 import React from 'react';
 import './Controls.css';
-import { FaPlay, FaStop, FaCircle, FaBackward, FaTrash } from 'react-icons/fa';
+import { FaPlay, FaStop, FaCircle, FaBackward } from 'react-icons/fa';
 
 // Number of slices to record per bar
 const precision = 96;

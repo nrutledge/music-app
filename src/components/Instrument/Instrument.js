@@ -54,6 +54,10 @@ class Instrument extends Component {
     if (this.state.reverbLevel !== prevState.reverb) {
       this.splitter.mix = (this.state.reverbLevel / 50) - 1;
     }
+
+    if (this.props.sounds !== prevProps.sounds) {
+      this.setState({ sounds: this.props.sounds });
+    }
   }
 
   incrementLoadedCount = () => {

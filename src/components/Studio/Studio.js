@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import audioCtx, { Reverb } from '../../services/audio';
 import ControlsContainer from '../../containers/ControlsContainer';
-import PadBank from '../PadBank/PadBank';
+import KeyPad from '../KeyPad/KeyPad';
 import Modal from '../Modal/Modal';
 import DrumPadSettings from '../DrumPadSettings/DrumPadSettings';
 import handleKeyEvent from '../../util/handleKeyEvent';
@@ -74,7 +74,7 @@ export class Studio extends Component {
             })}
           </div>
           <div className="section-bottom">
-            <PadBank />
+            <KeyPad />
           </div>
         </div>
       </div>

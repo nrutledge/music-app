@@ -35,10 +35,9 @@ class DrumPad extends Component {
     }
   }
 
-  // handleMouseEnter = () => this.props.setDisplayContent(this.props.name);
   handleMouseDown = () => {
     if (this.props.isEditMode) {
-      this.props.editKeySettings(this.props.instrumentId, this.props.triggerKey);
+      this.props.editKeySettings(this.props.triggerKey, this.props.instrumentId);
     }
     handleKeyEvent(this.props.keyPress, false, this.props.triggerKey)();
   };
