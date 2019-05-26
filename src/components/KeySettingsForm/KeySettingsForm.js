@@ -70,16 +70,18 @@ class KeySettingsForm extends Component {
 
   handleVolumeChange = e => {
     let value = e.target.value;
-
     if (!isNaN(value)) {
       value = clamp(value, 0, 1);
     }
+
     this.setState({ volume: value.toString() });
   };
 
   handleDetuneChange = e => {
     let value = e.target.value;
-    if (!isNaN(value)) {
+
+    // Clamp numeric values only ("-" chars in input field will have value of '')
+    if (value !== '' && !isNaN(value)) {
       value = clamp(parseFloat(value), -4800, 4800).toString();
     }
     
