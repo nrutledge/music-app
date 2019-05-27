@@ -138,17 +138,17 @@ class KeySettingsForm extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const { instrumentId, keyName } = ownProps;
-  const { name, source, volume, detune } = state.instruments
+  const matchingInstrument = state.instruments
     .byId[instrumentId]
     .sounds
     .find(sound => sound.triggerKey === keyName)
 
-  return {
-    name,
-    source,
-    volume,
-    detune
-  };
+  return { 
+    name: matchingInstrument ? matchingInstrument.name : '',
+    source: matchingInstrument ? matchingInstrument.source : '',
+    volume: matchingInstrument ? matchingInstrument.volume : '',
+    detune: matchingInstrument ? matchingInstrument.detune : '',
+  }
 }
 
 export default connect(mapStateToProps, actions)(KeySettingsForm);

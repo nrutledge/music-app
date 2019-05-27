@@ -8,6 +8,20 @@ import {
   CLOSE_EDIT_MODE
 } from '../actions/types';
 
+// TODO: Consider flattening data structure by moving sounds array into separate reducer
+
+// TODO: Move to separate file / convert to model class
+const makeSound = (triggerKey, source, name = '', volume = 1, detune = 0) => {
+  return {
+    id: (Math.random() * 1000000).toString(),
+    name: name,
+    triggerKey: triggerKey,
+    source: source,
+    volume: volume,
+    detune: detune
+  }
+}
+
 // Returns new activeKeys object based on provided instruments and their
 // current armed status. If instrumentId is provided, only that instrument's
 // values will be updated.
@@ -43,7 +57,7 @@ const getNewActiveKeys = (instruments, currentKeys = {}, instrumentId = null) =>
 };
 
 const initialState = {
-  isEditMode: false,
+  editingInstrumentId: null,
   activeKeys: getNewActiveKeys(instruments),
   byId: instruments
 }
@@ -93,7 +107,7 @@ export default (state = initialState, action) => {
 
       // Preserve the instrument state for use after editing but set the new 
       // active keys
-      return { ...state, isEditMode: true, activeKeys: newActiveKeys };
+      return { ...state, editingInstrumentId: action.payload.id, activeKeys: newActiveKeys };
     }
 
     case UPDATE_INSTRUMENT: {
@@ -111,18 +125,36 @@ export default (state = initialState, action) => {
 
     case UPDATE_INSTRUMENT_SOUND: {
       const { instrumentId, key, settings } = action.payload;
-      const newInstruments = { ...state.byId };
+      const newSounds = [ ...state.byId[instrumentId].sounds ];
 
-      newInstruments[instrumentId] = { ...newInstruments[instrumentId] };
-      newInstruments[instrumentId].sounds = newInstruments[instrumentId].sounds.map(sound => {
-        if (sound.triggerKey === key) {
-          return { ...sound, ...settings };
-        } else {
-          return sound;
-        }
-      });
+      const existingSoundIndex = state.byId[instrumentId].sounds.findIndex(
+        sound => sound.triggerKey === key
+      );
 
-      return { ...state, byId: newInstruments };
+      if (existingSoundIndex !== -1) {
+        newSounds[existingSoundIndex] = { 
+          ...newSounds[existingSoundIndex],
+          ...settings
+        };
+      } else if (settings.source) {
+        // If sound doesn't exist for key, add it (but only if there is a source specified
+        // since it is unplayable without the source)
+        const newSound = makeSound(key, settings.source, settings.volume, settings.detune );
+        newSounds.push(newSound);
+      }
+
+      const newInstruments = { 
+        ...state.byId, 
+        [instrumentId]: { 
+          ...state.byId[instrumentId],
+          sounds: newSounds
+        } 
+      }
+
+      return { ...state, 
+        activeKeys: getNewActiveKeys(newInstruments, state.activeKeys, instrumentId),
+        byId: newInstruments
+      }
     }
 
     case CLOSE_EDIT_MODE: {
@@ -133,7 +165,7 @@ export default (state = initialState, action) => {
 
       // Preserve the instrument state for use after editing but set the new 
       // active keys
-      return { ...state, isEditMode: false, activeKeys: newActiveKeys };
+      return { ...state, editingInstrumentId: null, activeKeys: newActiveKeys };
     }
 
     default: {

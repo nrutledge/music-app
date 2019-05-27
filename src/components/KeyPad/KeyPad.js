@@ -34,10 +34,21 @@ class KeyPad extends Component {
             }
 
             return <DrumPad 
-              isActive={this.props.activeKeys[key] && this.props.activeKeys[key].length > 0} 
+              isActive={
+                this.props.activeKeys[key] && 
+                this.props.activeKeys[key].length > 0
+              } 
+              isEditMode={this.props.editingInstrumentId !== null}
               triggerKey={key} 
-              instrumentId={this.props.activeKeys[key] && this.props.activeKeys[key][0]}
-              hue={(keyDetails[key] && keyDetails[key].hue) || 0} 
+              instrumentId={
+                this.props.editingInstrumentId || 
+                (this.props.activeKeys[key] && this.props.activeKeys[key][0])
+              }
+              hue={
+                this.props.editingInstrumentId !== null ?
+                  this.props.instruments[this.props.editingInstrumentId].hue :
+                  ((keyDetails[key] && keyDetails[key].hue) || 0)
+              } 
               width={width} 
               height={baseKeySize}
               fontSize={fontSize}
@@ -58,7 +69,7 @@ class KeyPad extends Component {
         {drumPads}
         <div className="key-pad__bottom-section">
           {
-            this.props.isEditMode && 
+            (this.props.editingInstrumentId !== null) && 
             <button 
               className="key-pad__button--close"
               onClick={() => {
@@ -75,7 +86,7 @@ class KeyPad extends Component {
 
 const mapStateToProps = ({ instruments, keyboards }) => {
   return { 
-    isEditMode: instruments.isEditMode,
+    editingInstrumentId: instruments.editingInstrumentId,
     instruments: instruments.byId, 
     activeKeys: instruments.activeKeys,
     keyboard: keyboards.keyboard,

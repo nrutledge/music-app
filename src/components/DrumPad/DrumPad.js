@@ -75,7 +75,7 @@ class DrumPad extends Component {
                   boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, ${saturation}, 60%, ${shadowAlpha})`,
                   color: `hsl(${this.props.hue}, ${saturation}, ${lightness})`
               }}
-              disabled={!this.props.isActive} 
+              disabled={this.props.isEditMode ? false : !this.props.isActive} 
           >
               {this.props.triggerKey.toUpperCase()}
           </button>
@@ -84,7 +84,7 @@ class DrumPad extends Component {
 }
 
 const mapStateToProps = (
-  { instruments: { isEditMode }, record: { playing, recording }, controls: { playIndex } }, 
+  { record: { playing, recording }, controls: { playIndex } }, 
   ownProps
 ) => { 
   const { triggerKey, instrumentId } = ownProps;
@@ -99,7 +99,7 @@ const mapStateToProps = (
   // down, up or unplayed (true, false or undefined
   const keydownState = playing[instrumentId] && playing[instrumentId][triggerKey];
 
-  return { isEditMode, playbackState, keydownState };
+  return { playbackState, keydownState };
 }
 
 export default connect(mapStateToProps, actions)(DrumPad);
