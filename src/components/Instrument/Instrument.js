@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FaVolume, FaVolumeMute, FaCircle, FaTrash } from 'react-icons/fa';
+import { FaVolume, FaVolumeMute, FaCircle, FaTrash, FaCog } from 'react-icons/fa';
 
 import * as actions from '../../actions';
 import Sound from '../Sound/Sound';
@@ -148,18 +148,19 @@ class Instrument extends Component {
           </button>
           <button
             className="instrument__button" 
+            style={{ backgroundColor: this.props.editing ? `hsl(${this.props.hue}, 50%, 60%)` : '#3e3e3e' }}
             onClick={event => {
               event.stopPropagation();
               this.props.editInstrument(this.props.id);
             }}
           >
-            Edit
+            <FaCog />
           </button>
         </div>
         <InstrumentDisplay 
           hue={this.props.hue} 
           displayName={this.props.name} 
-          displayContent={this.state.displayContent} 
+          displayContent={this.props.editing ? 'Edit Mode' : this.state.displayContent} 
           armed={this.props.armed}
         />
         <InputRange 

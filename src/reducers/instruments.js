@@ -28,7 +28,12 @@ const makeSound = (triggerKey, source, name = '', volume = 1, detune = 0) => {
 //
 // Example activeKeys object: { Q: [5, 6], W: [7, 8, 9], ... }
 //     This means key Q has instruments 5 and 6 active and W has 7, 8 and 9 active.
-const getNewActiveKeys = (instruments, currentKeys = {}, instrumentId = null) => {
+const getNewActiveKeys = (
+  instruments, 
+  currentKeys = {}, 
+  instrumentId = null, 
+  forceArmedStatus = false
+) => {
   let newKeys = { ...currentKeys };
 
   Object.values(instruments).forEach(instrument => {
@@ -44,7 +49,7 @@ const getNewActiveKeys = (instruments, currentKeys = {}, instrumentId = null) =>
         [];
         
       // Add back reference only if instrument is armed 
-      if (instrument.armed === true) {
+      if (instrument.armed === true || forceArmedStatus === true) {
         newKeys[triggerKey] = [ 
           ...(newKeys[triggerKey] || []), 
           instrument.id 
@@ -152,7 +157,7 @@ export default (state = initialState, action) => {
       }
 
       return { ...state, 
-        activeKeys: getNewActiveKeys(newInstruments, state.activeKeys, instrumentId),
+        activeKeys: getNewActiveKeys(newInstruments, state.activeKeys, instrumentId, true),
         byId: newInstruments
       }
     }

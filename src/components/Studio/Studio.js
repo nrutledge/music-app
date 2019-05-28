@@ -68,7 +68,8 @@ export class Studio extends Component {
                   transitionTime={instrument.transitionTime}
                   hue={instrument.hue}   
                   armed={instrument.armed}
-                  muted={instrument.muted}           
+                  muted={instrument.muted}    
+                  editing={instrument.id === this.props.editingInstrumentId}       
                 />
               )
             })}
@@ -82,4 +83,11 @@ export class Studio extends Component {
   }
 }
 
-export default connect(({ instruments: { byId } }) => ({ instruments: byId }))(Studio);
+const mapStateToProps = ({ instruments: { byId, editingInstrumentId } }) => { 
+  return {
+    instruments: byId,
+    editingInstrumentId
+  }
+};
+
+export default connect(mapStateToProps)(Studio);

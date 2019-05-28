@@ -11,9 +11,6 @@ const Modal = props => {
         {props.render && props.render()}
       </div>
       <div className="modal__bottom-section">
-        <button onClick={props.submitButtonHandler}>
-          {props.submitButtonName || 'Submit'}
-        </button>
         <button onClick={props.closeModal}>Close</button>
       </div>
     </div>
