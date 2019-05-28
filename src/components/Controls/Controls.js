@@ -1,6 +1,6 @@
 import React from 'react';
 import './Controls.css';
-import { FaPlay, FaStop, FaCircle, FaBackward, FaTrash } from 'react-icons/fa';
+import { FaPlay, FaStop, FaCircle, FaBackward } from 'react-icons/fa';
 
 // Number of slices to record per bar
 const precision = 96;
@@ -62,11 +62,11 @@ export default (props) => {
               </button>
             </div>
             <div className="controls__section">
-              <label className="controls__label" for="play-position">Position</label>
+              <label className="controls__label" htmlFor="play-position">Position</label>
               <div className="controls__display-data" name="play-position">
                 {`${currentBar} ${currentBeat}`}
               </div>
-              <label className="controls__label" for="tempo">Tempo</label>
+              <label className="controls__label" htmlFor="tempo">Tempo</label>
               <input 
                   className="controls__display-data controls__display-data--tempo" 
                   name="tempo"
@@ -80,7 +80,7 @@ export default (props) => {
             </div>
             <div className="controls__section">
               <button className="controls__button controls__button-clear" onClick={clearRecording}>
-                <FaTrash style={{ verticalAlign: 'baseline' }} /> Clear Recording
+                Clear Recording
               </button>
             </div>
         </div>

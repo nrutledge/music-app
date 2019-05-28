@@ -1,0 +1,43 @@
+.modal.hidden {
+  visibility: hidden;
+}
+
+.modal {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  background-color: #333;
+  border-radius: 10px;
+  color: #FFF;
+  font-size: 16px;
+  padding: 20px;
+}
+
+.modal h1 {
+  margin-top: 0;
+}
+
+.modal__content {
+  margin: 20px 10px;
+}
+
+.modal__content label {
+  display: inline-block;
+  width: 60px;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.modal__content input {
+  margin: 5px;
+  padding: 5px;
+  width: 350px;
+  font-size: 16px;
+}
+
+.modal__bottom-section {
+  display: flex;
+  justify-content: flex-end;
+  margin: 10px;
+}

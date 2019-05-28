@@ -3,7 +3,9 @@ import { connect } from 'react-redux';
 
 import audioCtx, { Reverb } from '../../services/audio';
 import ControlsContainer from '../../containers/ControlsContainer';
-import PadBank from '../PadBank/PadBank';
+import KeyPad from '../KeyPad/KeyPad';
+import Modal from '../Modal/Modal';
+import DrumPadSettings from '../DrumPadSettings/DrumPadSettings';
 import handleKeyEvent from '../../util/handleKeyEvent';
 import Instrument from '../Instrument/Instrument';
 import detectBrowser from '../../util/detectBrowser';
@@ -46,7 +48,8 @@ export class Studio extends Component {
       }}>
         <ControlsContainer />
         <div className="workspace">
-            {browserWarning}
+          {browserWarning}
+          <Modal title="Test Modal" content={<DrumPadSettings instrumentId={1} />} />
           <div className="section-top">
             {Object.values(this.props.instruments).map((instrument, index) => {
               return (
@@ -64,13 +67,15 @@ export class Studio extends Component {
                   decayTime={instrument.decayTime}
                   transitionTime={instrument.transitionTime}
                   hue={instrument.hue}   
-                  armed={instrument.armed}           
+                  armed={instrument.armed}
+                  muted={instrument.muted}    
+                  editing={instrument.id === this.props.editingInstrumentId}       
                 />
               )
             })}
           </div>
-          <div class="section-bottom">
-            <PadBank />
+          <div className="section-bottom">
+            <KeyPad />
           </div>
         </div>
       </div>
@@ -78,4 +83,11 @@ export class Studio extends Component {
   }
 }
 
-export default connect(({ instruments: { byId } }) => ({ instruments: byId }))(Studio);
+const mapStateToProps = ({ instruments: { byId, editingInstrumentId } }) => { 
+  return {
+    instruments: byId,
+    editingInstrumentId
+  }
+};
+
+export default connect(mapStateToProps)(Studio);

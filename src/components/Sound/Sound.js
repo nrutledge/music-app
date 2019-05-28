@@ -34,12 +34,12 @@ class Sound extends Component {
     }
 
     componentDidUpdate(prevProps) {
-      // @TODO: Fix exclusive zone logic
-      // Stop playing sound if another key in same exclusive zone was played
+      // @TODO: Fix exclusive group logic
+      // Stop playing sound if another key in same exclusive group was played
       /*
-      if (this.props.exclusiveZone &&
+      if (this.props.exclusiveGroup &&
           prevProps.lastPlayedKey !== this.props.lastPlayedKey &&
-          this.props.exclusiveZone === this.props.lastPlayedZone &&
+          this.props.exclusiveGroup === this.props.lastPlayedZone &&
           this.props.lastPlayedKey !== this.props.triggerKey 
       ) {
           // Fade sound out over longer duration than if single note were repeated (10x longer)

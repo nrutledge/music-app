@@ -18,17 +18,17 @@
     width: 100%;
   }
 
-  .instrument__button-clear {
+  .instrument__button {
     background-color: #3e3e3e;
     color: #DDD;
-    margin: 10px 0 10px 10px;
-    padding: 3px 15px;
+    margin: 10px 0px 10px 6px;
+    padding: 3px 12px;
   }
 
-  .instrument__button-clear:active {
+  .instrument__button:active {
     background-color: #ff0000;
   }
 
-  .instrument__button-clear .react-icons {
+  .instrument__button .react-icons {
     vertical-align: middle;
   }

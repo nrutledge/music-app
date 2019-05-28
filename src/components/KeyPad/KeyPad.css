@@ -8,3 +8,8 @@
 .key-row {
   display: flex;
 }
+
+.key-pad__bottom-section {
+  display: flex;
+  justify-content: flex-end;
+}

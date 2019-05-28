@@ -1,3 +1,5 @@
+import React from 'react';
+import KeySettingsForm from '../components/KeySettingsForm/KeySettingsForm';
 import { 
     TIMER_START, 
     TIMER_TICK, 
@@ -8,7 +10,14 @@ import {
     TOGGLE_RECORD,
     CLEAR_RECORDING,
     TOGGLE_INSTRUMENT_RECORD,
-    KEY_RESET_COMPLETED
+    TOGGLE_INSTRUMENT_PLAYBACK,
+    KEY_RESET_COMPLETED,
+    EDIT_INSTRUMENT,
+    UPDATE_INSTRUMENT,
+    UPDATE_INSTRUMENT_SOUND,
+    CLOSE_EDIT_MODE,
+    EDIT_KEY_SETTINGS,
+    CLOSE_MODAL
 } from './types';
 
 let timer = null;
@@ -51,6 +60,10 @@ export const toggleRecord = () => {
   return { type: TOGGLE_RECORD };
 };
 
+export const toggleInstrumentPlayback = (instrumentId) => {
+  return { type: TOGGLE_INSTRUMENT_PLAYBACK, payload: { instrumentId } };
+}
+
 export const toggleInstrumentRecord = (instrumentId) => {
   return { type: TOGGLE_INSTRUMENT_RECORD, payload: { instrumentId } };
 }
@@ -80,3 +93,37 @@ export const clearRecording = instrumentId => dispatch => {
     dispatch({ type: CLEAR_RECORDING, payload: { instrumentId } });
 }
 
+export const editInstrument = instrumentId => (dispatch, getState) => {
+  const instrument = getState().instruments.byId[instrumentId];
+
+  dispatch({ type: EDIT_INSTRUMENT, payload: instrument });
+}
+
+// settings is an object that will be merged into the instrument
+export const updateInstrument = (instrumentId, settings) => {
+  return { type: UPDATE_INSTRUMENT, payload: { instrumentId, settings }};
+};
+
+// settings is an object that will be merged into the sound object
+export const updateInstrumentSound = (instrumentId, key, settings) => {
+  return { type: UPDATE_INSTRUMENT_SOUND, payload: { instrumentId, key, settings }};
+};
+
+export const closeEditMode = () => {
+  return { type: CLOSE_EDIT_MODE };
+}
+
+export const editKeySettings = (key, instrumentId) => {
+  const title = `Settings for Key: ${key.toUpperCase()}`
+  const renderProp = () => {
+    return (
+      <KeySettingsForm keyName={key} instrumentId={instrumentId} />
+    );
+  }
+
+  return { type: EDIT_KEY_SETTINGS, payload: { title, renderProp } };
+}
+
+export const closeModal = () => {
+  return { type: CLOSE_MODAL };
+}

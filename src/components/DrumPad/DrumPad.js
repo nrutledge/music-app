@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
 
 import handleKeyEvent from '../../util/handleKeyEvent';
-import { keyPress } from '../../actions';
+import * as actions from '../../actions';
 import './DrumPad.css';
 
 class DrumPad extends Component {
@@ -35,8 +35,13 @@ class DrumPad extends Component {
     }
   }
 
-  // handleMouseEnter = () => this.props.setDisplayContent(this.props.name);
-  handleMouseDown = handleKeyEvent(this.props.keyPress, false, this.props.triggerKey);
+  handleMouseDown = () => {
+    if (this.props.isEditMode) {
+      this.props.editKeySettings(this.props.triggerKey, this.props.instrumentId);
+    }
+    handleKeyEvent(this.props.keyPress, false, this.props.triggerKey)();
+  };
+
   handleMouseUp = handleKeyEvent(this.props.keyPress, true, this.props.triggerKey);
 
   // If currently playing, stop when mouse leaves key
@@ -70,7 +75,7 @@ class DrumPad extends Component {
                   boxShadow: `0px 0px 20px 3px hsla(${this.props.hue}, ${saturation}, 60%, ${shadowAlpha})`,
                   color: `hsl(${this.props.hue}, ${saturation}, ${lightness})`
               }}
-              disabled={!this.props.isActive} 
+              disabled={this.props.isEditMode ? false : !this.props.isActive} 
           >
               {this.props.triggerKey.toUpperCase()}
           </button>
@@ -82,20 +87,20 @@ const mapStateToProps = (
   { record: { playing, recording }, controls: { playIndex } }, 
   ownProps
 ) => { 
-  const { triggerKey: key, instrumentId, reset } = ownProps;
+  const { triggerKey, instrumentId } = ownProps;
 
   // down, up or no change (true, false or undefined)
   const playbackState = (
     recording[instrumentId] && 
     recording[instrumentId][playIndex] &&
-    recording[instrumentId][playIndex][key]
+    recording[instrumentId][playIndex][triggerKey]
   );
 
   // down, up or unplayed (true, false or undefined
-  const keydownState = playing[instrumentId] && playing[instrumentId][key];
+  const keydownState = playing[instrumentId] && playing[instrumentId][triggerKey];
 
   return { playbackState, keydownState };
 }
 
-export default connect(mapStateToProps, { keyPress })(DrumPad);
+export default connect(mapStateToProps, actions)(DrumPad);
 
