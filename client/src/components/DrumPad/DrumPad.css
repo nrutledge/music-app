@@ -1,0 +1,7 @@
+.drum-pad {
+    box-sizing: border-box;
+    margin: 3.5px;
+    border-radius: 10px;
+    outline: none;
+    user-select: none;
+}

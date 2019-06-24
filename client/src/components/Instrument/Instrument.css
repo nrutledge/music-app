@@ -1,0 +1,34 @@
+.instrument {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    flex-shrink: 0;
+    align-items: center;
+    width: 250px;
+    margin: 10px 0px 10px 10px;
+    padding: 0px 25px 25px 25px;
+    background-color: rgba(38, 38, 38, 1);
+    border-radius: 15px;
+  }
+
+  .instrument__container-top {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 100%;
+  }
+
+  .instrument__button {
+    background-color: #3e3e3e;
+    color: #DDD;
+    margin: 10px 0px 10px 6px;
+    padding: 3px 12px;
+  }
+
+  .instrument__button:active {
+    background-color: #ff0000;
+  }
+
+  .instrument__button .react-icons {
+    vertical-align: middle;
+  }

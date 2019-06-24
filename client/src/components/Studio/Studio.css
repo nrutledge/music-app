@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'LedDisplay';
+  src: url('../../fonts/The Led Display St.ttf');
+}
+
+@font-face {
+  font-family: 'Pixel';
+  src: url('../../fonts/LLPIXEL3.ttf');
+}
+
+.studio {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.workspace {
+  width: 100%;
+}
+
+.section-top {
+  align-items: center;  
+  display: flex;
+  justify-content: left;
+  margin: 0;
+  padding: 5px;
+  overflow-x: scroll;
+  scrollbar-color: #333 #111;
+}
+
+.section-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 5px;
+  overflow-x: scroll;
+  scrollbar-color: #333 #111;
+}
+
+.browser-warning {
+  color: #FFF;
+  font-size: 2em;
+  background-color: #111;
+  width: 100%;
+  text-align: center;
+  padding: 20px;
+}
+
+@media (max-width: 1200px) {
+  .section-bottom {
+    justify-content: left;
+  }
+}
